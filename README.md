@@ -1,2 +1,4 @@
 # project-doppel
-A retro hardcode idle RPG
+A retro hardcore semi-idle RPG
+
+The flow starts in the `Bootstrap` scene
