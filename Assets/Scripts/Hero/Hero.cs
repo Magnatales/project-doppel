@@ -1,4 +1,6 @@
-﻿using PrimeTween;
+﻿using System;
+using Cysharp.Threading.Tasks;
+using PrimeTween;
 using UnityEngine;
 
 namespace Character
@@ -7,30 +9,63 @@ namespace Character
     {
         private readonly HeroView _heroView;
         private readonly Camera _camera;
-        private Tween _movementTween;
         private Vector3 _lastPosition;
+        private Vector3 _targetPosition;
+        private const float MOVEMENT_THRESHOLD = 0.01f;
 
         public Hero(HeroView heroView, Camera camera)
         {
             _heroView = heroView;
             _camera = camera;
+            _heroView.navMeshAgent.updateRotation = false;
+            _heroView.navMeshAgent.updateUpAxis = false;
         }
 
         public void Update()
         {
-            _heroView.spriteAnimator.Play(_heroView.transform.position != _lastPosition ? "walk" : "idle");
+            //Use a threshold in the check of position to avoid the character switching animations when colliding with a wall
+            var movementDelta = (_heroView.transform.position - _lastPosition).sqrMagnitude;
+            var walking = movementDelta > MOVEMENT_THRESHOLD * MOVEMENT_THRESHOLD; // Use squared value for performance
+
+            if (walking)
+            {
+                _heroView.spriteAnimator.Play(_heroView.transform.position.y > _lastPosition.y ? "walknorth" : "walk");
+            }
+            else
+            {
+                _heroView.spriteAnimator.Play("idle");
+            }
             _heroView.spriteAnimator.FlipX(_heroView.transform.position.x > _lastPosition.x);
 
-            if (Input.GetMouseButtonDown(0))
+            var horizontal = Input.GetAxis("Horizontal");
+            var vertical = Input.GetAxis("Vertical");
+            if (horizontal != 0 || vertical != 0)
+            {
+                var direction = new Vector3(horizontal, vertical, 0).normalized;
+                _targetPosition = _heroView.transform.position + direction;
+            }
+            else if (Input.GetMouseButtonDown(0))
             {
                 var mousePosition = Input.mousePosition;
                 var worldPosition = _camera.ScreenToWorldPoint(mousePosition);
-                worldPosition.z = _heroView.transform.position.z;
-                _movementTween.Stop();
-                _movementTween = Tween.LocalPositionAtSpeed(_heroView.transform, worldPosition, _heroView.speed, Ease.Linear);
+                worldPosition.z = 0;
+                _targetPosition = worldPosition;
             }
-            
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                Dash().Forget();
+            }
+
+            _heroView.navMeshAgent.SetDestination(_targetPosition);
             _lastPosition = _heroView.transform.position;
+        }
+
+        private async UniTaskVoid Dash()
+        {
+            _heroView.navMeshAgent.speed = 200;
+            await UniTask.Delay(TimeSpan.FromSeconds(0.5f));
+            _heroView.navMeshAgent.speed = 50;
         }
     }
 }
