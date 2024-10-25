@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 8612913986819769065}
   - component: {fileID: 9194173344859670271}
   - component: {fileID: 8200426570660652510}
+  - component: {fileID: 94918976345156086}
+  - component: {fileID: 2562754075581470638}
   m_Layer: 0
   m_Name: GameCamera
   m_TagString: MainCamera
@@ -28,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 8507839319038226586}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -69,7 +71,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 1
+  orthographic size: 135
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -137,3 +139,57 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!114 &94918976345156086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8507839319038226586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b8c96e2cdc154e848a3d9fe62464d42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CameraTargets: []
+  CenterTargetOnStart: 0
+  Axis: 0
+  UpdateType: 0
+  FollowHorizontal: 1
+  HorizontalFollowSmoothness: 0.15
+  FollowVertical: 1
+  VerticalFollowSmoothness: 0.15
+  OffsetX: 0
+  OffsetY: 0
+  IsRelativeOffset: 1
+  ZoomWithFOV: 0
+  IgnoreTimeScale: 0
+  CurrentZoomTriggerID: 0
+  IsCameraPositionLeftBounded: 0
+  IsCameraPositionRightBounded: 0
+  IsCameraPositionTopBounded: 0
+  IsCameraPositionBottomBounded: 0
+  GameCamera: {fileID: 8612913986819769065}
+--- !u!114 &2562754075581470638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8507839319038226586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17577239430844efcbdda516df8c1f8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _pc2D: {fileID: 94918976345156086}
+  _serializedAxis: 0
+  PixelsPerUnit: 1
+  ViewportAutoScale: 3
+  TargetViewportSizeInPixels: {x: 640, y: 360}
+  _zoom: 2
+  SnapMovementToGrid: 0
+  SnapCameraToGrid: 1
+  DrawGrid: 0
+  GridColor: {r: 1, g: 0, b: 0, a: 0.1}
+  GridDensity: 0
