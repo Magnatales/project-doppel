@@ -1,0 +1,2 @@
+
+This vault is the central hub for all design documentation and project resources for our RPG game. Here, you'll find information on everything from game mechanics to story concepts, technical specifications, and more.
