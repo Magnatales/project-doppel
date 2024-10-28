@@ -2,6 +2,8 @@
 using Cysharp.Threading.Tasks;
 using PrimeTween;
 using UnityEngine;
+using UnityEngine.AI;
+using Object = UnityEngine.Object;
 
 namespace Character
 {
@@ -11,6 +13,7 @@ namespace Character
         private readonly Camera _camera;
         private Vector3 _lastPosition;
         private Vector3 _targetPosition;
+        private bool _mouseWasPressed;
         private const float MOVEMENT_THRESHOLD = 0.01f;
 
         public Hero(HeroView heroView, Camera camera)
@@ -46,6 +49,15 @@ namespace Character
             }
             else if (Input.GetMouseButtonDown(0))
             {
+                _mouseWasPressed = true;
+                var mousePosition = Input.mousePosition;
+                var worldPosition = _camera.ScreenToWorldPoint(mousePosition);
+                worldPosition.z = 0;
+                _targetPosition = worldPosition;
+            }
+            else if (Input.GetMouseButton(0))
+            {
+                _mouseWasPressed = true;
                 var mousePosition = Input.mousePosition;
                 var worldPosition = _camera.ScreenToWorldPoint(mousePosition);
                 worldPosition.z = 0;
@@ -58,12 +70,16 @@ namespace Character
             }
 
             _heroView.navMeshAgent.SetDestination(_targetPosition);
+            if(_mouseWasPressed)
+                _heroView.ShowLine();
+            
             _lastPosition = _heroView.transform.position;
+            _mouseWasPressed = false;
         }
 
         private async UniTaskVoid Dash()
         {
-            _heroView.navMeshAgent.speed = 200;
+            _heroView.navMeshAgent.speed = 400;
             await UniTask.Delay(TimeSpan.FromSeconds(0.5f));
             _heroView.navMeshAgent.speed = 50;
         }
