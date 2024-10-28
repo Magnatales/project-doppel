@@ -1,12 +1,10 @@
-using Character;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class Bootstrap : MonoBehaviour
 {
-    [SerializeField] private HeroView heroView;
-    [SerializeField] private Camera gameCamera;
+    [SerializeField] private GameReferences gameReferences;
     private const string GAME_SCENE = "Game";
     private const string UI_SCENE = "UI";
     
@@ -24,6 +22,10 @@ public class Bootstrap : MonoBehaviour
         var gameScene = SceneManager.GetSceneByName(GAME_SCENE);
         SceneManager.SetActiveScene(gameScene);
         
-        var gameManager = new GameManager(heroView, gameCamera);
+        var heroView = Instantiate(gameReferences.HeroView);
+        var gameCamera = Instantiate(gameReferences.GameCamera);
+        Instantiate(gameReferences.Cursor);
+        
+        _ = new GameManager(heroView, gameCamera);
     }
 }

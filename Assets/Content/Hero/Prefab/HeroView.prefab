@@ -240,8 +240,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b78334151877394681684a9d0cfc750, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spriteAnimator: {fileID: 863149244951033505}
-  navMeshAgent: {fileID: 429284799438375953}
+  <SpriteAnim>k__BackingField: {fileID: 863149244951033505}
+  <NavAgent>k__BackingField: {fileID: 429284799438375953}
   destination: {fileID: 1236945339910391632}
   pathRenderer: {fileID: 748774718613739860}
 --- !u!195 &429284799438375953
@@ -343,19 +343,19 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 0.5882353}
-      key1: {r: 1, g: 1, b: 1, a: 0.5882353}
-      key2: {r: 0, g: 0, b: 0, a: 1}
-      key3: {r: 0, g: 0, b: 0, a: 0.09803922}
-      key4: {r: 0, g: 0, b: 0, a: 0}
+      key0: {r: 1, g: 1, b: 1, a: 0.20784314}
+      key1: {r: 1, g: 1, b: 1, a: 0.22352941}
+      key2: {r: 1, g: 1, b: 1, a: 1}
+      key3: {r: 0.44313726, g: 0.023529412, b: 0.023529412, a: 0.09803922}
+      key4: {r: 1, g: 1, b: 1, a: 0}
       key5: {r: 0, g: 0, b: 0, a: 0}
       key6: {r: 0, g: 0, b: 0, a: 0}
       key7: {r: 0, g: 0, b: 0, a: 0}
       ctime0: 0
       ctime1: 65535
-      ctime2: 0
-      ctime3: 0
-      ctime4: 0
+      ctime2: 33924
+      ctime3: 48959
+      ctime4: 65150
       ctime5: 0
       ctime6: 0
       ctime7: 0

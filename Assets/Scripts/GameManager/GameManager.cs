@@ -9,13 +9,14 @@ public class GameManager
     private readonly Camera _gameCamera;
     private readonly InputCamera _inputCamera;
     
-    public GameManager(HeroView heroView, Camera gameCamera)
+    public GameManager(IHeroView heroView, Camera gameCamera)
     {
-        var characterView = Object.Instantiate(heroView);
-        _gameCamera = Object.Instantiate(gameCamera);
-        _character = new Hero(characterView, _gameCamera);
-        _gameCamera.GetComponent<ProCamera2D>().CameraTargets.Add(new CameraTarget(){TargetTransform = characterView.transform});
-        _inputCamera = new InputCamera(_gameCamera);
+        _character = new Hero(heroView, gameCamera);
+        
+        var proCamera2D = gameCamera.GetComponent<ProCamera2D>();
+        proCamera2D.CameraTargets.Clear();
+        proCamera2D.CameraTargets.Add(new CameraTarget(){TargetTransform = heroView.Transform});
+        _inputCamera = new InputCamera(gameCamera);
         GameplayLoopAsync().Forget();
     }
 

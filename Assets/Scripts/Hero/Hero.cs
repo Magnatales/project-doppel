@@ -9,43 +9,43 @@ namespace Character
 {
     public class Hero
     {
-        private readonly HeroView _heroView;
+        private readonly IHeroView _heroView;
         private readonly Camera _camera;
         private Vector3 _lastPosition;
         private Vector3 _targetPosition;
         private bool _mouseWasPressed;
         private const float MOVEMENT_THRESHOLD = 0.01f;
 
-        public Hero(HeroView heroView, Camera camera)
+        public Hero(IHeroView heroView, Camera camera)
         {
             _heroView = heroView;
             _camera = camera;
-            _heroView.navMeshAgent.updateRotation = false;
-            _heroView.navMeshAgent.updateUpAxis = false;
+            _heroView.NavAgent.updateRotation = false;
+            _heroView.NavAgent.updateUpAxis = false;
         }
 
         public void Update()
         {
             //Use a threshold in the check of position to avoid the character switching animations when colliding with a wall
-            var movementDelta = (_heroView.transform.position - _lastPosition).sqrMagnitude;
+            var movementDelta = (_heroView.Transform.position - _lastPosition).sqrMagnitude;
             var walking = movementDelta > MOVEMENT_THRESHOLD * MOVEMENT_THRESHOLD; // Use squared value for performance
 
             if (walking)
             {
-                _heroView.spriteAnimator.Play(_heroView.transform.position.y > _lastPosition.y ? "walknorth" : "walk");
+                _heroView.SpriteAnim.Play(_heroView.Transform.position.y > _lastPosition.y ? "walknorth" : "walk");
             }
             else
             {
-                _heroView.spriteAnimator.Play("idle");
+                _heroView.SpriteAnim.Play("idle");
             }
-            _heroView.spriteAnimator.FlipX(_heroView.transform.position.x > _lastPosition.x);
+            _heroView.SpriteAnim.FlipX(_heroView.Transform.position.x > _lastPosition.x);
 
             var horizontal = Input.GetAxis("Horizontal");
             var vertical = Input.GetAxis("Vertical");
             if (horizontal != 0 || vertical != 0)
             {
                 var direction = new Vector3(horizontal, vertical, 0).normalized;
-                _targetPosition = _heroView.transform.position + direction;
+                _targetPosition = _heroView.Transform.position + direction;
             }
             else if (Input.GetMouseButtonDown(0))
             {
@@ -69,19 +69,19 @@ namespace Character
                 Dash().Forget();
             }
 
-            _heroView.navMeshAgent.SetDestination(_targetPosition);
+            _heroView.NavAgent.SetDestination(_targetPosition);
             if(_mouseWasPressed)
                 _heroView.ShowLine();
             
-            _lastPosition = _heroView.transform.position;
+            _lastPosition = _heroView.Transform.position;
             _mouseWasPressed = false;
         }
 
         private async UniTaskVoid Dash()
         {
-            _heroView.navMeshAgent.speed = 400;
+            _heroView.NavAgent.speed = 400;
             await UniTask.Delay(TimeSpan.FromSeconds(0.5f));
-            _heroView.navMeshAgent.speed = 50;
+            _heroView.NavAgent.speed = 50;
         }
     }
 }
