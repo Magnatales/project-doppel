@@ -26,11 +26,6 @@ public class Bootstrap : MonoBehaviour
         var gameCamera = Instantiate(gameReferences.GameCamera);
         Instantiate(gameReferences.Cursor);
         
-        _ = new GameManager(heroView, gameCamera, gameReferences.RuntimeEntities);
-    }
-
-    private void OnDestroy()
-    {
-        gameReferences.RuntimeEntities.Clear();
+        _ = new GameManager(heroView, gameCamera);
     }
 }

@@ -60,9 +60,6 @@ namespace Com.LuisPedroFonseca.ProCamera2D
 		float _pixelStep = -1;
 
 		Transform _parent;
-		
-		private int _previousWidth;
-		private int _previousHeight;
 
 		override protected void Awake()
 		{
@@ -74,11 +71,7 @@ namespace Com.LuisPedroFonseca.ProCamera2D
 				return;
 			}
 
-			_previousHeight = Screen.height;
-			_previousWidth = Screen.width;
 			ResizeCameraToPixelPerfect();
-			
-			//On window size change callback, call ResizeCameraToPixelPerfect
 
 			ProCamera2D.AddPositionOverrider(this);
 		}
@@ -89,15 +82,6 @@ namespace Com.LuisPedroFonseca.ProCamera2D
 			
 			if(ProCamera2D)
 				ProCamera2D.RemovePositionOverrider(this);
-		}
-
-		void Update()
-		{
-			if (_previousHeight == Screen.height && _previousWidth == Screen.width) return;
-			Debug.Log("Screen size changed, resizing camera to pixel perfect");
-			ResizeCameraToPixelPerfect();
-			_previousHeight = Screen.height;
-			_previousWidth = Screen.width;
 		}
 
 		#region IPositionOverrider implementation

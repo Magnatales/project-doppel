@@ -1,5 +1,4 @@
 using Character;
-using Code.RuntimeEntities;
 using UnityEngine;
 
 public class GameReferences : MonoBehaviour, IGameReferences
@@ -12,7 +11,4 @@ public class GameReferences : MonoBehaviour, IGameReferences
 
     [field: SerializeField] 
     public Cursor Cursor { get; private set; }
-    
-    [field: SerializeField]
-    public RuntimeEntities RuntimeEntities { get; private set; }
 }
