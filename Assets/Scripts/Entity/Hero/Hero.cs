@@ -1,14 +1,33 @@
 ﻿using System;
 using Cysharp.Threading.Tasks;
-using PrimeTween;
+using Entity;
 using UnityEngine;
-using UnityEngine.AI;
-using Object = UnityEngine.Object;
 
 namespace Character
 {
-    public class Hero
+    [Serializable]
+    public class Hero : ITarget
     {
+        public void InstantKill()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TakeDamage(int damage)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Heal(int heal)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddDebuff(string debuffId)
+        {
+            throw new NotImplementedException();
+        }
+
         private readonly IHeroView _heroView;
         private readonly Camera _camera;
         private Vector3 _lastPosition;
@@ -22,13 +41,13 @@ namespace Character
             _camera = camera;
             _heroView.NavAgent.updateRotation = false;
             _heroView.NavAgent.updateUpAxis = false;
+            //Id = $"Hero {Guid.NewGuid().ToString()}";
         }
 
         public void Update()
         {
-            //Use a threshold in the check of position to avoid the character switching animations when colliding with a wall
             var movementDelta = (_heroView.Transform.position - _lastPosition).sqrMagnitude;
-            var walking = movementDelta > MOVEMENT_THRESHOLD * MOVEMENT_THRESHOLD; // Use squared value for performance
+            var walking = movementDelta > MOVEMENT_THRESHOLD * MOVEMENT_THRESHOLD;
 
             if (walking)
             {
@@ -74,6 +93,7 @@ namespace Character
                 _heroView.ShowLine();
             
             _lastPosition = _heroView.Transform.position;
+            Position = _heroView.Transform.position;
             _mouseWasPressed = false;
         }
 
@@ -83,5 +103,7 @@ namespace Character
             await UniTask.Delay(TimeSpan.FromSeconds(0.5f));
             _heroView.NavAgent.speed = 50;
         }
+
+        public Vector3 Position { get; private set; }
     }
 }

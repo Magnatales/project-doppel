@@ -1,0 +1,628 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-4135814121410425329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db920e62f70f420bb33c771449926fa4, type: 3}
+  m_Name: TestChase
+  m_EditorClassIdentifier: 
+  Graphs:
+  - rid: 8858704322906554949
+  RootGraph:
+    rid: 8858704322906554915
+  m_DebugInfo: {fileID: -1299446276532684067}
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 8858704322906554886
+      type: {class: 'BlackboardVariable`1[[Collision.TargetCollision, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: {fileID: 0}
+    - rid: 8858704322906554887
+      type: {class: 'BlackboardVariable`1[[UnityEngine.AI.NavMeshAgent, UnityEngine.AIModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: {fileID: 0}
+    - rid: 8858704322906554888
+      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: 0
+    - rid: 8858704322906554889
+      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: 0
+    - rid: 8858704322906554890
+      type: {class: 'BlackboardVariable`1[[Collision.TargetCollision, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: {fileID: 0}
+    - rid: 8858704322906554891
+      type: {class: 'BlackboardVariable`1[[Collision.TargetCollision, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: {fileID: 0}
+    - rid: 8858704322906554915
+      type: {class: BehaviorGraphModule, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        AuthoringAssetID:
+          m_Value0: 17592891618977821041
+          m_Value1: 6909938774830243272
+        m_DebugInfo: {fileID: -1299446276532684067}
+        Root:
+          rid: 8858704322906554916
+        BlackboardReference:
+          rid: 8858704322906554917
+        BlackboardGroupReferences: []
+        m_VersionTimestamp: 638659656365264916
+    - rid: 8858704322906554916
+      type: {class: Start, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        ID:
+          m_Value0: 7027015072295579200
+          m_Value1: 7562372868559028110
+        Graph:
+          rid: 8858704322906554915
+        m_Parent:
+          rid: -2
+        m_Child:
+          rid: 8858704322906554918
+        Repeat: 1
+    - rid: 8858704322906554917
+      type: {class: BlackboardReference, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        m_Blackboard:
+          rid: 8858704322906554919
+        m_Source: {fileID: 7997579459193149642}
+    - rid: 8858704322906554918
+      type: {class: SelectorComposite, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        ID:
+          m_Value0: 9776488642556267064
+          m_Value1: 11703225588907151635
+        Graph:
+          rid: 8858704322906554915
+        m_Parent:
+          rid: 8858704322906554916
+        m_Children:
+        - rid: 8858704322906554920
+        - rid: 8858704322906554921
+    - rid: 8858704322906554919
+      type: {class: Blackboard, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        m_Variables:
+        - rid: 8858704322906554922
+    - rid: 8858704322906554920
+      type: {class: ChaseTargetCollisionAction, ns: , asm: Assembly-CSharp}
+      data:
+        ID:
+          m_Value0: 1821432508996270701
+          m_Value1: 667084521475700890
+        Graph:
+          rid: 8858704322906554915
+        m_Parent:
+          rid: 8858704322906554918
+        Target:
+          rid: 8858704322906554886
+        Agent:
+          rid: 8858704322906554887
+        Distance:
+          rid: 8858704322906554888
+        EscapeDistance:
+          rid: 8858704322906554889
+    - rid: 8858704322906554921
+      type: {class: WaitForTargetTriggerAction, ns: , asm: Assembly-CSharp}
+      data:
+        ID:
+          m_Value0: 11797177435394125816
+          m_Value1: 9785187107017135631
+        Graph:
+          rid: 8858704322906554915
+        m_Parent:
+          rid: 8858704322906554918
+        SelfTarget:
+          rid: 8858704322906554890
+        Target:
+          rid: 8858704322906554891
+    - rid: 8858704322906554922
+      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 1
+          m_Value1: 0
+        Name: Self
+        m_Value: {fileID: 0}
+    - rid: 8858704322906554949
+      type: {class: BehaviorGraphModule, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        AuthoringAssetID:
+          m_Value0: 17592891618977821041
+          m_Value1: 6909938774830243272
+        m_DebugInfo: {fileID: 0}
+        Root:
+          rid: -2
+        BlackboardReference:
+          rid: 8858704322906554950
+        BlackboardGroupReferences: []
+        m_VersionTimestamp: 638659656365264916
+    - rid: 8858704322906554950
+      type: {class: BlackboardReference, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        m_Blackboard:
+          rid: 8858704322906554951
+        m_Source: {fileID: 7997579459193149642}
+    - rid: 8858704322906554951
+      type: {class: Blackboard, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        m_Variables:
+        - rid: 8858704322906554952
+    - rid: 8858704322906554952
+      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 1
+          m_Value1: 0
+        Name: Self
+        m_Value: {fileID: 0}
+--- !u!114 &-1299446276532684067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b27bb6d9a2c8d540a10dff10acc543e, type: 3}
+  m_Name: TestChase Debug Info
+  m_EditorClassIdentifier: 
+  m_CodeBreakPointsList: []
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bad8f2220607dac4db5082ff333fafb8, type: 3}
+  m_Name: TestChase
+  m_EditorClassIdentifier: 
+  Blackboard: {fileID: 5199627353748621545}
+  m_Description: 
+  m_Nodes:
+  - rid: 8858704322906554531
+  - rid: 8858704322906554532
+  - rid: 8858704322906554533
+  - rid: 8858704322906554534
+  m_VersionTimestamp: 638659656365264916
+  m_DebugInfo: {fileID: -1299446276532684067}
+  AssetID:
+    m_Value0: 17592891618977821041
+    m_Value1: 6909938774830243272
+  Story:
+    Story: 
+    StoryVariableNames: []
+    Variables: []
+  m_NodeModelsInfo:
+  - Name: WaitForTargetTrigger
+    Story: 'Wait for [SelfTarget] to intercept [Target]'
+    RuntimeTypeID:
+      m_Value0: 6828287860790931985
+      m_Value1: 11322885112818935849
+    Variables:
+    - Name: SelfTarget
+      Type:
+        m_SerializableType: Collision.TargetCollision, Project.Code, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+      Tooltip: 
+    - Name: Target
+      Type:
+        m_SerializableType: Collision.TargetCollision, Project.Code, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+      Tooltip: 
+    NamedChildren: []
+  - Name: Try In Order
+    Story: 
+    RuntimeTypeID:
+      m_Value0: 11477120919463386923
+      m_Value1: 7730102824742023565
+    Variables: []
+    NamedChildren: []
+  - Name: ChaseTargetCollision
+    Story: '[Agent] Chase [Target] Until [Distance] distance and escapes at [EscapeDistance]'
+    RuntimeTypeID:
+      m_Value0: 9429539999351787182
+      m_Value1: 9368285682065046230
+    Variables:
+    - Name: Target
+      Type:
+        m_SerializableType: Collision.TargetCollision, Project.Code, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+      Tooltip: 
+    - Name: Agent
+      Type:
+        m_SerializableType: UnityEngine.AI.NavMeshAgent, UnityEngine.AIModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+      Tooltip: 
+    - Name: Distance
+      Type:
+        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089
+      Tooltip: 
+    - Name: EscapeDistance
+      Type:
+        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089
+      Tooltip: 
+    NamedChildren: []
+  - Name: On Start
+    Story: 
+    RuntimeTypeID:
+      m_Value0: 3335272451348827663
+      m_Value1: 11549843281177505721
+    Variables: []
+    NamedChildren: []
+  m_Blackboards: []
+  m_CommandBuffer:
+    m_Commands: []
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 8858704322906554531
+      type: {class: ActionNodeModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        Position: {x: 194.70001, y: 237.59998}
+        ID:
+          m_Value0: 11797177435394125816
+          m_Value1: 9785187107017135631
+        Parents: []
+        PortModels:
+        - rid: 8858704322906554535
+        - rid: 8858704322906554536
+        NodeType:
+          m_SerializableType: WaitForTargetTriggerAction, Assembly-CSharp, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        NodeTypeID:
+          m_Value0: 6828287860790931985
+          m_Value1: 11322885112818935849
+        m_FieldValues:
+        - rid: 8858704322906554927
+        - rid: 8858704322906554928
+    - rid: 8858704322906554532
+      type: {class: CompositeNodeModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        Position: {x: -67.79999, y: 147.59998}
+        ID:
+          m_Value0: 9776488642556267064
+          m_Value1: 11703225588907151635
+        Parents: []
+        PortModels:
+        - rid: 8858704322906554537
+        - rid: 8858704322906554538
+        NodeType:
+          m_SerializableType: Unity.Behavior.SelectorComposite, Unity.Behavior, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        NodeTypeID:
+          m_Value0: 11477120919463386923
+          m_Value1: 7730102824742023565
+        m_FieldValues: []
+    - rid: 8858704322906554533
+      type: {class: ActionNodeModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        Position: {x: -237.29999, y: 237.59998}
+        ID:
+          m_Value0: 1821432508996270701
+          m_Value1: 667084521475700890
+        Parents: []
+        PortModels:
+        - rid: 8858704322906554539
+        - rid: 8858704322906554540
+        NodeType:
+          m_SerializableType: ChaseTargetCollisionAction, Assembly-CSharp, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        NodeTypeID:
+          m_Value0: 9429539999351787182
+          m_Value1: 9368285682065046230
+        m_FieldValues:
+        - rid: 8858704322906554929
+        - rid: 8858704322906554544
+        - rid: 8858704322906554546
+        - rid: 8858704322906554547
+    - rid: 8858704322906554534
+      type: {class: StartNodeModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        Position: {x: -67.79996, y: 42.599968}
+        ID:
+          m_Value0: 7027015072295579200
+          m_Value1: 7562372868559028110
+        Parents: []
+        PortModels:
+        - rid: 8858704322906554541
+        NodeType:
+          m_SerializableType: Unity.Behavior.Start, Unity.Behavior, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        NodeTypeID:
+          m_Value0: 3335272451348827663
+          m_Value1: 11549843281177505721
+        m_FieldValues: []
+        Repeat: 1
+    - rid: 8858704322906554535
+      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        m_Name: InputPort
+        m_PortDataFlowType: 0
+        m_IsFloating: 0
+        m_NodeModel:
+          rid: 8858704322906554531
+        m_Connections:
+        - rid: 8858704322906554538
+    - rid: 8858704322906554536
+      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        m_Name: OutputPort
+        m_PortDataFlowType: 1
+        m_IsFloating: 0
+        m_NodeModel:
+          rid: 8858704322906554531
+        m_Connections: []
+    - rid: 8858704322906554537
+      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        m_Name: InputPort
+        m_PortDataFlowType: 0
+        m_IsFloating: 0
+        m_NodeModel:
+          rid: 8858704322906554532
+        m_Connections:
+        - rid: 8858704322906554541
+    - rid: 8858704322906554538
+      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        m_Name: OutputPort
+        m_PortDataFlowType: 1
+        m_IsFloating: 0
+        m_NodeModel:
+          rid: 8858704322906554532
+        m_Connections:
+        - rid: 8858704322906554535
+        - rid: 8858704322906554539
+    - rid: 8858704322906554539
+      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        m_Name: InputPort
+        m_PortDataFlowType: 0
+        m_IsFloating: 0
+        m_NodeModel:
+          rid: 8858704322906554533
+        m_Connections:
+        - rid: 8858704322906554538
+    - rid: 8858704322906554540
+      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        m_Name: OutputPort
+        m_PortDataFlowType: 1
+        m_IsFloating: 0
+        m_NodeModel:
+          rid: 8858704322906554533
+        m_Connections: []
+    - rid: 8858704322906554541
+      type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        m_Name: OutputPort
+        m_PortDataFlowType: 1
+        m_IsFloating: 0
+        m_NodeModel:
+          rid: 8858704322906554534
+        m_Connections:
+        - rid: 8858704322906554537
+    - rid: 8858704322906554544
+      type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        FieldName: Agent
+        Type:
+          m_SerializableType: UnityEngine.AI.NavMeshAgent, UnityEngine.AIModule,
+            Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+        LocalValue:
+          rid: 8858704322906554550
+        LinkedVariable:
+          rid: -2
+    - rid: 8858704322906554546
+      type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        FieldName: Distance
+        Type:
+          m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        LocalValue:
+          rid: 8858704322906554552
+        LinkedVariable:
+          rid: -2
+    - rid: 8858704322906554547
+      type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        FieldName: EscapeDistance
+        Type:
+          m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        LocalValue:
+          rid: 8858704322906554553
+        LinkedVariable:
+          rid: -2
+    - rid: 8858704322906554550
+      type: {class: 'BlackboardVariable`1[[UnityEngine.AI.NavMeshAgent, UnityEngine.AIModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: {fileID: 0}
+    - rid: 8858704322906554552
+      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: 0
+    - rid: 8858704322906554553
+      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: 0
+    - rid: 8858704322906554927
+      type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        FieldName: SelfTarget
+        Type:
+          m_SerializableType: Collision.TargetCollision, Project.Code, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        LocalValue:
+          rid: 8858704322906554930
+        LinkedVariable:
+          rid: -2
+    - rid: 8858704322906554928
+      type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        FieldName: Target
+        Type:
+          m_SerializableType: Collision.TargetCollision, Project.Code, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        LocalValue:
+          rid: 8858704322906554931
+        LinkedVariable:
+          rid: -2
+    - rid: 8858704322906554929
+      type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
+      data:
+        FieldName: Target
+        Type:
+          m_SerializableType: Collision.TargetCollision, Project.Code, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+        LocalValue:
+          rid: 8858704322906554932
+        LinkedVariable:
+          rid: -2
+    - rid: 8858704322906554930
+      type: {class: 'BlackboardVariable`1[[Collision.TargetCollision, Project.Code]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: {fileID: 0}
+    - rid: 8858704322906554931
+      type: {class: 'BlackboardVariable`1[[Collision.TargetCollision, Project.Code]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: {fileID: 0}
+    - rid: 8858704322906554932
+      type: {class: 'BlackboardVariable`1[[Collision.TargetCollision, Project.Code]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 0
+          m_Value1: 0
+        Name: 
+        m_Value: {fileID: 0}
+--- !u!114 &5199627353748621545
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dd922ae02c94c87a66e46a10a7319b9, type: 3}
+  m_Name: TestChase Blackboard Editor
+  m_EditorClassIdentifier: 
+  AssetID:
+    m_Value0: 17592891618977821041
+    m_Value1: 6909938774830243272
+  m_Variables:
+  - rid: 8858704322906554530
+  m_VersionTimestamp: 638659656365617773
+  m_CommandBuffer:
+    m_Commands: []
+  m_RuntimeBlackboardAsset: {fileID: 7997579459193149642}
+  references:
+    version: 2
+    RefIds:
+    - rid: 8858704322906554530
+      type: {class: 'TypedVariableModel`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 1
+          m_Value1: 0
+        Name: Self
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: {fileID: 0}
+--- !u!114 &7997579459193149642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c02bb70996b49eba31d0c206e28da24, type: 3}
+  m_Name: TestChase Blackboard Editor
+  m_EditorClassIdentifier: 
+  VersionTimestamp: 638659656365617773
+  AssetID:
+    m_Value0: 17592891618977821041
+    m_Value1: 6909938774830243272
+  m_Blackboard:
+    m_Variables:
+    - rid: 8858704322906554568
+  m_SharedBlackboardVariableGuids: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 8858704322906554568
+      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 1
+          m_Value1: 0
+        Name: Self
+        m_Value: {fileID: 0}
