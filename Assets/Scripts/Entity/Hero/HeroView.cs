@@ -1,6 +1,9 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using SimpleSpriteAnimator;
+using Unity.Behavior;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -10,11 +13,13 @@ namespace Character
     {
         [field: SerializeField] public SpriteAnimator SpriteAnim { get; private set; }
         [field: SerializeField] public NavMeshAgent NavAgent { get; private set; }
+        public List<Hero> Hero;
         public Transform Transform => transform;
         
         [SerializeField] private SpriteRenderer destination;
         [SerializeField] private LineRenderer pathRenderer;
-        
+        public BehaviorGraphAgent Agent;
+        public BehaviorGraph Graph;
         private Coroutine _fadeCoroutine;
         private Gradient _originalGradient;
         
@@ -23,6 +28,32 @@ namespace Character
             destination.enabled = false;
             destination.transform.SetParent(null);
             _originalGradient = pathRenderer.colorGradient;
+            Hero.Add(new Hero(this, null));
+        }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                // Find a random direction within a circle
+                float searchRadius = 55f; 
+                Vector2 randomDirection = UnityEngine.Random.insideUnitCircle.normalized * searchRadius;
+                Vector3 targetPosition = new Vector3(randomDirection.x, randomDirection.y, 0) + NavAgent.transform.position;
+                targetPosition.z = 0;
+                // Sample the NavMesh to find a valid point in 2D space
+                
+                if (NavMesh.SamplePosition(targetPosition, out NavMeshHit hit, searchRadius, NavMesh.AllAreas))
+                {
+                    // Set the agent's destination to the random point
+                    NavAgent.SetDestination(hit.position);
+                }
+                else
+                {
+                    Debug.Log("No valid point found within search radius.");
+                }
+                
+                
+            }
         }
 
         public void ShowLine()
