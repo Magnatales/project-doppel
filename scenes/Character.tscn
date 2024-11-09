@@ -1,15 +1,24 @@
-[gd_scene load_steps=4 format=3 uid="uid://lm7cbvhmuc3l"]
+[gd_scene load_steps=7 format=3 uid="uid://lm7cbvhmuc3l"]
 
 [ext_resource type="Script" path="res://scripts/csharp/entity/Player.cs" id="1_e0iv7"]
 [ext_resource type="PackedScene" uid="uid://cf37hjqiiwp88" path="res://scenes/PlayerAnimatedSprite.tscn" id="2_bj33f"]
+[ext_resource type="PackedScene" uid="uid://dminkvt8qo4dt" path="res://scenes/Enemy.tscn" id="2_h560s"]
+[ext_resource type="PackedScene" uid="uid://5n51x1gnmr1x" path="res://scenes/utils/HealthBartscn.tscn" id="4_dpg61"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_my2ov"]
 
-[node name="Player" type="Node2D" node_paths=PackedStringArray("navAgent", "animSprite")]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ldcmm"]
+size = Vector2(14, 10)
+
+[node name="Player" type="Node2D" node_paths=PackedStringArray("navAgent", "animSprite", "healthBar", "area", "mouseTargetArea")]
 script = ExtResource("1_e0iv7")
+packedScene = ExtResource("2_h560s")
 Speed = 75.0
 navAgent = NodePath("NavigationAgent2D")
 animSprite = NodePath("EntityAnimatedSprite2D")
+healthBar = NodePath("HealthBar")
+area = NodePath("Area2D")
+mouseTargetArea = NodePath("MouseTarget")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 path_desired_distance = 1.0
@@ -17,7 +26,6 @@ target_desired_distance = 1.0
 simplify_epsilon = 10.0
 radius = 5.0
 max_speed = 3000.0
-debug_enabled = true
 debug_use_custom = true
 debug_path_custom_color = Color(0.352941, 1, 1, 0.196078)
 
@@ -27,3 +35,14 @@ debug_path_custom_color = Color(0.352941, 1, 1, 0.196078)
 shape = SubResource("CircleShape2D_my2ov")
 
 [node name="EntityAnimatedSprite2D" parent="." instance=ExtResource("2_bj33f")]
+
+[node name="HealthBar" parent="." instance=ExtResource("4_dpg61")]
+
+[node name="MouseTarget" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MouseTarget"]
+position = Vector2(3, 0)
+shape = SubResource("RectangleShape2D_ldcmm")
+debug_color = Color(0.699914, 0.320888, 0.930597, 0.42)

@@ -14,7 +14,8 @@ config/name="project-doppel"
 run/main_scene="res://scenes/Game.tscn"
 config/features=PackedStringArray("4.3", "C#", "Forward Plus")
 boot_splash/show_image=false
-config/icon="res://textures/icon.svg"
+config/icon="res://textures/godot_103035.svg"
+config/windows_native_icon="res://textures/godo4.ico"
 
 [display]
 

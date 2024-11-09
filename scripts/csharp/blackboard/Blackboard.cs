@@ -10,7 +10,8 @@ public class Blackboard : IBlackBoard
     
     public T Get<T>(string key)
     {
-        if (!_data.TryGetValue(key, out var value)) {
+        if (!_data.TryGetValue(key, out var value)) 
+        {
             return default(T);
         }
         return (T)value;

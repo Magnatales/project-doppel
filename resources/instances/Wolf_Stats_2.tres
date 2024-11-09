@@ -1,9 +1,9 @@
-[gd_resource type="Resource" load_steps=2 format=3]
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://b4yx2bgw34y12"]
 
-[ext_resource type="Script" path="res://resources/scripts/EnemyStats.cs" id="1_annba"]
+[ext_resource type="Script" path="res://resources/scripts/EnemyStats.cs" id="1_5wpeo"]
 
 [resource]
-script = ExtResource("1_annba")
+script = ExtResource("1_5wpeo")
 Health = 0
 Damage = 20
 Speed = 0

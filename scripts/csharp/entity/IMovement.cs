@@ -1,4 +1,4 @@
-﻿public interface IMovable
+﻿public interface IMovement
 {
     void Move(float delta);
 }

@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://lm7cbvhmuc3l" path="res://scenes/Character.tscn" id="1_aqquo"]
 [ext_resource type="Material" uid="uid://n43ikyvv5sw7" path="res://shaders/pixel_smooth.tres" id="2_60t2a"]
-[ext_resource type="Script" path="res://scripts/csharp/Camera2d.cs" id="3_1weng"]
+[ext_resource type="Script" path="res://scripts/csharp/utils/Camera2d.cs" id="3_1weng"]
 [ext_resource type="Texture2D" uid="uid://dfas0owpswsa" path="res://textures/natural.png" id="4_fy0rl"]
 [ext_resource type="Script" path="res://scripts/gdscript/test_gd.gd" id="6_v3vfd"]
 [ext_resource type="TileSet" uid="uid://t1g2dayfcusi" path="res://textures/Level1.tres" id="8_n7gdd"]
@@ -17,19 +17,17 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(55, 72, 746, 75, 748, 4
 border_size = 10.0
 agent_radius = 5.0
 
-[node name="World" type="Node2D"]
+[node name="Field_01" type="Node2D"]
 y_sort_enabled = true
 
 [node name="Player" parent="." instance=ExtResource("1_aqquo")]
 texture_filter = 2
 position = Vector2(173, 223)
-Target = Vector2(1000, 300)
 
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("_player2")]
 position = Vector2(173, 223)
 script = ExtResource("3_1weng")
 _player2 = NodePath("../Player")
-_smoothingEnabled = true
 _smoothingRange = 1
 
 [node name="Natural" type="Sprite2D" parent="."]
@@ -50,6 +48,7 @@ collision_enabled = false
 navigation_enabled = false
 
 [node name="Enemy" parent="." instance=ExtResource("11_rlek8")]
+position = Vector2(390, 180)
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
 navigation_polygon = SubResource("NavigationPolygon_vhlqf")

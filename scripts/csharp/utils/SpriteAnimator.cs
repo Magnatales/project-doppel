@@ -1,10 +1,8 @@
-﻿using System;
-using System.Threading.Tasks;
-using Godot;
+﻿using Godot;
 
 namespace Code.Utils;
 
-public class EnemyAnimator(Node2D parent, NavigationAgent2D navAgent, AnimatedSprite2D animSprite)
+public class SpriteAnimator(Node2D parent, NavigationAgent2D navAgent, AnimationPlayer animationPlayer, Sprite2D sprite2D)
 {
     private bool _playingOneShot;
     public void Update()
@@ -12,7 +10,7 @@ public class EnemyAnimator(Node2D parent, NavigationAgent2D navAgent, AnimatedSp
         if (_playingOneShot) return;
         if (navAgent.IsNavigationFinished())
         {
-            animSprite.Play("IdleDown");
+            animationPlayer.Play("Idle");
         }
         else
         {
@@ -21,34 +19,34 @@ public class EnemyAnimator(Node2D parent, NavigationAgent2D navAgent, AnimatedSp
             {
                 if (direction.X > 0)
                 {
-                    animSprite.FlipH = false;
-                    animSprite.Play("WalkDown");
+                    sprite2D.FlipH = false;
+                    animationPlayer.Play("Walk");
                 }
                 else
                 {
-                    animSprite.FlipH = true;
-                    animSprite.Play("WalkDown");
+                    sprite2D.FlipH = true;
+                    animationPlayer.Play("Walk");
                 }
             }
             else
             {
                 if (direction.Y > 0)
                 {
-                    animSprite.Play("WalkDown");
+                    animationPlayer.Play("Walk");
                 }
                 else
                 {
-                    animSprite.Play("WalkDown");
+                    animationPlayer.Play("Walk");
                 }
             }
         }
     }
 
-    public async Task PlayAnimation(string animation)
+    public async void PlayOneShot(string animation)
     {
         _playingOneShot = true;
-        animSprite.Play(animation);
-        await Task.Delay(TimeSpan.FromSeconds(0.5f));
+        animationPlayer.Play(animation);
+        await animationPlayer.ToSignal(animationPlayer, AnimationMixer.SignalName.AnimationFinished);
         _playingOneShot = false;
     }
 }

@@ -1,5 +1,7 @@
 ﻿using System;
 using Code.Blackboard;
+using Code.Entity;
+using Code.Utils.Extensions;
 using Godot;
 
 namespace Code.BehaviorTree;
@@ -35,96 +37,89 @@ public class StopAgentMovement(IBlackBoard blackBoard) : IStrategy
 {
     public TreeNode.Status Process(float delta)
     {
-        var agent = blackBoard.Get<NavigationAgent2D>(BBCons.NavAgentKey);
+        var npc = blackBoard.Get<INpc>(BBCons.NpcKey);
         var self = blackBoard.Get<Node2D>(BBCons.SelfKey);
         
-        agent.SetTargetPosition(self.GlobalPosition.Floor());
+        npc.NavAgent.SetTargetPosition(self.GlobalPosition.Floor());
         self.GlobalPosition = self.GlobalPosition.Floor();
         return TreeNode.Status.Success;
     }
 }
 
+//TODO https://docs.godotengine.org/en/stable/tutorials/navigation/navigation_optimizing_performance.html
 public class MoveToTarget(IBlackBoard blackBoard) : IStrategy
 {
     public TreeNode.Status Process(float delta)
     {
-        var agent = blackBoard.Get<NavigationAgent2D>(BBCons.NavAgentKey);
+        var npc = blackBoard.Get<INpc>(BBCons.NpcKey);
         var self = blackBoard.Get<Node2D>(BBCons.SelfKey);
-        var movable = blackBoard.Get<IMovable>(BBCons.MovableKey);
         var enemy = blackBoard.Get<IEnemy>(BBCons.EnemyKey);
         
-        if (enemy.Target == null)
+        if (enemy.EnemyAreas.Target == null)
         {
-            agent.SetTargetPosition(self.GlobalPosition.Floor());
+            npc.NavAgent.SetTargetPosition(self.GlobalPosition.Floor());
             self.GlobalPosition = self.GlobalPosition.Floor();
             return TreeNode.Status.Failure;
         }
-        agent.SetTargetPosition(enemy.Target.Pos);
-        movable.Move(delta);
+        
+        npc.NavAgent.SetTargetPosition(enemy.EnemyAreas.Target.Pos);
+        npc.Movement.Move(delta);
         return TreeNode.Status.Running;
     }
 }
 
-public class AttackTarget(IBlackBoard blackBoard) : IStrategy
+public class PlayOneShot(IBlackBoard blackBoard, string animation) : IStrategy
 {
-    private const float ATTACK_ANIMATION = 0.5f;
     private float _timer;
+    private bool _once;
     public TreeNode.Status Process(float delta)
     {
-        var self = blackBoard.Get<Node2D>(BBCons.SelfKey);
-        var enemy = blackBoard.Get<IEnemy>(BBCons.EnemyKey);
+        var npc = blackBoard.Get<INpc>(BBCons.NpcKey);
         
         _timer += delta;
-        if (!(_timer >= ATTACK_ANIMATION)) return TreeNode.Status.Running;
         
-        switch (enemy.Target)
+        if(_timer >= npc.AnimPlayer.GetAnimDuration(animation))
         {
-            case null:
-                return TreeNode.Status.Failure;
-            case Player _ when !enemy.InAttackRange:
-                enemy.Attack(null);
-                GD.Print("PLAYER TOO FAR AWAY");
-                _timer = 0;
-                return TreeNode.Status.Failure;
-            case Player player:
-                enemy.Attack(player);
-                _timer = 0;
-                return TreeNode.Status.Success;
+            Reset();
+            return TreeNode.Status.Success;
         }
+
+        if (_once) return TreeNode.Status.Running;
+        
+        npc.PlayOneShot(animation);
+        _once = true;
         return TreeNode.Status.Running;
     }
 
     public void Reset()
     {
+        _once = false;
         _timer = 0;
     }
 }
 
-public class PatrolRandomPoints(IBlackBoard blackBoard, float delay, int distance) : IStrategy
+public class PatrolRandomPoints(IBlackBoard blackBoard, int distance) : IStrategy
 {
-    private float _timer;
+    private bool _positionSet;
     public TreeNode.Status Process(float delta)
     {
-        var agent = blackBoard.Get<NavigationAgent2D>(BBCons.NavAgentKey);
+        var npc = blackBoard.Get<INpc>(BBCons.NpcKey);
         var self = blackBoard.Get<Node2D>(BBCons.SelfKey);
-        var movable = blackBoard.Get<IMovable>(BBCons.MovableKey);
-        
-        _timer += delta;
-        movable.Move(delta);
-        if (_timer < delay) return TreeNode.Status.Running;
-        
-        _timer = 0;
-
         var map = NavigationServer2D.GetMaps()[0];
         var randomPoint = NavigationServer2D.MapGetRandomPoint(map, 1, true);
         var direction = randomPoint - self.GlobalPosition;
         direction = direction.Normalized();
-        agent.SetTargetPosition(self.GlobalPosition + (direction * distance));
-        return TreeNode.Status.Running;
+        if(!_positionSet)
+        {
+            npc.NavAgent.SetTargetPosition(self.GlobalPosition + (direction * distance));
+            _positionSet = true;
+        }
+        npc.Movement.Move(delta);
+        return npc.NavAgent.IsNavigationFinished() ? TreeNode.Status.Success : TreeNode.Status.Running;
     }
     
     public void Reset()
     {
-        _timer = 0;
+        _positionSet = false;
     }
 }

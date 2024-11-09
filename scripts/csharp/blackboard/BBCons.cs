@@ -2,8 +2,7 @@
 
 public static class BBCons
 {
-    public static string NavAgentKey = "NavAgent";
-    public static string EnemyKey = "Enemy";
+    public static string EnemyKey = "EnemyReferences";
     public static string SelfKey = "Self";
-    public static string MovableKey = "Movable";
+    public static string NpcKey = "Npc";
 }
