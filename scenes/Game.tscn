@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://b7kic5ecsmher"]
+[gd_scene load_steps=4 format=3 uid="uid://b7kic5ecsmher"]
 
 [ext_resource type="PackedScene" uid="uid://w8nuo1kmcf5v" path="res://scenes/worlds/Field_01.tscn" id="1_1ou6t"]
 [ext_resource type="Script" path="res://scripts/csharp/utils/FPSCounter.cs" id="2_5yq0y"]
+[ext_resource type="PackedScene" uid="uid://dxf2j75pllknv" path="res://scenes/vfx/Effects.tscn" id="3_hv8ha"]
 
 [node name="Game" type="Node2D"]
 y_sort_enabled = true
@@ -14,9 +15,13 @@ offset_left = 19.0
 offset_top = 9.0
 offset_right = 59.0
 offset_bottom = 49.0
-text = "FPS:"
+text = "<wave>FPS:</wave>"
 fit_content = true
 scroll_active = false
+visible_characters = 229
+visible_ratio = 13.4706
 script = ExtResource("2_5yq0y")
 
 [node name="World" parent="." instance=ExtResource("1_1ou6t")]
+
+[node name="Effects" parent="." instance=ExtResource("3_hv8ha")]

@@ -2,10 +2,11 @@
 
 namespace Code.Utils;
 
-public class SpriteAnimator(Node2D parent, NavigationAgent2D navAgent, AnimationPlayer animationPlayer, Sprite2D sprite2D)
+public class SpriteAnimator(Node2D user, NavigationAgent2D navAgent, AnimationPlayer animationPlayer, Sprite2D sprite2D)
 {
     private bool _playingOneShot;
-    public void Update()
+    
+    public void Process()
     {
         if (_playingOneShot) return;
         if (navAgent.IsNavigationFinished())
@@ -14,7 +15,7 @@ public class SpriteAnimator(Node2D parent, NavigationAgent2D navAgent, Animation
         }
         else
         {
-            var direction = navAgent.GetNextPathPosition() - parent.GlobalPosition;
+            var direction = navAgent.GetNextPathPosition() - user.GlobalPosition;
             if (Mathf.Abs(direction.X) > Mathf.Abs(direction.Y))
             {
                 if (direction.X > 0)
@@ -30,20 +31,14 @@ public class SpriteAnimator(Node2D parent, NavigationAgent2D navAgent, Animation
             }
             else
             {
-                if (direction.Y > 0)
-                {
-                    animationPlayer.Play("Walk");
-                }
-                else
-                {
-                    animationPlayer.Play("Walk");
-                }
+                animationPlayer.Play(direction.Y > 0 ? "Walk" : "Walk");
             }
         }
     }
 
-    public async void PlayOneShot(string animation)
+    public async void PlayOneShot(string animation, bool canOverride = false)
     {
+        if (_playingOneShot && !canOverride) return;
         _playingOneShot = true;
         animationPlayer.Play(animation);
         await animationPlayer.ToSignal(animationPlayer, AnimationMixer.SignalName.AnimationFinished);

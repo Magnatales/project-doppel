@@ -62,5 +62,12 @@ public partial class EnemyAreas : Node2D
         detectionArea.Scale = new Vector2(1, 1);
         Target = null;
     }
-    
+
+    public void Disable()
+    {
+        detectionArea.SetProcessMode(ProcessModeEnum.Disabled);
+        attackArea.SetProcessMode(ProcessModeEnum.Disabled);
+        detectionArea.Visible = false;
+        attackArea.Visible = false;
+    }
 }

@@ -48,7 +48,7 @@ collision_enabled = false
 navigation_enabled = false
 
 [node name="Enemy" parent="." instance=ExtResource("11_rlek8")]
-position = Vector2(390, 180)
+position = Vector2(528, 256)
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
 navigation_polygon = SubResource("NavigationPolygon_vhlqf")

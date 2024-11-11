@@ -11,10 +11,11 @@
 size = Vector2(14, 10)
 
 [node name="Player" type="Node2D" node_paths=PackedStringArray("navAgent", "animSprite", "healthBar", "area", "mouseTargetArea")]
+position = Vector2(281, 181)
 script = ExtResource("1_e0iv7")
-packedScene = ExtResource("2_h560s")
 Speed = 75.0
 navAgent = NodePath("NavigationAgent2D")
+packedScene = ExtResource("2_h560s")
 animSprite = NodePath("EntityAnimatedSprite2D")
 healthBar = NodePath("HealthBar")
 area = NodePath("Area2D")
@@ -26,8 +27,9 @@ target_desired_distance = 1.0
 simplify_epsilon = 10.0
 radius = 5.0
 max_speed = 3000.0
+debug_enabled = true
 debug_use_custom = true
-debug_path_custom_color = Color(0.352941, 1, 1, 0.196078)
+debug_path_custom_color = Color(0.352941, 1, 1, 0.392157)
 
 [node name="Area2D" type="Area2D" parent="."]
 

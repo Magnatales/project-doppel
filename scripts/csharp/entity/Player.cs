@@ -2,13 +2,14 @@ using System.Threading.Tasks;
 using Code.Entity;
 using Code.Utils;
 using Godot;
+using projectdoppel.scripts.csharp;
 
 public partial class Player : Node2D, ITarget
 {
-    [Export] private PackedScene packedScene;
     [Export] public float Speed;
     [Export] public NavigationAgent2D navAgent;
 
+    [Export] private PackedScene packedScene;
     [Export] private AnimatedSprite2D animSprite;
     [Export] private ProgressBar healthBar;
     [Export] private Area2D area;
@@ -34,7 +35,7 @@ public partial class Player : Node2D, ITarget
     private ITarget _target;
 
     public override void _Ready()
-    { ;
+    {
         animSprite.Play("IdleDown");
         _entityAnimator = new EntityAnimator(this, navAgent, animSprite);
         currentHealth = maxHealth;
@@ -47,6 +48,11 @@ public partial class Player : Node2D, ITarget
     {
         mouseTargetArea.AreaEntered -= OnTargetAreaEntered;
         mouseTargetArea.AreaExited -= OnTargetAreaExited;
+    }
+
+    public override void _Draw()
+    {
+        base._Draw();
     }
 
     public override void _Process(double delta)
@@ -74,7 +80,7 @@ public partial class Player : Node2D, ITarget
             {
                 navAgent.SetTargetPosition(GlobalPosition.Floor());
                 GlobalPosition = GlobalPosition.Floor();
-                _target.TakeDamage(20, this);
+                _target.TakeDamage(70, this);
                 return;
             }
             _targetPosition = GetGlobalMousePosition();
@@ -83,10 +89,13 @@ public partial class Player : Node2D, ITarget
         
         if (Input.IsActionJustPressed("RightClick"))
         {
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 4; i++)
             {
-                var enemy = (Enemy)packedScene.Instantiate();
-                enemy.GlobalPosition = new Vector2(GetGlobalMousePosition().X, GetGlobalMousePosition().Y);
+
+                var enemy2 = new Enemy();
+                GetParent().AddChild(enemy2);
+                var enemy = packedScene.Instantiate<Enemy>();
+                enemy.GlobalPosition = new Vector2(GetGlobalMousePosition().X + i, GetGlobalMousePosition().Y + i);
                 GetParent().AddChild(enemy);
             }
         }

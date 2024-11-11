@@ -1,18 +1,13 @@
-[gd_scene load_steps=20 format=3 uid="uid://dminkvt8qo4dt"]
+[gd_scene load_steps=22 format=3 uid="uid://dminkvt8qo4dt"]
 
 [ext_resource type="Script" path="res://scripts/csharp/entity/enemy/Enemy.cs" id="1_1anby"]
-[ext_resource type="Script" path="res://resources/scripts/EnemyStats.cs" id="2_0337o"]
+[ext_resource type="Resource" uid="uid://7d7pjr3bdbs2" path="res://resources/instances/zombie_stats.tres" id="2_dc5tc"]
 [ext_resource type="Texture2D" uid="uid://c0stf12w2u1h6" path="res://textures/zombie/Attack.png" id="3_yg82q"]
 [ext_resource type="Texture2D" uid="uid://brpyajwybbkwr" path="res://textures/zombie/Idle.png" id="4_84emu"]
 [ext_resource type="Texture2D" uid="uid://bnnhjqgpsj316" path="res://textures/zombie/Walk.png" id="5_o62db"]
 [ext_resource type="Script" path="res://scripts/csharp/entity/enemy/EnemyAreas.cs" id="6_0cxai"]
 [ext_resource type="Material" uid="uid://n43ikyvv5sw7" path="res://shaders/pixel_smooth.tres" id="6_511qi"]
-
-[sub_resource type="Resource" id="Resource_oquq5"]
-script = ExtResource("2_0337o")
-Health = 513
-Damage = 40
-Speed = 50
+[ext_resource type="Texture2D" uid="uid://blpfyhsv0pg1s" path="res://textures/zombie/Die.png" id="6_k137r"]
 
 [sub_resource type="Animation" id="Animation_galgo"]
 resource_name = "Attack"
@@ -91,6 +86,112 @@ tracks/5/keys = {
 "args": ["Hit"],
 "method": &"_FromAnim"
 }]
+}
+
+[sub_resource type="Animation" id="Animation_aurtk"]
+resource_name = "Die"
+length = 0.3
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("6_k137r")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [3]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:vframes")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sprite2D:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+
+[sub_resource type="Animation" id="Animation_eayac"]
+resource_name = "Hit"
+length = 0.1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("3_yg82q")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [9]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:vframes")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [2]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sprite2D:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [5]
 }
 
 [sub_resource type="Animation" id="Animation_rnk2h"]
@@ -291,6 +392,8 @@ tracks/4/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ilu08"]
 _data = {
 "Attack": SubResource("Animation_galgo"),
+"Die": SubResource("Animation_aurtk"),
+"Hit": SubResource("Animation_eayac"),
 "Idle": SubResource("Animation_rnk2h"),
 "RESET": SubResource("Animation_46gmt"),
 "Walk": SubResource("Animation_25fl1")
@@ -300,7 +403,7 @@ _data = {
 radius = 91.0055
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_pmthc"]
-radius = 9.0
+radius = 8.06226
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1jp6r"]
 size = Vector2(24, 40)
@@ -330,13 +433,14 @@ anti_aliasing_size = 2.0
 [sub_resource type="SystemFont" id="SystemFont_g5hu7"]
 subpixel_positioning = 0
 
-[node name="Enemy" type="Node2D" node_paths=PackedStringArray("NavAgent", "AnimPlayer", "EnemyAreas", "Sprite", "_healthBar", "_hpText")]
+[node name="Enemy" type="Node2D" node_paths=PackedStringArray("NavAgent", "AnimPlayer", "EnemyAreas", "Sprite", "_hitArea", "_healthBar", "_hpText")]
 script = ExtResource("1_1anby")
 NavAgent = NodePath("NavigationAgent2D")
 AnimPlayer = NodePath("AnimationPlayer")
 EnemyAreas = NodePath("EnemyAreas")
-Stats = SubResource("Resource_oquq5")
+Stats = ExtResource("2_dc5tc")
 Sprite = NodePath("Sprite2D")
+_hitArea = NodePath("HitArea")
 _healthBar = NodePath("HealthBar")
 _hpText = NodePath("HpText")
 
@@ -407,6 +511,7 @@ theme_override_styles/background = SubResource("StyleBoxFlat_f8lo4")
 theme_override_styles/fill = SubResource("StyleBoxFlat_3lgq1")
 value = 50.0
 show_percentage = false
+metadata/_edit_use_anchors_ = true
 
 [node name="HpText" type="RichTextLabel" parent="."]
 z_index = 2
@@ -426,8 +531,7 @@ theme_override_font_sizes/normal_font_size = 8
 text = "513/513"
 fit_content = true
 scroll_active = false
+metadata/_edit_use_anchors_ = true
 
 [connection signal="area_entered" from="EnemyAreas/Detection" to="." method="OnDetectionRangeEntered"]
 [connection signal="area_exited" from="EnemyAreas/Detection" to="." method="OnDetectionRangeExited"]
-[connection signal="area_entered" from="EnemyAreas/Attack" to="." method="OnAttackRangeEntered"]
-[connection signal="area_exited" from="EnemyAreas/Attack" to="." method="OnAttackRangeExited"]

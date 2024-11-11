@@ -10,7 +10,6 @@ public static class EnemyFactory
     {
         switch (enemy.Type)
         {
-            
             default:
                 var movement = new NavAgentMovement(parent, npc.NavAgent, npc.Sprite, enemy.Stats.Speed);
                 var spriteAnimator = new SpriteAnimator(parent, npc.NavAgent, npc.AnimPlayer, npc.Sprite);

@@ -13,11 +13,12 @@ public partial class Enemy : Node2D, IEnemy, INpc, ITarget
 	[Export] public EnemyAreas EnemyAreas { get; private set; }
 	[Export] public EnemyStats Stats { get; private set; }
 	[Export] public Sprite2D Sprite { get; private set; }
-	
+
+	[Export] private Area2D _hitArea;
 	[Export] private ProgressBar _healthBar;
 	[Export] private RichTextLabel _hpText;
 	
-	public bool IsDead { get; }
+	public bool IsDead => _currentHealth <= 0;
 	public Vector2 Pos => GlobalPosition;
 	public IMovement Movement { get; private set; }
 	
@@ -28,6 +29,7 @@ public partial class Enemy : Node2D, IEnemy, INpc, ITarget
 	
 	public override void _Ready()
 	{
+		GD.Print(GlobalPosition);
 		_currentHealth = Stats.Health;
 		_healthBar.Value = _healthBar.MaxValue;
 		
@@ -39,14 +41,19 @@ public partial class Enemy : Node2D, IEnemy, INpc, ITarget
 		_hpText.Text = $"{_currentHealth}/{Stats.Health}";
 		_hpText.Visible = false;
 	}
-	
+
 	public override void _Process(double delta)
 	{
 		if (_currentHealth <= 0) return;
 		_behaviorTree.Process((float)delta);
-		_spriteAnimator.Update();
+		_spriteAnimator.Process();
 	}
-	
+
+	public override void _PhysicsProcess(double delta)
+	{
+		
+	}
+
 	public void _FromAnim(string trackKey)
 	{
 		if (!Enum.TryParse(trackKey, out AnimActions actionType))
@@ -113,5 +120,23 @@ public partial class Enemy : Node2D, IEnemy, INpc, ITarget
 		var tween2 = GetTree().CreateTween();
 		tween2.TweenProperty(_healthBar, "value", newWidth, 0.20f)
 			.SetTrans(Tween.TransitionType.Sine);
+		
+		Effects.Instance.Play("Hit", Sprite.GlobalPosition - Sprite.Position / 2);
+		
+		_spriteAnimator.PlayOneShot("Hit");
+		if (_currentHealth ! > 0)
+		{
+			return;
+		}
+		
+		_spriteAnimator.PlayOneShot("Die", true);
+		EnemyAreas.Disable();
+		_hitArea.SetProcessMode(ProcessModeEnum.Disabled);
+		_hitArea.Visible = false;
+		var tween = GetTree().CreateTween();
+		tween.TweenInterval(1f);
+		tween.TweenProperty(this, "scale", new Vector2(1, 0), 0.5f)
+			.SetTrans(Tween.TransitionType.Sine)
+			.Finished += QueueFree;
 	}
 }
