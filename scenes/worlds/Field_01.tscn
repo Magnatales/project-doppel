@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=4 uid="uid://w8nuo1kmcf5v"]
+[gd_scene load_steps=12 format=4 uid="uid://w8nuo1kmcf5v"]
 
 [ext_resource type="PackedScene" uid="uid://lm7cbvhmuc3l" path="res://scenes/Character.tscn" id="1_aqquo"]
 [ext_resource type="Material" uid="uid://n43ikyvv5sw7" path="res://shaders/pixel_smooth.tres" id="2_60t2a"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://scripts/gdscript/test_gd.gd" id="6_v3vfd"]
 [ext_resource type="TileSet" uid="uid://t1g2dayfcusi" path="res://textures/Level1.tres" id="8_n7gdd"]
 [ext_resource type="TileSet" uid="uid://d8ikugmexub8" path="res://textures/Level2.tres" id="9_kaa6i"]
+[ext_resource type="Script" path="res://scripts/Test.cs" id="10_0xleu"]
 [ext_resource type="TileSet" uid="uid://nlhb4i0virul" path="res://textures/Ground.tres" id="10_ahyqr"]
 [ext_resource type="PackedScene" uid="uid://dminkvt8qo4dt" path="res://scenes/Enemy.tscn" id="11_rlek8"]
 
@@ -31,6 +32,7 @@ _player2 = NodePath("../Player")
 _smoothingRange = 1
 
 [node name="Natural" type="Sprite2D" parent="."]
+visible = false
 texture_filter = 2
 material = ExtResource("2_60t2a")
 position = Vector2(518, 260)
@@ -48,6 +50,7 @@ collision_enabled = false
 navigation_enabled = false
 
 [node name="Enemy" parent="." instance=ExtResource("11_rlek8")]
+visible = false
 position = Vector2(528, 256)
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
@@ -69,3 +72,6 @@ tile_map_data = PackedByteArray("AAAEAAUAAQABAAEAAAAEAAYAAQABAAEAAAAEAAcAAQABAAE
 tile_set = ExtResource("8_n7gdd")
 collision_enabled = false
 navigation_enabled = false
+
+[node name="Node" type="Node" parent="."]
+script = ExtResource("10_0xleu")

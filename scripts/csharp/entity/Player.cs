@@ -76,15 +76,25 @@ public partial class Player : Node2D, ITarget
         
         if (Input.IsActionJustPressed("LeftClick"))
         {
-            if(_target != null)
-            {
-                navAgent.SetTargetPosition(GlobalPosition.Floor());
-                GlobalPosition = GlobalPosition.Floor();
-                _target.TakeDamage(70, this);
-                return;
-            }
-            _targetPosition = GetGlobalMousePosition();
-            navAgent.SetTargetPosition(_targetPosition);
+            // for (int i = 0; i < 100; i++)
+            // {
+            //     var randomPosAroundMouse = new Vector2(GetGlobalMousePosition().X + GD.RandRange(-100, 100), GetGlobalMousePosition().Y + GD.RandRange(-100, 100));
+            //     var hitDamage = new HitDamage(10, randomPosAroundMouse);
+            //     GetTree().Root.AddChild(hitDamage);
+            // }
+            
+            var hitDamage = new HitDamage(10, GetGlobalMousePosition());
+            GetTree().Root.AddChild(hitDamage);
+        
+            // if(_target != null)
+            // {
+            //     navAgent.SetTargetPosition(GlobalPosition.Floor());
+            //     GlobalPosition = GlobalPosition.Floor();
+            //     _target.TakeDamage(70, this);
+            //     return;
+            // }
+            // _targetPosition = GetGlobalMousePosition();
+            // navAgent.SetTargetPosition(_targetPosition);
         }
         
         if (Input.IsActionJustPressed("RightClick"))
