@@ -53,7 +53,6 @@ public partial class Player : Node2D, ITarget
             _label.Text = SteamManager.Instance.PlayerName;
             _camera.MakeCurrent();
         }
-        _camera.MakeCurrent();
     }
 
     public override void _ExitTree()
