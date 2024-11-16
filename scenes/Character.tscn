@@ -21,14 +21,14 @@ default_font_size = 0
 properties/0/path = NodePath(".:position")
 properties/0/spawn = true
 properties/0/replication_mode = 1
-properties/1/path = NodePath("EntityAnimatedSprite2D:animation")
+properties/1/path = NodePath("EntityAnimatedSprite2D:flip_h")
 properties/1/spawn = true
 properties/1/replication_mode = 1
-properties/2/path = NodePath("EntityAnimatedSprite2D:flip_h")
+properties/2/path = NodePath("EntityAnimatedSprite2D:frame")
 properties/2/spawn = true
 properties/2/replication_mode = 1
 
-[node name="Player" type="Node2D" node_paths=PackedStringArray("navAgent", "animSprite", "healthBar", "area", "mouseTargetArea", "_label", "_multiplayerSynchronizer")]
+[node name="Player" type="Node2D" node_paths=PackedStringArray("navAgent", "animSprite", "healthBar", "area", "mouseTargetArea", "_label", "_camera", "_multiplayerSynchronizer")]
 position = Vector2(281, 181)
 script = ExtResource("1_e0iv7")
 Speed = 75.0
@@ -39,6 +39,7 @@ healthBar = NodePath("HealthBar")
 area = NodePath("Area2D")
 mouseTargetArea = NodePath("MouseTarget")
 _label = NodePath("Label")
+_camera = NodePath("Camera2D")
 _multiplayerSynchronizer = NodePath("MultiplayerSynchronizer")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]

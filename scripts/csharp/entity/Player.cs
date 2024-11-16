@@ -16,6 +16,7 @@ public partial class Player : Node2D, ITarget
     [Export] private Area2D area;
     [Export] private Area2D mouseTargetArea;
     [Export] private Label _label;
+    [Export] private Camera2d _camera;
     
     [Export] private MultiplayerSynchronizer _multiplayerSynchronizer;
     
@@ -46,7 +47,13 @@ public partial class Player : Node2D, ITarget
         healthBar.Value = currentHealth;
         mouseTargetArea.AreaEntered += OnTargetAreaEntered;
         mouseTargetArea.AreaExited += OnTargetAreaExited;
-        _label.Text = SteamManager.Instance.PlayerName;
+        
+        if(_multiplayerSynchronizer.GetMultiplayerAuthority() == Multiplayer.GetUniqueId())
+        {
+            _label.Text = SteamManager.Instance.PlayerName;
+            _camera.MakeCurrent();
+        }
+        _camera.MakeCurrent();
     }
 
     public override void _ExitTree()
