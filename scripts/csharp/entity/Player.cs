@@ -54,8 +54,9 @@ public partial class Player : Node2D, ITarget
         if(_multiplayerSynchronizer.GetMultiplayerAuthority() == Multiplayer.GetUniqueId())
         {
             _camera.MakeCurrent();
-            _label.Text = $"Player {NickName}";
+           
         }
+        _label.Text = $"Player {Name}";
     }
 
     public override void _ExitTree()
@@ -72,11 +73,11 @@ public partial class Player : Node2D, ITarget
     public override void _Process(double delta)
     {
         if (currentHealth <= 0) return;
-         _entityAnimator.Update();
         if (_multiplayerSynchronizer.GetMultiplayerAuthority() != Multiplayer.GetUniqueId())
         {
             return;
         }
+        _entityAnimator.Update();
         mouseTargetArea.GlobalPosition = GetGlobalMousePosition();
        
         if (navAgent.IsNavigationFinished())

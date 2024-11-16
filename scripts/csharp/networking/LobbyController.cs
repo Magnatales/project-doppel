@@ -77,7 +77,6 @@ public partial class LobbyController : CanvasLayer, ILobbyController
         player.Name = playerId.ToString();
         player.GlobalPosition = new Vector2(100, 100);
         _players.Add(playerId, player);
-        player.NickName = (_players.Count).ToString();
         _spawnPoint.AddChild(player);
         Rpc(nameof(RefreshPlayerList));
     }
