@@ -41,7 +41,7 @@ public partial class LobbyController : CanvasLayer, ILobbyController
         Multiplayer.PeerDisconnected += RemovePlayer;
         
         AddPlayer(1);
-        Hide();
+        _lobbyView.HideMenus();
     }
     
     public async void RefreshLobbies()
@@ -87,7 +87,7 @@ public partial class LobbyController : CanvasLayer, ILobbyController
             var steamPeer = new SteamMultiplayerPeer();
             steamPeer.CreateClient(SteamManager.Instance.PlayerSteamId, lobby.Owner.Id);
             Multiplayer.MultiplayerPeer = steamPeer;
-            Hide();
+            _lobbyView.HideMenus();
         }
     }
 }

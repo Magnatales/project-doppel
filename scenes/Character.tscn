@@ -82,7 +82,6 @@ text = "Pepe"
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_blx2h")
 
-[node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("_player2")]
+[node name="Camera2D" type="Camera2D" parent="."]
 script = ExtResource("7_lr34d")
-_player2 = NodePath("")
 _smoothingRange = 1

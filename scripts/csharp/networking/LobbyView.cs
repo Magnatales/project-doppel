@@ -37,6 +37,13 @@ public partial class LobbyView : Control, ILobbyView
         _lobbyButtonTemplate.ProcessMode = ProcessModeEnum.Disabled;
     }
 
+    public void HideMenus()
+    {
+        LobbyContainer.Hide();
+        HostButton.Hide();
+        RefreshButton.Hide();
+    }
+
     public void BindLobbies(List<Lobby> lobbies)
     {
         foreach (var lobbyButton in _lobbyButtons)
@@ -61,8 +68,10 @@ public partial class LobbyView : Control, ILobbyView
         StringBuilder playerList = new StringBuilder();
         for (var index = 0; index < playerIds.Count; index++)
         {
+            var i = index;
+            i++;
             var playerId = playerIds[index];
-            playerList.Append($"P{index}: {playerId}");
+            playerList.Append($"P{i}: Id:{playerId}");
             playerList.Append("\n");
         }
 
