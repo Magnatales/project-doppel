@@ -35,9 +35,11 @@ public partial class Player : Node2D, ITarget
     private Vector2 _velocity = Vector2.Zero;
     private ITarget _target;
 
+    public int AuthorityId;
+
     public override void _EnterTree()
     {
-        _multiplayerSynchronizer.SetMultiplayerAuthority((int)long.Parse(Name));
+        _multiplayerSynchronizer.SetMultiplayerAuthority(AuthorityId);
     }
 
     public override void _Ready()
@@ -52,8 +54,8 @@ public partial class Player : Node2D, ITarget
         if(_multiplayerSynchronizer.GetMultiplayerAuthority() == Multiplayer.GetUniqueId())
         {
             _camera.MakeCurrent();
+            _label.Text = $"Player {Name}";
         }
-        _label.Text = $"Player {Name}";
     }
 
     public override void _ExitTree()
