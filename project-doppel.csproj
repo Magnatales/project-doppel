@@ -6,6 +6,39 @@
     <EnableDynamicLoading>true</EnableDynamicLoading>
     <RootNamespace>projectdoppel</RootNamespace>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="Steamworks/Facepunch/Facepunch.Steamworks.Posix.dll" />
+    <None Include="Steamworks/Facepunch/Facepunch.Steamworks.Win64.dll" />
+    <None Include="steam_api.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Pack>true</Pack>
+      <PackagePath>lib/net8.0</PackagePath>
+    </None>
+    <None Include="steam_api64.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Pack>true</Pack>
+      <PackagePath>lib/net8.0</PackagePath>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Facepunch.Steamworks.Win64" Condition="$([MSBuild]::IsOSPlatform('Windows'))">
+      <HintPath>./Steamworks/Facepunch/Facepunch.Steamworks.Win64.dll</HintPath>
+      <Pack>true</Pack>
+      <PackagePath>lib/net8.0</PackagePath>
+    </Reference>
+    <Reference Include="Facepunch.Steamworks.Win64" Condition="$([MSBuild]::IsOSPlatform('Linux'))">
+      <HintPath>./Steamworks/Facepunch/Facepunch.Steamworks.Posix.dll</HintPath>
+      <Pack>true</Pack>
+      <PackagePath>lib/net8.0</PackagePath>
+    </Reference>
+    <Reference Include="Facepunch.Steamworks.Win64" Condition="$([MSBuild]::IsOSPlatform('OSX'))">
+      <HintPath>./Steamworks/Facepunch/Facepunch.Steamworks.Posix.dll</HintPath>
+      <Pack>true</Pack>
+      <PackagePath>lib/net8.0</PackagePath>
+    </Reference>
+  </ItemGroup>
+  
   <ItemGroup>
     <Folder Include="scenes\" />
   </ItemGroup>

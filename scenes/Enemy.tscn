@@ -1,7 +1,7 @@
 [gd_scene load_steps=22 format=3 uid="uid://dminkvt8qo4dt"]
 
 [ext_resource type="Script" path="res://scripts/csharp/entity/enemy/Enemy.cs" id="1_1anby"]
-[ext_resource type="Resource" uid="uid://7d7pjr3bdbs2" path="res://resources/instances/zombie_stats.tres" id="2_dc5tc"]
+[ext_resource type="Resource" uid="uid://ckngfgocfg1n7" path="res://resources/instances/Zombie.tres" id="2_f6abi"]
 [ext_resource type="Texture2D" uid="uid://c0stf12w2u1h6" path="res://textures/zombie/Attack.png" id="3_yg82q"]
 [ext_resource type="Texture2D" uid="uid://brpyajwybbkwr" path="res://textures/zombie/Idle.png" id="4_84emu"]
 [ext_resource type="Texture2D" uid="uid://bnnhjqgpsj316" path="res://textures/zombie/Walk.png" id="5_o62db"]
@@ -438,7 +438,7 @@ script = ExtResource("1_1anby")
 NavAgent = NodePath("NavigationAgent2D")
 AnimPlayer = NodePath("AnimationPlayer")
 EnemyAreas = NodePath("EnemyAreas")
-Stats = ExtResource("2_dc5tc")
+Stats = ExtResource("2_f6abi")
 Sprite = NodePath("Sprite2D")
 _hitArea = NodePath("HitArea")
 _healthBar = NodePath("HealthBar")

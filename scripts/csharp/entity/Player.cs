@@ -3,6 +3,7 @@ using Code.Entity;
 using Code.Utils;
 using Godot;
 using projectdoppel.scripts.csharp;
+using Steam;
 
 public partial class Player : Node2D, ITarget
 {
@@ -14,18 +15,16 @@ public partial class Player : Node2D, ITarget
     [Export] private ProgressBar healthBar;
     [Export] private Area2D area;
     [Export] private Area2D mouseTargetArea;
+    [Export] private Label _label;
+    
+    [Export] private MultiplayerSynchronizer _multiplayerSynchronizer;
     
     public bool IsDead => currentHealth <= 0;
     public Vector2 Pos => GlobalPosition;
-    public void DisplayHp(bool value)
-    {
-        
-    }
 
     private int maxHealth = 100;
     private int currentHealth;
     
-   
     private Vector2 _targetPosition;
     private float oldX;
     private float oldY;
@@ -42,6 +41,7 @@ public partial class Player : Node2D, ITarget
         healthBar.Value = currentHealth;
         mouseTargetArea.AreaEntered += OnTargetAreaEntered;
         mouseTargetArea.AreaExited += OnTargetAreaExited;
+        _label.Text = SteamManager.Instance.PlayerName;
     }
 
     public override void _ExitTree()
@@ -49,10 +49,15 @@ public partial class Player : Node2D, ITarget
         mouseTargetArea.AreaEntered -= OnTargetAreaEntered;
         mouseTargetArea.AreaExited -= OnTargetAreaExited;
     }
-
-    public override void _Draw()
+    
+    public void DisplayHp(bool value)
     {
-        base._Draw();
+        
+    }
+
+    public void BindAuthority(long playerId)
+    {
+        _multiplayerSynchronizer.SetMultiplayerAuthority((int) playerId);
     }
 
     public override void _Process(double delta)
@@ -83,23 +88,23 @@ public partial class Player : Node2D, ITarget
             //     GetTree().Root.AddChild(hitDamage);
             // }
             
-            var hitDamage = new HitDamage(10, GetGlobalMousePosition());
-            GetTree().Root.AddChild(hitDamage);
+            // var hitDamage = new HitDamage(10, GetGlobalMousePosition());
+            // GetTree().Root.AddChild(hitDamage);
         
-            // if(_target != null)
-            // {
-            //     navAgent.SetTargetPosition(GlobalPosition.Floor());
-            //     GlobalPosition = GlobalPosition.Floor();
-            //     _target.TakeDamage(70, this);
-            //     return;
-            // }
-            // _targetPosition = GetGlobalMousePosition();
-            // navAgent.SetTargetPosition(_targetPosition);
+            if(_target != null)
+            {
+                navAgent.SetTargetPosition(GlobalPosition.Floor());
+                GlobalPosition = GlobalPosition.Floor();
+                _target.TakeDamage(70, this);
+                return;
+            }
+            _targetPosition = GetGlobalMousePosition();
+            navAgent.SetTargetPosition(_targetPosition);
         }
         
         if (Input.IsActionJustPressed("RightClick"))
         {
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 1; i++)
             {
 
                 var enemy2 = new Enemy();
@@ -118,8 +123,6 @@ public partial class Player : Node2D, ITarget
         if (_target != null)
         {
             return;
-            _target.DisplayHp(false);
-            _target = null;
         }
         target.DisplayHp(true);
         _target = target;

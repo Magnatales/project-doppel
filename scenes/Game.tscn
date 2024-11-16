@@ -1,19 +1,22 @@
-[gd_scene load_steps=4 format=3 uid="uid://b7kic5ecsmher"]
+[gd_scene load_steps=5 format=3 uid="uid://b7kic5ecsmher"]
 
 [ext_resource type="PackedScene" uid="uid://w8nuo1kmcf5v" path="res://scenes/worlds/Field_01.tscn" id="1_1ou6t"]
+[ext_resource type="PackedScene" uid="uid://tqgg41odn7nx" path="res://scenes/networking/Lobby.tscn" id="1_bpy4p"]
 [ext_resource type="Script" path="res://scripts/csharp/utils/FPSCounter.cs" id="2_5yq0y"]
 [ext_resource type="PackedScene" uid="uid://dxf2j75pllknv" path="res://scenes/vfx/Effects.tscn" id="3_hv8ha"]
 
 [node name="Game" type="Node2D"]
 y_sort_enabled = true
 
+[node name="LobbyController" parent="." instance=ExtResource("1_bpy4p")]
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer"]
 custom_minimum_size = Vector2(94.51, 0)
-offset_left = 19.0
+offset_left = 290.0
 offset_top = 9.0
-offset_right = 113.51
+offset_right = 384.51
 offset_bottom = 55.0
 text = "<wave>FPS:</wave>"
 fit_content = true

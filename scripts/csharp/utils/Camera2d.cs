@@ -30,17 +30,23 @@ public partial class Camera2d : Camera2D
 	{
 		var cameraPos = Vector2.Zero;
 
-		if (_smoothingEnabled)
+		if (_player2 != null)
 		{
-			var weight = (float)(11 - _smoothingRange) / 100;
-			cameraPos = GlobalPosition.Lerp(_player2.GlobalPosition, weight);
+			if (_smoothingEnabled)
+			{
+				var weight = (float)(11 - _smoothingRange) / 100;
+				cameraPos = GlobalPosition.Lerp(_player2.GlobalPosition, weight);
+			}
+			else
+			{
+				cameraPos = _player2.GlobalPosition;
+			}
+			
+			GlobalPosition = cameraPos;
+
 		}
-		else
-		{
-			cameraPos = _player2.GlobalPosition;
-		}
-		
-		GlobalPosition = cameraPos;
+
+
 
 		if (Input.IsActionJustReleased("Scroll Up") && _currentZoomLevel < _zoomLevels.Count - 1)
 		{
