@@ -29,6 +29,7 @@ public partial class Enemy : Node2D, IEnemy, INpc, ITarget
 	
 	public override void _Ready()
 	{
+		GD.Print("How many times");
 		_currentHealth = Stats.Health;
 		_healthBar.Value = _healthBar.MaxValue;
 		

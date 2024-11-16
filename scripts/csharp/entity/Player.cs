@@ -20,6 +20,7 @@ public partial class Player : Node2D, ITarget
     [Export] private Camera2d _camera;
     
     [Export] private MultiplayerSynchronizer _multiplayerSynchronizer;
+    [Export] private MultiplayerSpawner _multiplayerSpawner;
     
     public bool IsDead => currentHealth <= 0;
     public Vector2 Pos => GlobalPosition;
@@ -109,15 +110,15 @@ public partial class Player : Node2D, ITarget
         
         if (Input.IsActionJustPressed("RightClick"))
         {
-            // for (int i = 0; i < 1; i++)
-            // {
-            //
-            //     var enemy2 = new Enemy();
-            //     GetParent().AddChild(enemy2);
-            //     var enemy = packedScene.Instantiate<Enemy>();
-            //     enemy.GlobalPosition = new Vector2(GetGlobalMousePosition().X + i, GetGlobalMousePosition().Y + i);
-            //     GetParent().AddChild(enemy);
-            // }
+            for (int i = 0; i < 1; i++)
+            {
+                EnemySpawner.Instance.SpawnEnemy(new Vector2(600, 100));
+                // var enemy2 = new Enemy();
+                // GetParent().AddChild(enemy2);
+                // var enemy = packedScene.Instantiate<Enemy>();
+                // enemy.GlobalPosition = new Vector2(GetGlobalMousePosition().X + i, GetGlobalMousePosition().Y + i);
+                // GetTree().Root.AddChild(enemy);
+            }
         }
         
     }

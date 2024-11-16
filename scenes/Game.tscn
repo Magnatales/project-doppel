@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://b7kic5ecsmher"]
+[gd_scene load_steps=7 format=3 uid="uid://b7kic5ecsmher"]
 
 [ext_resource type="PackedScene" uid="uid://w8nuo1kmcf5v" path="res://scenes/worlds/Field_01.tscn" id="1_1ou6t"]
 [ext_resource type="PackedScene" uid="uid://tqgg41odn7nx" path="res://scenes/networking/Lobby.tscn" id="1_bpy4p"]
 [ext_resource type="Script" path="res://scripts/csharp/utils/FPSCounter.cs" id="2_5yq0y"]
 [ext_resource type="PackedScene" uid="uid://dxf2j75pllknv" path="res://scenes/vfx/Effects.tscn" id="3_hv8ha"]
 [ext_resource type="PackedScene" uid="uid://dminkvt8qo4dt" path="res://scenes/Enemy.tscn" id="5_4yoo7"]
+[ext_resource type="Script" path="res://scripts/csharp/entity/enemy/EnemySpawner.cs" id="5_absc8"]
 
 [node name="Game" type="Node2D"]
 y_sort_enabled = true
@@ -30,15 +31,19 @@ script = ExtResource("2_5yq0y")
 
 [node name="Effects" parent="." instance=ExtResource("3_hv8ha")]
 
-[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+[node name="PlayerMultiplayerSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("res://scenes/Character.tscn")
 spawn_path = NodePath("../PlayerPosition")
 
 [node name="PlayerPosition" type="Node2D" parent="."]
 position = Vector2(114, 122)
 
-[node name="Enemy" parent="." instance=ExtResource("5_4yoo7")]
-position = Vector2(618, 303)
+[node name="EnemyMultiplayerSpawner" type="MultiplayerSpawner" parent="." node_paths=PackedStringArray("_enemyParent")]
+_spawnable_scenes = PackedStringArray("res://scenes/Enemy.tscn")
+spawn_path = NodePath("Node2D")
+script = ExtResource("5_absc8")
+_enemyScene = ExtResource("5_4yoo7")
+_enemyParent = NodePath("Node2D")
 
-[node name="Enemy2" parent="." instance=ExtResource("5_4yoo7")]
-position = Vector2(605, 165)
+[node name="Node2D" type="Node2D" parent="EnemyMultiplayerSpawner"]
+position = Vector2(449, 176)
