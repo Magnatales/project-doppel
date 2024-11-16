@@ -51,9 +51,9 @@ public partial class Player : Node2D, ITarget
         
         if(_multiplayerSynchronizer.GetMultiplayerAuthority() == Multiplayer.GetUniqueId())
         {
-            _label.Text = $"Player {Name}";
             _camera.MakeCurrent();
         }
+        _label.Text = $"Player {Name}";
     }
 
     public override void _ExitTree()
@@ -106,15 +106,15 @@ public partial class Player : Node2D, ITarget
         
         if (Input.IsActionJustPressed("RightClick"))
         {
-            for (int i = 0; i < 1; i++)
-            {
-
-                var enemy2 = new Enemy();
-                GetParent().AddChild(enemy2);
-                var enemy = packedScene.Instantiate<Enemy>();
-                enemy.GlobalPosition = new Vector2(GetGlobalMousePosition().X + i, GetGlobalMousePosition().Y + i);
-                GetParent().AddChild(enemy);
-            }
+            // for (int i = 0; i < 1; i++)
+            // {
+            //
+            //     var enemy2 = new Enemy();
+            //     GetParent().AddChild(enemy2);
+            //     var enemy = packedScene.Instantiate<Enemy>();
+            //     enemy.GlobalPosition = new Vector2(GetGlobalMousePosition().X + i, GetGlobalMousePosition().Y + i);
+            //     GetParent().AddChild(enemy);
+            // }
         }
         
     }
