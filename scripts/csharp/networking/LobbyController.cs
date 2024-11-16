@@ -18,6 +18,7 @@ public partial class LobbyController : CanvasLayer, ILobbyController
     [Export] private LobbyView _lobbyView;
     [Export] private PackedScene _lobbyScene;
     [Export] private PackedScene _playerScene;
+    [Export] private Node2D _spawnPoint;
     
     private readonly Dictionary<long, Player> _players = new();
     private readonly Dictionary<SteamId, Lobby> _availableLobbies = new();
@@ -71,21 +72,25 @@ public partial class LobbyController : CanvasLayer, ILobbyController
 
     private void AddPlayer(long playerId)
     {
+        GD.Print($"Adding player {playerId}");
         var player = _playerScene.Instantiate<Player>();
         player.GlobalPosition = new Vector2(100, 100);
         player.BindAuthority(playerId);
         _players.Add(playerId, player);
-        GetTree().Root.AddChild(player);
+        _spawnPoint.AddChild(player);
         Rpc(nameof(RefreshPlayerList));
     }
     
-    private void JoinLobby(SteamId obj)
+    private async void JoinLobby(SteamId obj)
     {
+        await SteamManager.Instance.GetMultiplayerLobbies();
         if (_availableLobbies.TryGetValue(obj, out var lobby))
         {
-            lobby.Join();
+            GD.Print("Lobby found");
+            await lobby.Join();
             var steamPeer = new SteamMultiplayerPeer();
             steamPeer.CreateClient(SteamManager.Instance.PlayerSteamId, lobby.Owner.Id);
+            GD.Print($"Joining lobby {lobby.Id} with owner {lobby.Owner.Id}");
             Multiplayer.MultiplayerPeer = steamPeer;
             _lobbyView.HideMenus();
         }

@@ -26,3 +26,10 @@ script = ExtResource("2_5yq0y")
 [node name="World" parent="." instance=ExtResource("1_1ou6t")]
 
 [node name="Effects" parent="." instance=ExtResource("3_hv8ha")]
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://scenes/Character.tscn")
+spawn_path = NodePath("../PlayerPosition")
+
+[node name="PlayerPosition" type="Node2D" parent="."]
+position = Vector2(114, 122)

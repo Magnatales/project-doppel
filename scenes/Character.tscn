@@ -44,7 +44,6 @@ _multiplayerSynchronizer = NodePath("MultiplayerSynchronizer")
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 path_desired_distance = 1.0
 target_desired_distance = 1.0
-simplify_epsilon = 10.0
 radius = 5.0
 max_speed = 3000.0
 debug_enabled = true

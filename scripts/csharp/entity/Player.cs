@@ -32,7 +32,7 @@ public partial class Player : Node2D, ITarget
     private EntityAnimator _entityAnimator;
     private Vector2 _velocity = Vector2.Zero;
     private ITarget _target;
-
+    
     public override void _Ready()
     {
         animSprite.Play("IdleDown");
@@ -63,8 +63,13 @@ public partial class Player : Node2D, ITarget
     public override void _Process(double delta)
     {
         if (currentHealth <= 0) return;
+         _entityAnimator.Update();
+        if (_multiplayerSynchronizer.GetMultiplayerAuthority() != Multiplayer.GetUniqueId())
+        {
+            return;
+        }
         mouseTargetArea.GlobalPosition = GetGlobalMousePosition();
-        _entityAnimator.Update();
+       
         if (navAgent.IsNavigationFinished())
         {
             GlobalPosition = GlobalPosition.Floor();
@@ -81,16 +86,6 @@ public partial class Player : Node2D, ITarget
         
         if (Input.IsActionJustPressed("LeftClick"))
         {
-            // for (int i = 0; i < 100; i++)
-            // {
-            //     var randomPosAroundMouse = new Vector2(GetGlobalMousePosition().X + GD.RandRange(-100, 100), GetGlobalMousePosition().Y + GD.RandRange(-100, 100));
-            //     var hitDamage = new HitDamage(10, randomPosAroundMouse);
-            //     GetTree().Root.AddChild(hitDamage);
-            // }
-            
-            // var hitDamage = new HitDamage(10, GetGlobalMousePosition());
-            // GetTree().Root.AddChild(hitDamage);
-        
             if(_target != null)
             {
                 navAgent.SetTargetPosition(GlobalPosition.Floor());
