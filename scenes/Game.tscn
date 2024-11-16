@@ -8,7 +8,8 @@
 [node name="Game" type="Node2D"]
 y_sort_enabled = true
 
-[node name="LobbyController" parent="." instance=ExtResource("1_bpy4p")]
+[node name="LobbyController" parent="." node_paths=PackedStringArray("_spawnPoint") instance=ExtResource("1_bpy4p")]
+_spawnPoint = NodePath("../PlayerPosition")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
