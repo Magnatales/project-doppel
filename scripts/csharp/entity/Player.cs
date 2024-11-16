@@ -4,6 +4,7 @@ using Code.Utils;
 using Godot;
 using projectdoppel.scripts.csharp;
 using Steam;
+using Steamworks;
 
 public partial class Player : Node2D, ITarget
 {
@@ -22,7 +23,7 @@ public partial class Player : Node2D, ITarget
     
     public bool IsDead => currentHealth <= 0;
     public Vector2 Pos => GlobalPosition;
-
+    
     private int maxHealth = 100;
     private int currentHealth;
     
@@ -50,7 +51,7 @@ public partial class Player : Node2D, ITarget
         
         if(_multiplayerSynchronizer.GetMultiplayerAuthority() == Multiplayer.GetUniqueId())
         {
-            _label.Text = SteamManager.Instance.PlayerName;
+            _label.Text = $"Player {Name}";
             _camera.MakeCurrent();
         }
     }
