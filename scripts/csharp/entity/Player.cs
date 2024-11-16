@@ -32,7 +32,12 @@ public partial class Player : Node2D, ITarget
     private EntityAnimator _entityAnimator;
     private Vector2 _velocity = Vector2.Zero;
     private ITarget _target;
-    
+
+    public override void _EnterTree()
+    {
+        _multiplayerSynchronizer.SetMultiplayerAuthority((int)long.Parse(Name));
+    }
+
     public override void _Ready()
     {
         animSprite.Play("IdleDown");
@@ -54,12 +59,7 @@ public partial class Player : Node2D, ITarget
     {
         
     }
-
-    public void BindAuthority(long playerId)
-    {
-        _multiplayerSynchronizer.SetMultiplayerAuthority((int) playerId);
-    }
-
+    
     public override void _Process(double delta)
     {
         if (currentHealth <= 0) return;

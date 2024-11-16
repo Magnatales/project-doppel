@@ -12,6 +12,7 @@ y_sort_enabled = true
 _spawnPoint = NodePath("../PlayerPosition")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer"]
 custom_minimum_size = Vector2(94.51, 0)
