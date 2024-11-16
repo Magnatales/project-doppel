@@ -75,6 +75,7 @@ public partial class LobbyController : CanvasLayer, ILobbyController
         GD.Print($"Adding player {playerId}");
         var player = _playerScene.Instantiate<Player>();
         player.GlobalPosition = new Vector2(100, 100);
+        player.Name = playerId.ToString();
         _players.Add(playerId, player);
         _spawnPoint.AddChild(player);
         Rpc(nameof(RefreshPlayerList));
