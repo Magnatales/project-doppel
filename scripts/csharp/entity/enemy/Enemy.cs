@@ -137,6 +137,12 @@ public partial class Enemy : Node2D, IEnemy, INpc, ITarget
 		tween.TweenInterval(1f);
 		tween.TweenProperty(this, "scale", new Vector2(1, 0), 0.5f)
 			.SetTrans(Tween.TransitionType.Sine)
-			.Finished += QueueFree;
+			.Finished += Die;
+	}
+
+	[Rpc]
+	private void Die()
+	{
+		QueueFree();	
 	}
 }
