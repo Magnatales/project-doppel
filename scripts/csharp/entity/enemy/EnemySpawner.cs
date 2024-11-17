@@ -12,12 +12,10 @@ public partial class EnemySpawner : MultiplayerSpawner
 		Instance = this;
 	}
 	
-	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
 	public void SpawnEnemy(Vector2 position)
 	{
 		var enemy = _enemyScene.Instantiate<Enemy>();
-		GetTree().Root.AddChild(enemy);
+		_enemyParent.AddChild(enemy, true);
 		enemy.GlobalPosition = position;
 	}
-
 }
