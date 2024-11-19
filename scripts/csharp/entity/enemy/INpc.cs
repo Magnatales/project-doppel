@@ -10,4 +10,5 @@ public interface INpc
     public IMovement Movement { get; }
     void PlayOneShot(string anim);
     void _FromAnim(string trackKey);
+    Vector2 Velocity { get; set; }
 }

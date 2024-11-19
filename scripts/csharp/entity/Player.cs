@@ -101,7 +101,7 @@ public partial class Player : Node2D, ITarget
             {
                 navAgent.SetTargetPosition(GlobalPosition.Floor());
                 GlobalPosition = GlobalPosition.Floor();
-                _target.TakeDamage(70, this);
+               _target.TakeDamage(70, this);
                 return;
             }
             _targetPosition = GetGlobalMousePosition();
@@ -110,17 +110,25 @@ public partial class Player : Node2D, ITarget
         
         if (Input.IsActionJustPressed("RightClick"))
         {
+            //Rpc(nameof(ShowUniqueID));
+            if(!Multiplayer.IsServer()) return;
             for (int i = 0; i < 1; i++)
             {
                 EnemySpawner.Instance.SpawnEnemy(new Vector2(600, 100));
-                // var enemy2 = new Enemy();
-                // GetParent().AddChild(enemy2);
-                // var enemy = packedScene.Instantiate<Enemy>();
-                // enemy.GlobalPosition = new Vector2(GetGlobalMousePosition().X + i, GetGlobalMousePosition().Y + i);
-                // GetTree().Root.AddChild(enemy);
+                 // var enemy2 = new Enemy();
+                 // GetParent().AddChild(enemy2);
+                 // var enemy = packedScene.Instantiate<Enemy>();
+                 // enemy.GlobalPosition = new Vector2(GetGlobalMousePosition().X + i, GetGlobalMousePosition().Y + i);
+                 // GetTree().Root.AddChild(enemy);
             }
         }
         
+    }
+    
+    [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
+    public void ShowUniqueID()
+    {
+        GD.Print($"My id is : {Multiplayer.GetUniqueId()}");
     }
 
     private void OnTargetAreaEntered(Area2D area2D)
@@ -142,36 +150,19 @@ public partial class Player : Node2D, ITarget
         _target = null;
 
     }
-    
-    private void DoPhysicsPointQuery()
-    {
-        var mousePos = GetGlobalMousePosition();
-        var query = new PhysicsPointQueryParameters2D();
-        query.Position = mousePos;
-        query.CollideWithAreas = true;
-        query.CollisionMask = 2;
-        var spaceState = GetWorld2D().DirectSpaceState;
-        var result = spaceState.IntersectPoint(query, 10);
-
-        if (result.Count <= 0) return;
-        
-        foreach (var value in result)
-        {
-            if (!value.TryGetValue("collider", out var collider)) continue;
-            if (collider.Obj is not Area2D area2D) continue;
-            if (area2D.GetParent() is not Enemy damageable) continue;
-            
-            //GD.Print("Hit enemy " + damageable.Name);
-            damageable.TakeDamage(40, this);
-        }
-    }
 
     public void Log(string text)
     {
         GD.Print(text);
     }
     
-    public void TakeDamage(int amount, ITarget from)
+    public void TakeDamage(int amount, ITarget target)
+    {
+        Rpc(nameof(TakeDamageRpc), amount);
+    }
+    
+    [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
+    public void TakeDamageRpc(int amount)
     {
         var tween = GetTree().CreateTween();
         tween.TweenProperty(GetNode("EntityAnimatedSprite2D"), "scale", Vector2.One * 1.2f, 0.15f)

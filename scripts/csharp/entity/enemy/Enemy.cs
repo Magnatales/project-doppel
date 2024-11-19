@@ -21,6 +21,7 @@ public partial class Enemy : Node2D, IEnemy, INpc, ITarget
 	public bool IsDead => _currentHealth <= 0;
 	public Vector2 Pos => GlobalPosition;
 	public IMovement Movement { get; private set; }
+	public Vector2 Velocity { get; set; }
 	
 	private SpriteAnimator _spriteAnimator;
 	private BehaviourTree _behaviorTree;
@@ -29,7 +30,11 @@ public partial class Enemy : Node2D, IEnemy, INpc, ITarget
 	
 	public override void _Ready()
 	{
-		GD.Print("How many times");
+		if (!Multiplayer.IsServer())
+		{
+			SetProcess(false);
+		}
+		
 		_currentHealth = Stats.Health;
 		_healthBar.Value = _healthBar.MaxValue;
 		
@@ -48,11 +53,7 @@ public partial class Enemy : Node2D, IEnemy, INpc, ITarget
 		_behaviorTree.Process((float)delta);
 		_spriteAnimator.Process();
 	}
-
-	public override void _PhysicsProcess(double delta)
-	{
-		
-	}
+	
 
 	public void _FromAnim(string trackKey)
 	{
@@ -71,7 +72,7 @@ public partial class Enemy : Node2D, IEnemy, INpc, ITarget
 				break;
 		}
 	}
-	
+
 	public void DisplayHp(bool value)
 	{
 		_hpText.Visible = value;
@@ -102,14 +103,20 @@ public partial class Enemy : Node2D, IEnemy, INpc, ITarget
 			EnemyAreas.Target = null;
 		}
 	}
-
+	
 	public void TakeDamage(int amount, ITarget target)
 	{
-		//TODO do this hardcoded logic in the behavior tree
-		if(EnemyAreas.Target == null)
-		{
-			EnemyAreas.ForceTarget(target);
-		}
+		Rpc(nameof(TakeDamageRpc), amount);
+	}
+	
+	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
+	private void TakeDamageRpc(int amount)
+	{
+		// //TODO do this hardcoded logic in the behavior tree
+		// if(EnemyAreas.Target == null)
+		// {
+		// 	EnemyAreas.ForceTarget(target);
+		// }
 		_currentHealth -= amount;
 		_currentHealth = Mathf.Clamp(_currentHealth, 0, Stats.Health);
 		_hpText.Text = $"{_currentHealth}/{Stats.Health}";
@@ -123,13 +130,17 @@ public partial class Enemy : Node2D, IEnemy, INpc, ITarget
 		
 		Effects.Instance.Play("Hit", Sprite.GlobalPosition - Sprite.Position / 2);
 		
-		_spriteAnimator.PlayOneShot("Hit");
+		if(Multiplayer.IsServer())
+			_spriteAnimator.PlayOneShot("Hit");
+		
 		if (_currentHealth ! > 0)
 		{
 			return;
 		}
 		
-		_spriteAnimator.PlayOneShot("Die", true);
+		if(Multiplayer.IsServer())
+			_spriteAnimator.PlayOneShot("Die", true);
+		
 		EnemyAreas.Disable();
 		_hitArea.SetProcessMode(ProcessModeEnum.Disabled);
 		_hitArea.Visible = false;
@@ -139,10 +150,10 @@ public partial class Enemy : Node2D, IEnemy, INpc, ITarget
 			.SetTrans(Tween.TransitionType.Sine)
 			.Finished += Die;
 	}
-
-	[Rpc]
+	
 	private void Die()
 	{
-		QueueFree();	
+		if(Multiplayer.IsServer())
+			QueueFree();	
 	}
 }

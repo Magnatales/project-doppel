@@ -13,6 +13,8 @@ public partial class EnemyAreas : Node2D
     
     public override void _Ready()
     {
+        if(!Multiplayer.IsServer()) return;
+        
         attackArea.AreaEntered += OnAttackRangeEntered;
         attackArea.AreaExited += OnAttackRangeExited;
         
@@ -22,6 +24,8 @@ public partial class EnemyAreas : Node2D
 
     public override void _ExitTree()
     {
+        if(!Multiplayer.IsServer()) return;
+        
         attackArea.AreaEntered -= OnAttackRangeEntered;
         attackArea.AreaExited -= OnAttackRangeExited;
         

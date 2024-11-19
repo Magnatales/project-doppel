@@ -20,6 +20,8 @@ public interface ILobbyView
 public partial class LobbyView : Control, ILobbyView
 {
     [Export] public Button HostButton { get; private set; }
+    [Export] public Button HostLocalButton { get; private set; }
+    [Export] public Button JoinLocalButton { get; private set; }
     [Export] public Button RefreshButton { get; private set; }
     [Export] public Container LobbyContainer { get; private set; }
     [Export] private Button _lobbyButtonTemplate;
@@ -42,6 +44,8 @@ public partial class LobbyView : Control, ILobbyView
         LobbyContainer.Hide();
         HostButton.Hide();
         RefreshButton.Hide();
+        HostLocalButton.Hide();
+        JoinLocalButton.Hide();
     }
 
     public void BindLobbies(List<Lobby> lobbies)

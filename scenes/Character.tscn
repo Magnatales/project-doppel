@@ -30,6 +30,9 @@ properties/2/replication_mode = 1
 properties/3/path = NodePath("EntityAnimatedSprite2D:animation")
 properties/3/spawn = true
 properties/3/replication_mode = 1
+properties/4/path = NodePath("HealthBar:value")
+properties/4/spawn = true
+properties/4/replication_mode = 1
 
 [node name="Player" type="Node2D" node_paths=PackedStringArray("navAgent", "animSprite", "healthBar", "area", "mouseTargetArea", "_label", "_camera", "_multiplayerSynchronizer")]
 position = Vector2(281, 181)
@@ -43,7 +46,7 @@ area = NodePath("Area2D")
 mouseTargetArea = NodePath("MouseTarget")
 _label = NodePath("Label")
 _camera = NodePath("Camera2D")
-_multiplayerSynchronizer = NodePath("MultiplayerSynchronizer")
+_multiplayerSynchronizer = NodePath("PlayerSynchronizer")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 path_desired_distance = 1.0
@@ -82,7 +85,7 @@ offset_bottom = -19.0
 theme = SubResource("Theme_txvd7")
 text = "Pepe"
 
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+[node name="PlayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_blx2h")
 
 [node name="Camera2D" type="Camera2D" parent="."]

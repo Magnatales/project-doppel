@@ -9,7 +9,7 @@ namespace Code.Networking;
 
 public interface ILobbyController
 {
-    void CreateHost();
+    void CreateSteamHost();
     void RefreshLobbies();
 }
 
@@ -24,12 +24,35 @@ public partial class LobbyController : CanvasLayer, ILobbyController
     private readonly Dictionary<SteamId, Lobby> _availableLobbies = new();
     public override void _Ready()
     {
-        _lobbyView.HostButton.Pressed += CreateHost;
+        _lobbyView.HostButton.Pressed += CreateSteamHost;
         _lobbyView.RefreshButton.Pressed += RefreshLobbies;
+        _lobbyView.HostLocalButton.Pressed += CreateLocalHost;
+        _lobbyView.JoinLocalButton.Pressed += JoinLocalHost;
         _lobbyView.OnLobbyClicked = JoinLobby;
     }
 
-    public async void CreateHost()
+    private void JoinLocalHost()
+    {
+        var eNetMultiplayerPeer = new ENetMultiplayerPeer();
+        eNetMultiplayerPeer.CreateClient("127.0.0.1", 25565);
+        Multiplayer.MultiplayerPeer = eNetMultiplayerPeer;
+        _lobbyView.HideMenus();
+    }
+
+    private void CreateLocalHost()
+    {
+        _lobbyView.BindHostLobby($"LocalHost");
+        var enetMultiplayerPeer = new ENetMultiplayerPeer();
+        enetMultiplayerPeer.CreateServer(25565);
+        Multiplayer.MultiplayerPeer = enetMultiplayerPeer;
+        Multiplayer.PeerConnected += AddPlayer;
+        Multiplayer.PeerDisconnected += RemovePlayer;
+        
+        AddPlayer(1);
+        _lobbyView.HideMenus();
+    }
+
+    public async void CreateSteamHost()
     {
         var lobby = await SteamManager.Instance.CreateLobby();
         

@@ -1,10 +1,10 @@
-﻿using Godot;
+﻿using Code.Entity;
+using Godot;
 
 namespace Code.Utils;
 
-public class NavAgentMovement(Node2D parent, NavigationAgent2D navAgent, Sprite2D sprite2D, float speed) : IMovement
+public class NavAgentMovement(Node2D parent, NavigationAgent2D navAgent, Sprite2D sprite2D, INpc npc, float speed) : IMovement
 {
-    private Vector2 _velocity = Vector2.Zero;
     public void Move(float delta)
     {
         if (navAgent.IsNavigationFinished())
@@ -17,7 +17,9 @@ public class NavAgentMovement(Node2D parent, NavigationAgent2D navAgent, Sprite2
         sprite2D.FlipH = targetPos.X < parent.GlobalPosition.X;
         var direction = navAgent.GetNextPathPosition() - parent.GlobalPosition;
         direction = direction.Normalized();
-        _velocity = _velocity.Lerp(direction * speed, speed * delta);
-        parent.GlobalPosition += _velocity * delta;
+        npc.Velocity = npc.Velocity.Lerp(direction * speed, speed * delta);
+        var newPosition = parent.GlobalPosition + (npc.Velocity * delta);
+        
+        parent.GlobalPosition = parent.GlobalPosition.Lerp(newPosition, 1f);
     }
 }

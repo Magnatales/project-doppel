@@ -17,13 +17,15 @@ script = ExtResource("1_m6ovv")
 _lobbyView = NodePath("LobbyView")
 _playerScene = ExtResource("2_1gh8y")
 
-[node name="LobbyView" type="Control" parent="." node_paths=PackedStringArray("HostButton", "RefreshButton", "LobbyContainer", "_lobbyButtonTemplate", "_lobbyLabel", "_playersInLobbyLabel")]
+[node name="LobbyView" type="Control" parent="." node_paths=PackedStringArray("HostButton", "HostLocalButton", "JoinLocalButton", "RefreshButton", "LobbyContainer", "_lobbyButtonTemplate", "_lobbyLabel", "_playersInLobbyLabel")]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("2_tjgoh")
 HostButton = NodePath("HostButton")
+HostLocalButton = NodePath("HostLocal")
+JoinLocalButton = NodePath("JoinLocal")
 RefreshButton = NodePath("RefreshButton")
 LobbyContainer = NodePath("../VBoxContainer")
 _lobbyButtonTemplate = NodePath("../VBoxContainer/LobbyButtonTemplate")
@@ -37,6 +39,25 @@ offset_right = 8.0
 offset_bottom = 8.0
 theme = SubResource("Theme_c7xmo")
 text = "Host Game"
+
+[node name="HostLocal" type="Button" parent="LobbyView"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 556.0
+offset_right = 638.0
+offset_bottom = 23.0
+theme = SubResource("Theme_c7xmo")
+text = "Host Local"
+
+[node name="JoinLocal" type="Button" parent="LobbyView"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 556.0
+offset_top = 36.0
+offset_right = 638.0
+offset_bottom = 59.0
+theme = SubResource("Theme_c7xmo")
+text = "Join Local"
 
 [node name="RefreshButton" type="Button" parent="LobbyView"]
 texture_filter = 1
