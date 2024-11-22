@@ -42,4 +42,8 @@
   <ItemGroup>
     <Folder Include="scenes\" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="GameAnalytics.Net.Core.SDK" Version="3.3.5" />
+  </ItemGroup>
 </Project>

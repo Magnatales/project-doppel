@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Godot;
 using Steam;
 using Steamworks;
 using Steamworks.Data;
+using GameAnalyticsSDK.Net;
 
 namespace Code.Networking;
 
@@ -29,6 +31,15 @@ public partial class LobbyController : CanvasLayer, ILobbyController
         _lobbyView.HostLocalButton.Pressed += CreateLocalHost;
         _lobbyView.JoinLocalButton.Pressed += JoinLocalHost;
         _lobbyView.OnLobbyClicked = JoinLobby;
+        GameAnalytics.SetEnabledInfoLog(true);
+        GameAnalytics.SetEnabledVerboseLog(true);
+        GameAnalytics.ConfigureBuild("0.01");
+        GameAnalytics.Initialize("451e8de83ecb4b5ce126a4c28d2db0c0", "2e2b3f5a29f3855ffcbbb69023742ae9fd696461");
+      
+        AppDomain.CurrentDomain.UnhandledException += (sender, args) =>
+        {
+            GameAnalytics.AddErrorEvent(EGAErrorSeverity.Critical, args.ExceptionObject.ToString());
+        };
     }
 
     private void JoinLocalHost()
@@ -50,6 +61,8 @@ public partial class LobbyController : CanvasLayer, ILobbyController
         
         AddPlayer(1);
         _lobbyView.HideMenus();
+        
+        GameAnalytics.AddErrorEvent(EGAErrorSeverity.Info, "From build!");
     }
 
     public async void CreateSteamHost()
