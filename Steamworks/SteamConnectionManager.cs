@@ -41,6 +41,11 @@ public class SteamConnectionManager : ConnectionManager
         byte[] managedArray = new byte[size];
         Marshal.Copy(data, managedArray, 0, size);
 
+        if (managedArray.Length == 2)
+        {
+            GD.Print($"{managedArray[0]} {managedArray[1]}" );
+        }
+
         _pendingMessages.Enqueue(new SteamNetworkingMessage(managedArray, ConnectionInfo.Identity.SteamId, MultiplayerPeer.TransferModeEnum.Reliable, recvTime));
     }
     public IEnumerable<SteamNetworkingMessage> GetPendingMessages()

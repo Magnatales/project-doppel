@@ -55,11 +55,11 @@ public partial class LobbyController : CanvasLayer, ILobbyController
     public async void CreateSteamHost()
     {
         var lobby = await SteamManager.Instance.CreateLobby();
-        
         _lobbyView.BindHostLobby(lobby.Id.ToString());
         
         var steamPeer = new SteamMultiplayerPeer();
         steamPeer.CreateHost(25565);
+        GD.Print($"Creating host and assigning MultiplayerPeer {steamPeer}");
         Multiplayer.MultiplayerPeer = steamPeer;
         Multiplayer.PeerConnected += AddPlayer;
         Multiplayer.PeerDisconnected += RemovePlayer;
@@ -114,6 +114,7 @@ public partial class LobbyController : CanvasLayer, ILobbyController
             var steamPeer = new SteamMultiplayerPeer();
             steamPeer.CreateClient(SteamManager.Instance.PlayerSteamId, lobby.Owner.Id);
             GD.Print($"Joining lobby {lobby.Id} with owner {lobby.Owner.Id}");
+            GD.Print($"Creating host and assigning MultiplayerPeer {steamPeer}");
             Multiplayer.MultiplayerPeer = steamPeer;
             _lobbyView.HideMenus();
         }

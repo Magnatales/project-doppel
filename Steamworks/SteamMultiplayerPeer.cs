@@ -17,8 +17,8 @@ public partial class SteamMultiplayerPeer : MultiplayerPeerExtension
 
     private const int MAX_PACKET_SIZE = 524288; // Arbitrary value from steam. Fun.
 
-    private SteamConnectionManager _steamConnectionManager;
-    private SteamSocketManager _steamSocketManager;
+    public SteamConnectionManager _steamConnectionManager;
+    public SteamSocketManager _steamSocketManager;
 
     private readonly Dictionary<int, SteamConnection> _peerIdToConnection = new Dictionary<int, SteamConnection>();
     private readonly Dictionary<ulong, SteamConnection> _connectionsBySteamId = new Dictionary<ulong, SteamConnection>();

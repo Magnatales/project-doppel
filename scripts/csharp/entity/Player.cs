@@ -5,6 +5,7 @@ using Godot;
 using projectdoppel.scripts.csharp;
 using Steam;
 using Steamworks;
+using Steamworks.Data;
 
 public partial class Player : Node2D, ITarget
 {
@@ -110,6 +111,19 @@ public partial class Player : Node2D, ITarget
         
         if (Input.IsActionJustPressed("RightClick"))
         {
+            var steamMultiplayerPeer = (SteamMultiplayerPeer)Multiplayer.MultiplayerPeer;
+            if (SteamManager.Instance.IsHost)
+            {
+                foreach (Connection connection in steamMultiplayerPeer._steamSocketManager.Connected)
+                {
+                    connection.SendMessage([7, 7]);
+                }
+            }
+            else
+            {
+                steamMultiplayerPeer._steamConnectionManager.Connection.SendMessage([1, 2]);
+            }
+
             //Rpc(nameof(ShowUniqueID));
             if(!Multiplayer.IsServer()) return;
             for (int i = 0; i < 1; i++)

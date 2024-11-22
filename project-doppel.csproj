@@ -42,4 +42,12 @@
   <ItemGroup>
     <Folder Include="scenes\" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <Content Include="messages\test.proto" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="Google.Protobuf" Version="3.28.3" />
+  </ItemGroup>
 </Project>

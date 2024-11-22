@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+
+option csharp_namespace = "Doppel";
+
+package core;
+
+
+message ClientToServerCalls
+{
+  int32 id = 1;
+  oneof kind
+  {
+    ClientToServerRequest request = 2;
+    ClientToServerResponses response = 3;
+  }
+}
+
+message ClientToServerRequest
+{
+  oneof request
+  {
+    AttemptSkillRequest attempt_skill = 2;
+  }
+}
+
+message ClientToServerResponses
+{
+  int32 id = 1;
+  oneof response
+  {
+    AttemptSkillResponse attempt_skill_response = 2;
+  }
+}
+
+message AttemptSkillRequest
+{
+  
+}
+
+
+message AttemptSkillResponse
+{
+  
+}
