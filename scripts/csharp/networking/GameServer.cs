@@ -38,8 +38,8 @@ public class GameServer : BaseServer
         public async void CreateNewPlayer(SteamId steamId)
         {
             // ObjectState player = gameState.Server_CreateObjectStateAndPawn((uint)steamId, ResourceId.PawnPlayer, "", steamId, true);
-            //
-            var player = _gameReferences.playerScene.Instantiate<Player>();
+            
+            var player = _gameState.CreatePlayerInGameState((uint)steamId, sendObjectStatePacketRequest: true);
             Friend playerSteam = new Friend(steamId);
             await playerSteam.RequestInfoAsync();
             player.SetPawn((uint)playerSteam.Id, playerSteam.Id, playerSteam.Name);
