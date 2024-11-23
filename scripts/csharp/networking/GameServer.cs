@@ -39,7 +39,7 @@ public class GameServer : BaseServer
             var player = _gameReferences.playerScene.Instantiate<Player>();
             Friend playerSteam = new Friend(steamId);
             await playerSteam.RequestInfoAsync();
-            player.SetPawn((uint)steamId, steamId);
+            player.SetPawn((uint)playerSteam.Id, playerSteam.Id, playerSteam.Name);
             player.Name = playerSteam.Name;
             _gameReferences.playerSpawnPoint.GetTree().Root.AddChild(player);
             GD.Print(playerSteam);

@@ -1,9 +1,12 @@
 using System.Threading.Tasks;
 using Code.Entity;
+using Code.Networking.Packets;
+using Code.Service;
 using Code.Utils;
 using Godot;
 using projectdoppel.scripts.csharp;
 using Steamworks;
+using Steamworks.Data;
 
 public partial class Player : Node2D, ITarget
 {
@@ -35,8 +38,8 @@ public partial class Player : Node2D, ITarget
     private Vector2 _velocity = Vector2.Zero;
     private ITarget _target;
     
-    public uint networkId { get; private set; }
-    public ulong networkOwner { get; private set; }
+    public uint NetworkId { get; private set; }
+    public ulong NetworkOwner { get; private set; }
 
     public string NickName;
 
@@ -53,6 +56,11 @@ public partial class Player : Node2D, ITarget
         healthBar.Value = currentHealth;
         mouseTargetArea.AreaEntered += OnTargetAreaEntered;
         mouseTargetArea.AreaExited += OnTargetAreaExited;
+
+        var networkService = Services.Get<INetworkService>();
+        networkService.Server_SubscribeRpc<TransformPacket, Connection>(Server_OnTransformPacketReceived, () => this.IsValid() == false);
+        networkService.Server_SubscribeRpc<TransformRequestPacket, Connection>(Server_OnTransformRequestPacketReceived, () => this.IsValid() == false);
+        networkService.Client_SubscribeRpc<TransformPacket>(Client_OnTransformPacketReceived, () => this.IsValid() == false);
         
         // if(_multiplayerSynchronizer.GetMultiplayerAuthority() == Multiplayer.GetUniqueId())
         // {
@@ -61,15 +69,45 @@ public partial class Player : Node2D, ITarget
         // }
         if (HasOwnership())
         {
-            _label.Text = $"{Name}";
+         
             _camera.MakeCurrent();
         } 
+        _label.Text = $"{NickName}";
     }
-    
-    public void SetPawn(uint networkId, ulong networkOwner)
+
+    private void Client_OnTransformPacketReceived(TransformPacket packet)
     {
-        this.networkId = networkId;
-        this.networkOwner = networkOwner;
+        if (packet.NetworkId != NetworkId) return;
+        GlobalPosition = packet.Position;
+       // GetParent().GetNode(packet.ParentPath).AddChild(this);
+    }
+
+    private void Server_OnTransformRequestPacketReceived(TransformRequestPacket packet, Connection connection)
+    {
+        if(NetworkId != packet.NetworkId) return;
+
+        var transformPacket = new TransformPacket();
+        transformPacket.NetworkId = NetworkId;
+        transformPacket.Position = GlobalPosition;
+        transformPacket.ParentPath = GetParent().GetPath();
+        
+        Services.Get<INetworkService>().Server.Send(transformPacket, connection, SendType.Reliable);
+    }
+
+    private void Server_OnTransformPacketReceived(TransformPacket packet, Connection from)
+    {
+        if (packet.NetworkId != NetworkId) return;
+        var fromSteamId = (ulong) from.UserData;
+        if (fromSteamId != NetworkOwner) return;
+        
+        Services.Get<INetworkService>().Server.Broadcast(packet, SendType.Reliable, from);
+    }
+
+    public void SetPawn(uint networkId, ulong networkOwner, string nickName)
+    {
+        this.NetworkId = networkId;
+        this.NetworkOwner = networkOwner;
+        NickName = nickName;
     }
 
     public override void _ExitTree()
@@ -140,7 +178,7 @@ public partial class Player : Node2D, ITarget
     
     public bool HasOwnership()
     {
-        return SteamClient.SteamId == networkOwner;
+        return SteamClient.SteamId == NetworkOwner;
     }
     
     private void OnTargetAreaEntered(Area2D area2D)
