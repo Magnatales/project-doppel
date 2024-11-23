@@ -90,6 +90,11 @@ public class GameState
         
         _players.Add(networkId, player);
 
+        if (sendObjectStatePacketRequest)
+        {
+            player.Client_SendPlayerDataPacket();
+        }
+
         if (Services.Get<INetworkService>().IsServer())
         {
             Server_ReplicateGameState();
