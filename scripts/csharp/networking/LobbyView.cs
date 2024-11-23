@@ -12,7 +12,7 @@ public interface ILobbyView
     Button HostButton { get; }
     Button RefreshButton { get; }
     
-    void BindLobbies(List<Lobby> lobbies);
+    void BindLobbies(Lobby[] lobbies);
     void BindPlayers(List<long> playerIds);
     void BindHostLobby(string lobbyId);
 }
@@ -48,7 +48,7 @@ public partial class LobbyView : Control, ILobbyView
         JoinLocalButton.Hide();
     }
 
-    public void BindLobbies(List<Lobby> lobbies)
+    public void BindLobbies(Lobby[] lobbies)
     {
         foreach (var lobbyButton in _lobbyButtons)
         {

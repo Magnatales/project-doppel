@@ -74,6 +74,15 @@ public partial class LobbyController : CanvasLayer, ILobbyController
     
     public async void RefreshLobbies()
     {
+        var findLobbiesQuery = new LobbyQuery();
+        findLobbiesQuery.maxResults = 10;
+        _availableLobbies.Clear();
+        var lobbies = await findLobbiesQuery.RequestAsync();
+        _lobbyView.BindLobbies(lobbies);
+        foreach (var lobby in lobbies)
+        {
+            _availableLobbies.Add(lobby.Id, lobby);
+        }
         // var lobbies = await SteamManager.Instance.GetMultiplayerLobbies();
         // _lobbyView.BindLobbies(lobbies);
         // _availableLobbies.Clear();
@@ -108,8 +117,12 @@ public partial class LobbyController : CanvasLayer, ILobbyController
         Rpc(nameof(RefreshPlayerList));
     }
     
-    private async void JoinLobby(SteamId obj)
+    private async void JoinLobby(SteamId steamId)
     {
+        _lobbyView.HideMenus();
+        await Services.Get<INetworkService>().ClientConnect(steamId);
+        var level = _levelScene.Instantiate();
+        GetTree().Root.AddChild(level);
         // await SteamManager.Instance.GetMultiplayerLobbies();
         // if (_availableLobbies.TryGetValue(obj, out var lobby))
         // {
