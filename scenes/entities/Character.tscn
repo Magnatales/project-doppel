@@ -7,6 +7,7 @@
 [ext_resource type="Material" uid="uid://n43ikyvv5sw7" path="res://shaders/pixel_smooth.tres" id="5_s22gc"]
 [ext_resource type="FontFile" uid="uid://mc441mrvu2ce" path="res://resources/fonts/alagard.ttf" id="5_wtes3"]
 [ext_resource type="Script" path="res://scripts/csharp/utils/Camera2d.cs" id="7_lr34d"]
+[ext_resource type="Script" path="res://scripts/csharp/networking/components/NetworkTransformSynchronizer.cs" id="8_1oumc"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_my2ov"]
 
@@ -17,24 +18,7 @@ size = Vector2(14, 10)
 default_font = ExtResource("5_wtes3")
 default_font_size = 0
 
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_blx2h"]
-properties/0/path = NodePath(".:position")
-properties/0/spawn = true
-properties/0/replication_mode = 1
-properties/1/path = NodePath("EntityAnimatedSprite2D:flip_h")
-properties/1/spawn = true
-properties/1/replication_mode = 1
-properties/2/path = NodePath("EntityAnimatedSprite2D:frame")
-properties/2/spawn = true
-properties/2/replication_mode = 1
-properties/3/path = NodePath("EntityAnimatedSprite2D:animation")
-properties/3/spawn = true
-properties/3/replication_mode = 1
-properties/4/path = NodePath("HealthBar:value")
-properties/4/spawn = true
-properties/4/replication_mode = 1
-
-[node name="Player" type="Node2D" node_paths=PackedStringArray("navAgent", "animSprite", "healthBar", "area", "mouseTargetArea", "_label", "_camera", "_multiplayerSynchronizer")]
+[node name="Player" type="Node2D" node_paths=PackedStringArray("navAgent", "animSprite", "healthBar", "area", "mouseTargetArea", "_label", "_camera")]
 position = Vector2(281, 181)
 script = ExtResource("1_e0iv7")
 Speed = 75.0
@@ -46,7 +30,6 @@ area = NodePath("Area2D")
 mouseTargetArea = NodePath("MouseTarget")
 _label = NodePath("Label")
 _camera = NodePath("Camera2D")
-_multiplayerSynchronizer = NodePath("PlayerSynchronizer")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 path_desired_distance = 1.0
@@ -85,9 +68,10 @@ offset_bottom = -19.0
 theme = SubResource("Theme_txvd7")
 text = "Pepe"
 
-[node name="PlayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_config = SubResource("SceneReplicationConfig_blx2h")
-
 [node name="Camera2D" type="Camera2D" parent="."]
 script = ExtResource("7_lr34d")
 _smoothingRange = 1
+
+[node name="NetworkTransformSynchronizer" type="Node" parent="." node_paths=PackedStringArray("target")]
+script = ExtResource("8_1oumc")
+target = NodePath("..")

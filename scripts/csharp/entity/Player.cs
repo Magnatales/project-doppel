@@ -56,11 +56,6 @@ public partial class Player : Node2D, ITarget
         healthBar.Value = currentHealth;
         mouseTargetArea.AreaEntered += OnTargetAreaEntered;
         mouseTargetArea.AreaExited += OnTargetAreaExited;
-
-        var networkService = Services.Get<INetworkService>();
-        networkService.Server_SubscribeRpc<TransformPacket, Connection>(Server_OnTransformPacketReceived, () => this.IsValid() == false);
-        networkService.Server_SubscribeRpc<TransformRequestPacket, Connection>(Server_OnTransformRequestPacketReceived, () => this.IsValid() == false);
-        networkService.Client_SubscribeRpc<TransformPacket>(Client_OnTransformPacketReceived, () => this.IsValid() == false);
         
         // if(_multiplayerSynchronizer.GetMultiplayerAuthority() == Multiplayer.GetUniqueId())
         // {
@@ -69,38 +64,9 @@ public partial class Player : Node2D, ITarget
         // }
         if (HasOwnership())
         {
-         
             _camera.MakeCurrent();
         } 
         _label.Text = $"{NickName}";
-    }
-
-    private void Client_OnTransformPacketReceived(TransformPacket packet)
-    {
-        if (packet.NetworkId != NetworkId) return;
-        GlobalPosition = packet.Position;
-       // GetParent().GetNode(packet.ParentPath).AddChild(this);
-    }
-
-    private void Server_OnTransformRequestPacketReceived(TransformRequestPacket packet, Connection connection)
-    {
-        if(NetworkId != packet.NetworkId) return;
-
-        var transformPacket = new TransformPacket();
-        transformPacket.NetworkId = NetworkId;
-        transformPacket.Position = GlobalPosition;
-        transformPacket.ParentPath = GetParent().GetPath();
-        
-        Services.Get<INetworkService>().Server.Send(transformPacket, connection, SendType.Reliable);
-    }
-
-    private void Server_OnTransformPacketReceived(TransformPacket packet, Connection from)
-    {
-        if (packet.NetworkId != NetworkId) return;
-        var fromSteamId = (ulong) from.UserData;
-        if (fromSteamId != NetworkOwner) return;
-        
-        Services.Get<INetworkService>().Server.Broadcast(packet, SendType.Reliable, from);
     }
 
     public void SetPawn(uint networkId, ulong networkOwner, string nickName)
