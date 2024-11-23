@@ -9,7 +9,7 @@ namespace Code.Service;
 public interface INetworkService : IDisposable
 {
     GameServer Server { get; }
-    BaseClient Client { get; }
+    GameClient Client { get; }
 
     void _Process(float delta);
     

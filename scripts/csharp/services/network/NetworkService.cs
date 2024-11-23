@@ -8,17 +8,30 @@ using Steamworks;
 
 namespace Code.Service;
 
-public class NetworkService(GameReferences references) : INetworkService
+public class NetworkService : INetworkService
 {
     public GameServer Server { get; private set; }
-    public BaseClient Client { get; private set; }
+    public GameClient Client { get; private set; }
+    
+    public ushort TickRate = 60;
+    public ulong Tick { get; private set; }
+    private float _tickPerSeconds;
+    private double _tickTimer;
+    private GameReferences _references;
+
+    public NetworkService(GameReferences references)
+    {
+        _references = references;
+        _tickPerSeconds = 1 / (float)TickRate;
+    }
+    
     public async Task HostConnect()
     {
         Server = SteamNetworkingSockets.CreateRelaySocket<GameServer>(BaseServer.PORT);
         if (Server != null)
         {
             GD.Print("Server created");
-            Server.Init(references);
+            Server.Init(_references);
         }
 
         await ClientConnect(SteamClient.SteamId);
@@ -27,11 +40,12 @@ public class NetworkService(GameReferences references) : INetworkService
     public async Task ClientConnect(SteamId steamId)
     {
         ClientDisconnect();
-        Client = SteamNetworkingSockets.ConnectRelay<BaseClient>(steamId, BaseServer.PORT);
+        await Task.Delay(1000);
+        Client = SteamNetworkingSockets.ConnectRelay<GameClient>(steamId, BaseServer.PORT);
         if (Client != null)
         {
             GD.Print("Client connected successfully");
-            await Task.Delay(100);
+            await Task.Delay(500);
         }
     }
     
@@ -46,6 +60,32 @@ public class NetworkService(GameReferences references) : INetworkService
         {
             Client.Receive();
         }
+        
+        _tickTimer += delta;
+        if (_tickTimer >= _tickPerSeconds)
+        {
+            _tickTimer -= _tickPerSeconds;
+            Tick++;
+            
+            TickServer(Tick);
+            TickClient(Tick);
+        }
+    }
+    
+    private void TickServer(ulong tick)
+    {
+        if (Server == null)
+            return;
+
+        Server.Tick(tick);
+    }
+    
+    private void TickClient(ulong tick)
+    {
+        if (Client == null)
+            return;
+
+        Client.Tick(tick);
     }
 
     public void HostDisconnect()

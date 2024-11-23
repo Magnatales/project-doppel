@@ -11,6 +11,7 @@ public class GameServer : BaseServer
     {
         //public GameState gameState;
         private GameReferences _gameReferences;
+        private GameState _gameState;
 
         private List<ulong> banned;
 
@@ -24,12 +25,14 @@ public class GameServer : BaseServer
                 return SteamClient.SteamId;
             }
         }
+        
+        
 
         public void Init(GameReferences gameReferences)
         {
             base.Initialize();
             _gameReferences = gameReferences;
-            //gameState = new GameState(true);
+            _gameState = new GameState(true);
         }
 
         public async void CreateNewPlayer(SteamId steamId)
@@ -128,10 +131,10 @@ public class GameServer : BaseServer
         {
             base.Tick(tick);
 
-            // if (gameState != null)
-            // {
-            //     gameState.ServerTick(tick);
-            // }
+            if (_gameState != null)
+            {
+                _gameState.ServerTick(tick);
+            }
         }
 
         public void Kick(SteamId playerId)
