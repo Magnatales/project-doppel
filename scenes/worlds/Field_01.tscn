@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=4 uid="uid://w8nuo1kmcf5v"]
+[gd_scene load_steps=8 format=4 uid="uid://w8nuo1kmcf5v"]
 
 [ext_resource type="Material" uid="uid://n43ikyvv5sw7" path="res://shaders/pixel_smooth.tres" id="2_60t2a"]
 [ext_resource type="Texture2D" uid="uid://dfas0owpswsa" path="res://textures/natural.png" id="4_fy0rl"]
@@ -6,7 +6,6 @@
 [ext_resource type="TileSet" uid="uid://t1g2dayfcusi" path="res://textures/Level1.tres" id="8_n7gdd"]
 [ext_resource type="TileSet" uid="uid://d8ikugmexub8" path="res://textures/Level2.tres" id="9_kaa6i"]
 [ext_resource type="TileSet" uid="uid://nlhb4i0virul" path="res://textures/Ground.tres" id="10_ahyqr"]
-[ext_resource type="Script" path="res://Steamworks/SteamManager.cs" id="11_thr2v"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_vhlqf"]
 vertices = PackedVector2Array(369, 385, 742.969, 441, 56.0469, 441.992, 175, 385, 59.9375, 77.0234, 175, 259, 741.023, 79.9688, 369, 259)
@@ -54,6 +53,3 @@ tile_map_data = PackedByteArray("AAAEAAUAAQABAAEAAAAEAAYAAQABAAEAAAAEAAcAAQABAAE
 tile_set = ExtResource("8_n7gdd")
 collision_enabled = false
 navigation_enabled = false
-
-[node name="SteamManager" type="Node" parent="."]
-script = ExtResource("11_thr2v")

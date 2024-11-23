@@ -4,13 +4,14 @@
 [ext_resource type="PackedScene" uid="uid://tqgg41odn7nx" path="res://scenes/networking/Lobby.tscn" id="1_bpy4p"]
 [ext_resource type="Script" path="res://scripts/csharp/utils/FPSCounter.cs" id="2_5yq0y"]
 [ext_resource type="PackedScene" uid="uid://dxf2j75pllknv" path="res://scenes/vfx/Effects.tscn" id="3_hv8ha"]
-[ext_resource type="PackedScene" uid="uid://dminkvt8qo4dt" path="res://scenes/Enemy.tscn" id="5_4yoo7"]
+[ext_resource type="PackedScene" uid="uid://dminkvt8qo4dt" path="res://scenes/entities/Enemy.tscn" id="5_4yoo7"]
 [ext_resource type="Script" path="res://scripts/csharp/entity/enemy/EnemySpawner.cs" id="5_absc8"]
 
 [node name="Game" type="Node2D"]
 y_sort_enabled = true
 
 [node name="LobbyController" parent="." node_paths=PackedStringArray("_spawnPoint") instance=ExtResource("1_bpy4p")]
+visible = false
 _spawnPoint = NodePath("../PlayerPosition")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
@@ -32,14 +33,12 @@ script = ExtResource("2_5yq0y")
 [node name="Effects" parent="." instance=ExtResource("3_hv8ha")]
 
 [node name="PlayerMultiplayerSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("res://scenes/Character.tscn")
 spawn_path = NodePath("../PlayerPosition")
 
 [node name="PlayerPosition" type="Node2D" parent="."]
 position = Vector2(114, 122)
 
 [node name="EnemyMultiplayerSpawner" type="MultiplayerSpawner" parent="." node_paths=PackedStringArray("_enemyParent")]
-_spawnable_scenes = PackedStringArray("res://scenes/Enemy.tscn")
 spawn_path = NodePath("Node2D")
 script = ExtResource("5_absc8")
 _enemyScene = ExtResource("5_4yoo7")

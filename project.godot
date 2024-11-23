@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="project-doppel"
-run/main_scene="res://scenes/Game.tscn"
+run/main_scene="res://scenes/Bootstrap.tscn"
 config/features=PackedStringArray("4.3", "C#", "Forward Plus")
 boot_splash/show_image=false
 config/icon="res://textures/godot_103035.svg"

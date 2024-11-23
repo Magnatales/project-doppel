@@ -3,7 +3,6 @@ using Code.Entity;
 using Code.Utils;
 using Godot;
 using projectdoppel.scripts.csharp;
-using Steam;
 using Steamworks;
 
 public partial class Player : Node2D, ITarget
@@ -19,7 +18,7 @@ public partial class Player : Node2D, ITarget
     [Export] private Label _label;
     [Export] private Camera2d _camera;
     
-    [Export] private MultiplayerSynchronizer _multiplayerSynchronizer;
+    //[Export] private MultiplayerSynchronizer _multiplayerSynchronizer;
     [Export] private MultiplayerSpawner _multiplayerSpawner;
     
     public bool IsDead => currentHealth <= 0;
@@ -35,12 +34,15 @@ public partial class Player : Node2D, ITarget
     private EntityAnimator _entityAnimator;
     private Vector2 _velocity = Vector2.Zero;
     private ITarget _target;
+    
+    public uint networkId { get; private set; }
+    public ulong networkOwner { get; private set; }
 
     public string NickName;
 
     public override void _EnterTree()
     {
-        _multiplayerSynchronizer.SetMultiplayerAuthority((int)long.Parse(Name));
+        //_multiplayerSynchronizer.SetMultiplayerAuthority((int)long.Parse(Name));
     }
 
     public override void _Ready()
@@ -52,12 +54,22 @@ public partial class Player : Node2D, ITarget
         mouseTargetArea.AreaEntered += OnTargetAreaEntered;
         mouseTargetArea.AreaExited += OnTargetAreaExited;
         
-        if(_multiplayerSynchronizer.GetMultiplayerAuthority() == Multiplayer.GetUniqueId())
+        // if(_multiplayerSynchronizer.GetMultiplayerAuthority() == Multiplayer.GetUniqueId())
+        // {
+        //     _camera.MakeCurrent();
+        //    
+        // }
+        if (HasOwnership())
         {
+            _label.Text = $"{Name}";
             _camera.MakeCurrent();
-           
-        }
-        _label.Text = $"Player {Name}";
+        } 
+    }
+    
+    public void SetPawn(uint networkId, ulong networkOwner)
+    {
+        this.networkId = networkId;
+        this.networkOwner = networkOwner;
     }
 
     public override void _ExitTree()
@@ -74,10 +86,11 @@ public partial class Player : Node2D, ITarget
     public override void _Process(double delta)
     {
         if (currentHealth <= 0) return;
-        if (_multiplayerSynchronizer.GetMultiplayerAuthority() != Multiplayer.GetUniqueId())
-        {
-            return;
-        }
+        if (!HasOwnership()) return;
+        // if (_multiplayerSynchronizer.GetMultiplayerAuthority() != Multiplayer.GetUniqueId())
+        // {
+        //     return;
+        // }
         _entityAnimator.Update();
         mouseTargetArea.GlobalPosition = GetGlobalMousePosition();
        
@@ -112,25 +125,24 @@ public partial class Player : Node2D, ITarget
         {
             //Rpc(nameof(ShowUniqueID));
             if(!Multiplayer.IsServer()) return;
-            for (int i = 0; i < 1; i++)
-            {
-                EnemySpawner.Instance.SpawnEnemy(new Vector2(600, 100));
-                 // var enemy2 = new Enemy();
-                 // GetParent().AddChild(enemy2);
-                 // var enemy = packedScene.Instantiate<Enemy>();
-                 // enemy.GlobalPosition = new Vector2(GetGlobalMousePosition().X + i, GetGlobalMousePosition().Y + i);
-                 // GetTree().Root.AddChild(enemy);
-            }
+            // for (int i = 0; i < 1; i++)
+            // {
+            //     EnemySpawner.Instance.SpawnEnemy(new Vector2(600, 100));
+            //      // var enemy2 = new Enemy();
+            //      // GetParent().AddChild(enemy2);
+            //      // var enemy = packedScene.Instantiate<Enemy>();
+            //      // enemy.GlobalPosition = new Vector2(GetGlobalMousePosition().X + i, GetGlobalMousePosition().Y + i);
+            //      // GetTree().Root.AddChild(enemy);
+            // }
         }
         
     }
     
-    [Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
-    public void ShowUniqueID()
+    public bool HasOwnership()
     {
-        GD.Print($"My id is : {Multiplayer.GetUniqueId()}");
+        return SteamClient.SteamId == networkOwner;
     }
-
+    
     private void OnTargetAreaEntered(Area2D area2D)
     {
         if(area2D.GetParent() is not ITarget target) return;

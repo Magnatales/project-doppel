@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=3 uid="uid://w0lfnb3hpbsc"]
+
+[ext_resource type="Script" path="res://scripts/csharp/bootstrap/BootStrap.cs" id="1_7bsw4"]
+[ext_resource type="PackedScene" uid="uid://tqgg41odn7nx" path="res://scenes/networking/Lobby.tscn" id="2_1h2oh"]
+[ext_resource type="Script" path="res://scripts/csharp/references/GameReferences.cs" id="2_vaags"]
+[ext_resource type="PackedScene" uid="uid://lm7cbvhmuc3l" path="res://scenes/entities/Character.tscn" id="3_flsqu"]
+
+[node name="Bootstrap" type="Node" node_paths=PackedStringArray("_gameReferences")]
+script = ExtResource("1_7bsw4")
+_gameReferences = NodePath("GameReferences")
+
+[node name="GameReferences" type="Node" parent="." node_paths=PackedStringArray("playerSpawnPoint")]
+script = ExtResource("2_vaags")
+playerScene = ExtResource("3_flsqu")
+lobbyScene = ExtResource("2_1h2oh")
+playerSpawnPoint = NodePath("PlayerSpawnPoint")
+
+[node name="PlayerSpawnPoint" type="Node2D" parent="GameReferences"]
+position = Vector2(71, 74)
