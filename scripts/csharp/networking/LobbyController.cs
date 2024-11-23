@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Code.Service;
 using Godot;
 using Steamworks;
@@ -52,6 +53,7 @@ public partial class LobbyController : CanvasLayer, ILobbyController
         // AddPlayer(1);
         _lobbyView.HideMenus();
         await Services.Get<INetworkService>().HostConnect();
+        await SteamMatchmaking.CreateLobbyAsync();
         var level = _levelScene.Instantiate();
         GetTree().Root.AddChild(level);
     }
@@ -77,7 +79,7 @@ public partial class LobbyController : CanvasLayer, ILobbyController
         var findLobbiesQuery = new LobbyQuery();
         findLobbiesQuery.maxResults = 10;
         _availableLobbies.Clear();
-        var lobbies = await findLobbiesQuery.RequestAsync();
+        var lobbies = await Task.Run(() => findLobbiesQuery.RequestAsync());
         _lobbyView.BindLobbies(lobbies);
         foreach (var lobby in lobbies)
         {
@@ -120,9 +122,14 @@ public partial class LobbyController : CanvasLayer, ILobbyController
     private async void JoinLobby(SteamId steamId)
     {
         _lobbyView.HideMenus();
-        await Services.Get<INetworkService>().ClientConnect(steamId);
-        var level = _levelScene.Instantiate();
-        GetTree().Root.AddChild(level);
+        if(_availableLobbies.TryGetValue(steamId, out var lobby))
+        {
+            await lobby.Join();
+            await Services.Get<INetworkService>().ClientConnect(lobby.Owner.Id);
+            var level = _levelScene.Instantiate();
+            GetTree().Root.AddChild(level);
+        }
+   
         // await SteamManager.Instance.GetMultiplayerLobbies();
         // if (_availableLobbies.TryGetValue(obj, out var lobby))
         // {
