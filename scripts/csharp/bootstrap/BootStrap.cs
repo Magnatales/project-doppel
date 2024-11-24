@@ -1,3 +1,5 @@
+using System;
+using System.Threading.Tasks;
 using Code.Networking;
 using Code.Networking.handlers;
 using Code.Networking.Packets;
@@ -67,7 +69,7 @@ public partial class BootStrap : Node
 		Services.Dispose();
 	}
 
-	private void Init(uint networkId)
+	private async void Init(uint networkId)
 	{
 		_networkId = networkId;
 		var networkService = Services.Get<INetworkService>();
@@ -87,6 +89,9 @@ public partial class BootStrap : Node
 			{
 				NetworkId = _networkId
 			};
+			
+			//Hook up to connected instead of waiting some time
+			await Task.Delay(TimeSpan.FromSeconds(3));
 			networkService.Client.Send(packet, SendType.Reliable);
 		}
 	}
