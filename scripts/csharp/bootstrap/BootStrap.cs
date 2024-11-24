@@ -80,7 +80,7 @@ public partial class BootStrap : Node
 			var networkService = Services.Get<INetworkService>();
 			if (networkService.IsServer())
 			{
-				networkService.Server?.Broadcast(mouseInputPacket, SendType.Reliable);
+				networkService.Server?.BroadcastExceptLocalhost(mouseInputPacket, SendType.Reliable);
 			}
 			else
 			{
