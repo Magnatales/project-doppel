@@ -13,6 +13,9 @@ public partial class NetworkTransformSynchronizer : Node
     private INetworkService _networkService => Services.Get<INetworkService>();
 
     private TransformPacket? _lastReceivedTransformPacket;
+
+    private Vector2 _previousPosition;
+    private float _positionThreshold = 0.01f;
     
     public override void _Ready()
     {
@@ -35,15 +38,18 @@ public partial class NetworkTransformSynchronizer : Node
         else
         {
             if (!target.IsValid()) return;
+
+            var currentPosition = target.GlobalPosition;
+
+            if (!(currentPosition.DistanceTo(_previousPosition) > _positionThreshold)) return;
             
+            var transformPacket = CreateTransformPacket();
             if (_networkService.IsServer())
             {
-                var transformPacket = CreateTransformPacket();
                 _networkService.Server.BroadcastExceptLocalhost(transformPacket, SendType.Reliable);
             }
             else
             {
-                var transformPacket = CreateTransformPacket();
                 _networkService.Client.Send(transformPacket, SendType.Reliable);
             }
         }
