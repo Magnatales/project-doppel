@@ -18,6 +18,10 @@ public interface INetworkService : IDisposable
     
     void HostDisconnect();
     void ClientDisconnect();
+    public bool IsClientConnected()
+    {
+        return IsClient() && Client.Connected;
+    }
     
     bool IsServer();
     bool IsClient();

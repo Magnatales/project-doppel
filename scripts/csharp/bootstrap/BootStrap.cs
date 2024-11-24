@@ -82,7 +82,12 @@ public partial class BootStrap : Node
 		{
 			_clientHandler = new ClientSkillHandler(networkService, _networkId, this);
 			networkService.Client_SubscribeRpc<GameStatePacket>(Client_OnGameStatePacketReceived, () => this.IsValid() == false);
-			networkService.Client.Send(new GameStateRequestPacket(){NetworkId = _networkId}, SendType.Reliable);
+			
+			var packet = new GameStateRequestPacket
+			{
+				NetworkId = _networkId
+			};
+			networkService.Client.Send(packet, SendType.Reliable);
 		}
 	}
 

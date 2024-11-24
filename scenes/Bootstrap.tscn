@@ -1,9 +1,14 @@
-[gd_scene load_steps=5 format=3 uid="uid://w0lfnb3hpbsc"]
+[gd_scene load_steps=10 format=3 uid="uid://w0lfnb3hpbsc"]
 
 [ext_resource type="Script" path="res://scripts/csharp/bootstrap/BootStrap.cs" id="1_7bsw4"]
 [ext_resource type="PackedScene" uid="uid://tqgg41odn7nx" path="res://scenes/networking/Lobby.tscn" id="2_1h2oh"]
 [ext_resource type="Script" path="res://scripts/csharp/references/GameReferences.cs" id="2_vaags"]
 [ext_resource type="PackedScene" uid="uid://lm7cbvhmuc3l" path="res://scenes/entities/Character.tscn" id="3_flsqu"]
+[ext_resource type="Material" uid="uid://n43ikyvv5sw7" path="res://shaders/pixel_smooth.tres" id="5_f0h1o"]
+[ext_resource type="Script" path="res://scripts/csharp/networking/components/UILabelBandwithOut.cs" id="5_o8qk3"]
+[ext_resource type="Theme" uid="uid://dp7shd8hg32r" path="res://resources/text/text_theme.tres" id="6_74af5"]
+[ext_resource type="Script" path="res://scripts/csharp/networking/components/UILabelPing.cs" id="6_1162j"]
+[ext_resource type="Script" path="res://scripts/csharp/networking/components/UILabelBandwithIn.cs" id="7_8t7ix"]
 
 [node name="Bootstrap" type="Node" node_paths=PackedStringArray("_gameReferences")]
 script = ExtResource("1_7bsw4")
@@ -17,3 +22,32 @@ playerSpawnPoint = NodePath("PlayerSpawnPoint")
 
 [node name="PlayerSpawnPoint" type="Node2D" parent="GameReferences"]
 position = Vector2(71, 74)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer"]
+offset_left = 243.0
+offset_top = 296.0
+offset_right = 368.0
+offset_bottom = 373.0
+
+[node name="UILabelBandwithOut" type="Label" parent="CanvasLayer/VBoxContainer"]
+material = ExtResource("5_f0h1o")
+layout_mode = 2
+theme = ExtResource("6_74af5")
+text = "Upload: 38 B/s"
+script = ExtResource("5_o8qk3")
+
+[node name="UILabelPing" type="Label" parent="CanvasLayer/VBoxContainer"]
+material = ExtResource("5_f0h1o")
+layout_mode = 2
+theme = ExtResource("6_74af5")
+text = "Ping: 0 ms"
+script = ExtResource("6_1162j")
+
+[node name="UILabelBandwithIn" type="Label" parent="CanvasLayer/VBoxContainer"]
+material = ExtResource("5_f0h1o")
+layout_mode = 2
+theme = ExtResource("6_74af5")
+text = "Download: 0 B/s"
+script = ExtResource("7_8t7ix")

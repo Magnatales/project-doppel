@@ -36,7 +36,7 @@ public static class Services
             return (T)service;
         }
 
-        throw new InvalidOperationException($"Service of type {type} is not registered.");
+        return null;
     }
 
     /// <summary>
