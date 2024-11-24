@@ -40,8 +40,7 @@ public partial class NetworkTransformSynchronizer : Node
             if (!target.IsValid()) return;
 
             var currentPosition = target.GlobalPosition;
-
-            if (!(currentPosition.DistanceTo(_previousPosition) > _positionThreshold)) return;
+            if ((currentPosition - _previousPosition).LengthSquared() > _positionThreshold * _positionThreshold) return;
             
             var transformPacket = CreateTransformPacket();
             if (_networkService.IsServer())
@@ -72,7 +71,7 @@ public partial class NetworkTransformSynchronizer : Node
     {
         if (packet.NetworkId != target.NetworkId) return;
         
-        Services.Get<INetworkService>().Server.Broadcast(packet, SendType.Reliable, from);
+        _networkService.Server.Broadcast(packet, SendType.Reliable, from);
     }
     
     private void Server_OnTransformRequestPacketReceived(TransformRequestPacket packet, Connection connection)
@@ -81,7 +80,7 @@ public partial class NetworkTransformSynchronizer : Node
 
         var transformPacket = CreateTransformPacket();
 
-        Services.Get<INetworkService>().Server.Send(transformPacket, connection, SendType.Reliable);
+        _networkService.Server.Send(transformPacket, connection, SendType.Reliable);
     }
 
     private TransformPacket CreateTransformPacket()

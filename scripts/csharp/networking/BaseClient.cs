@@ -50,7 +50,6 @@ public class BaseClient : ConnectionManager
         IntPtr data = IntPtr.Zero;
         try
         {
-            GD.Print("SENDING CLIENT PACKET");
             data = Processor.WriteGetIntPtr(packet, out var size);
             Connection.SendMessage(data, size, sendType);
         }
