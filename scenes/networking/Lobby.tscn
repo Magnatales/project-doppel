@@ -43,6 +43,7 @@ theme = SubResource("Theme_c7xmo")
 text = "Host Game"
 
 [node name="HostLocal" type="Button" parent="LobbyView"]
+visible = false
 texture_filter = 1
 layout_mode = 0
 offset_left = 556.0
@@ -52,6 +53,7 @@ theme = SubResource("Theme_c7xmo")
 text = "Host Local"
 
 [node name="JoinLocal" type="Button" parent="LobbyView"]
+visible = false
 texture_filter = 1
 layout_mode = 0
 offset_left = 556.0

@@ -57,16 +57,12 @@ public partial class Player : Node2D, ITarget
         mouseTargetArea.AreaEntered += OnTargetAreaEntered;
         mouseTargetArea.AreaExited += OnTargetAreaExited;
         
-        // if(_multiplayerSynchronizer.GetMultiplayerAuthority() == Multiplayer.GetUniqueId())
-        // {
-        //     _camera.MakeCurrent();
-        //    
-        // }
         if (HasOwnership())
         {
             _camera.MakeCurrent();
         } 
         _label.Text = $"{NickName}";
+        animSprite.
     }
     
 

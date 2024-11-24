@@ -17,8 +17,6 @@ public interface ILobbyController
 public partial class LobbyController : CanvasLayer, ILobbyController
 {
     [Export] private LobbyView _lobbyView;
-    [Export] private PackedScene _lobbyScene;
-    [Export] private PackedScene _playerScene;
     [Export] private Node2D _spawnPoint;
     [Export] private PackedScene _levelScene;
     
@@ -43,14 +41,6 @@ public partial class LobbyController : CanvasLayer, ILobbyController
 
     private async void CreateLocalHost()
     {
-        // _lobbyView.BindHostLobby($"LocalHost");
-        // var enetMultiplayerPeer = new ENetMultiplayerPeer();
-        // enetMultiplayerPeer.CreateServer(25565);
-        // Multiplayer.MultiplayerPeer = enetMultiplayerPeer;
-        // Multiplayer.PeerConnected += AddPlayer;
-        // Multiplayer.PeerDisconnected += RemovePlayer;
-        //
-        // AddPlayer(1);
         _lobbyView.HideMenus();
         await Services.Get<INetworkService>().HostConnect();
         await SteamMatchmaking.CreateLobbyAsync();
@@ -70,8 +60,11 @@ public partial class LobbyController : CanvasLayer, ILobbyController
         // Multiplayer.PeerConnected += AddPlayer;
         // Multiplayer.PeerDisconnected += RemovePlayer;
         
-        AddPlayer(1);
         _lobbyView.HideMenus();
+        await Services.Get<INetworkService>().HostConnect();
+        await SteamMatchmaking.CreateLobbyAsync();
+        var level = _levelScene.Instantiate();
+        GetTree().Root.AddChild(level);
     }
     
     public async void RefreshLobbies()
@@ -85,38 +78,6 @@ public partial class LobbyController : CanvasLayer, ILobbyController
         {
             _availableLobbies.Add(lobby.Id, lobby);
         }
-        // var lobbies = await SteamManager.Instance.GetMultiplayerLobbies();
-        // _lobbyView.BindLobbies(lobbies);
-        // _availableLobbies.Clear();
-        // foreach (var lobby in lobbies)
-        // {
-        //     _availableLobbies.Add(lobby.Id, lobby);
-        // }
-    }
-
-    [Rpc(CallLocal = true)]
-    private void RefreshPlayerList()
-    {
-        _lobbyView.BindPlayers(_players.Keys.ToList());
-    }
-
-    private void RemovePlayer(long playerId)
-    {
-        var player = _players[playerId];
-        player.QueueFree();
-        _players.Remove(playerId);
-        Rpc(nameof(RefreshPlayerList));
-    }
-
-    private void AddPlayer(long playerId)
-    {
-        GD.Print($"Adding player {playerId}");
-        var player = _playerScene.Instantiate<Player>();
-        player.Name = playerId.ToString();
-        player.GlobalPosition = new Vector2(100, 100);
-        _players.Add(playerId, player);
-        _spawnPoint.AddChild(player);
-        Rpc(nameof(RefreshPlayerList));
     }
     
     private async void JoinLobby(SteamId steamId)
@@ -129,17 +90,5 @@ public partial class LobbyController : CanvasLayer, ILobbyController
             var level = _levelScene.Instantiate();
             GetTree().Root.AddChild(level);
         }
-   
-        // await SteamManager.Instance.GetMultiplayerLobbies();
-        // if (_availableLobbies.TryGetValue(obj, out var lobby))
-        // {
-        //     GD.Print("Lobby found");
-        //     await lobby.Join();
-        //     var steamPeer = new SteamMultiplayerPeer();
-        //     steamPeer.CreateClient(SteamManager.Instance.PlayerSteamId, lobby.Owner.Id);
-        //     GD.Print($"Joining lobby {lobby.Id} with owner {lobby.Owner.Id}");
-        //     Multiplayer.MultiplayerPeer = steamPeer;
-        //     _lobbyView.HideMenus();
-        // }
     }
 }
