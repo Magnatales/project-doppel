@@ -43,7 +43,7 @@ public class ServerSkillHandler
 
     private void OnSkillUsedPacket(PlayerSkillUsePacket packet, Connection from)
     {
-        if (packet.NetworkId != _networkId) return;
+        if (packet.NetworkId == _networkId) return;
         
         GD.Print($"[SERVER] From: {from.UserData} Using skill {packet.SkillUsed}");
     }

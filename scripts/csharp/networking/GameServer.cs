@@ -12,6 +12,8 @@ public class GameServer : BaseServer
         //public GameState gameState;
         private GameReferences _gameReferences;
 
+        public List<Player> _players;
+
         private List<ulong> banned;
 
         public static ulong SteamId
@@ -43,6 +45,7 @@ public class GameServer : BaseServer
             player.SetPawn((uint)playerSteam.Id, playerSteam.Id, playerSteam.Name);
             player.Name = playerSteam.Name;
             _gameReferences.playerSpawnPoint.GetTree().Root.AddChild(player);
+            _players.Add(player);
             GD.Print(playerSteam);
             // player.GetPawn().SetName(playerSteam.Name);
 

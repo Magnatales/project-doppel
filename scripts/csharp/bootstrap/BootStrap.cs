@@ -51,6 +51,7 @@ public partial class BootStrap : Node
 			if (_serverHandler != null)
 			{
 				//Do some validation like mana check etc
+				GD.Print($"[SERVER] Using skill {_lastSkillUsed.SkillUsed}");
 				Services.Get<INetworkService>().Server?.BroadcastExceptLocalhost(_lastSkillUsed, SendType.Reliable);
 				//Use skill here if true, else show some feedback "Not enough mana" etc
 			}
@@ -74,8 +75,17 @@ public partial class BootStrap : Node
 		
 		if(networkService.IsServer())
 			_serverHandler = new ServerSkillHandler(networkService, _networkId, this);
-		
-		if(networkService.IsClient())
+
+		if (networkService.IsClient())
+		{
 			_clientHandler = new ClientSkillHandler(networkService, _networkId, this);
+			foreach (var player in networkService.Server._players)
+			{
+				var playerCopy = _gameReferences.playerScene.Instantiate<Player>();
+				playerCopy.SetPawn(player.NetworkId, player.NetworkOwner, player.NickName);
+				playerCopy.Name = player.Name;
+				_gameReferences.playerSpawnPoint.GetTree().Root.AddChild(playerCopy);
+			}
+		}
 	}
 }
