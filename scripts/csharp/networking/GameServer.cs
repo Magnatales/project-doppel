@@ -11,7 +11,6 @@ public class GameServer : BaseServer
     {
         //public GameState gameState;
         private GameReferences _gameReferences;
-        private GameState _gameState;
 
         private List<ulong> banned;
 
@@ -32,14 +31,13 @@ public class GameServer : BaseServer
         {
             base.Initialize();
             _gameReferences = gameReferences;
-            _gameState = new GameState(true);
         }
 
         public async void CreateNewPlayer(SteamId steamId)
         {
             // ObjectState player = gameState.Server_CreateObjectStateAndPawn((uint)steamId, ResourceId.PawnPlayer, "", steamId, true);
             
-            var player = _gameState.CreatePlayerInGameState((uint)steamId, sendObjectStatePacketRequest: true);
+            var player = _gameReferences.playerScene.Instantiate<Player>();
             Friend playerSteam = new Friend(steamId);
             await playerSteam.RequestInfoAsync();
             player.SetPawn((uint)playerSteam.Id, playerSteam.Id, playerSteam.Name);
@@ -130,11 +128,6 @@ public class GameServer : BaseServer
         public override void Tick(ulong tick)
         {
             base.Tick(tick);
-
-            if (_gameState != null)
-            {
-                _gameState.ServerTick(tick);
-            }
         }
 
         public void Kick(SteamId playerId)

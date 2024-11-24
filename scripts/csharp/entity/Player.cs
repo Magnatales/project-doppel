@@ -67,24 +67,8 @@ public partial class Player : Node2D, ITarget
             _camera.MakeCurrent();
         } 
         _label.Text = $"{NickName}";
-        
-        Services.Get<INetworkService>().Server_SubscribeRpc<PlayerStateRequestPacket, Connection>(Server_OnPlayerStateRequestPacketReceived, () => !this.IsValid());
     }
-
-    private void Server_OnPlayerStateRequestPacketReceived(PlayerStateRequestPacket packet, Connection fromConnection)
-    {
-        if(NetworkId != packet.NetworkId) return;
-
-        Server_SendPlayerStatePacket(fromConnection);
-    }
-
-    private void Server_SendPlayerStatePacket(Connection toConnection)
-    {
-        var playerStatePacket = new PlayerStatePacket();
-        playerStatePacket.NetworkId = NetworkId;
-        
-        Services.Get<INetworkService>().Server.Send(playerStatePacket, toConnection, SendType.Reliable);
-    }
+    
 
     public void SetPawn(uint networkId, ulong networkOwner, string nickName)
     {
@@ -217,13 +201,5 @@ public partial class Player : Node2D, ITarget
             animSprite.Stop();
             healthBar.Visible = false;
         }
-    }
-
-    public void Client_SendPlayerDataPacket()
-    {
-        var playerStateRequestPacket = new PlayerStateRequestPacket();
-        playerStateRequestPacket.NetworkId = NetworkId;
-
-        Services.Get<INetworkService>().Client.Send(playerStateRequestPacket, SendType.Reliable);
     }
 }
