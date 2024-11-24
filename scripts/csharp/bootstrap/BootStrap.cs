@@ -72,20 +72,42 @@ public partial class BootStrap : Node
 		_networkId = networkId;
 		var networkService = Services.Get<INetworkService>();
 		networkService.OnStartedClientOrServer -= Init;
-		
-		if(networkService.IsServer())
-			_serverHandler = new ServerSkillHandler(networkService, _networkId, this);
 
-		if (networkService.IsClient())
+		if (networkService.IsServer())
+		{
+			_serverHandler = new ServerSkillHandler(networkService, _networkId, this);
+			networkService.Server_SubscribeRpc<GameStateRequestPacket, Connection>(Server_OnGameStateRequestPacketReceived, () => this.IsValid() == false);
+		}
+		else if (networkService.IsClient())
 		{
 			_clientHandler = new ClientSkillHandler(networkService, _networkId, this);
-			foreach (var player in networkService.Server._players)
-			{
-				var playerCopy = _gameReferences.playerScene.Instantiate<Player>();
-				playerCopy.SetPawn(player.NetworkId, player.NetworkOwner, player.NickName);
-				playerCopy.Name = player.Name;
-				_gameReferences.playerSpawnPoint.GetTree().Root.AddChild(playerCopy);
-			}
+			networkService.Client_SubscribeRpc<GameStatePacket>(Client_OnGameStatePacketReceived, () => this.IsValid() == false);
+			networkService.Client.Send(new GameStateRequestPacket(){NetworkId = _networkId}, SendType.Reliable);
+		}
+	}
+
+	private void Server_OnGameStateRequestPacketReceived(GameStateRequestPacket gameStateRequestPacket, Connection from)
+	{
+		var playerIds = Services.Get<INetworkService>().Server._playerIds.ToArray();
+		var playerNames = Services.Get<INetworkService>().Server._playerNames.ToArray();
+		var packet = new GameStatePacket
+		{
+			PlayerIds = playerIds,
+			PlayerNames = playerNames
+		};
+		Services.Get<INetworkService>().Server.Send(packet, from, SendType.Reliable);
+	}
+
+	private void Client_OnGameStatePacketReceived(GameStatePacket gameStatePacket)
+	{
+		for (var index = 0; index < gameStatePacket.PlayerIds.Length; index++)
+		{
+			var playerId = gameStatePacket.PlayerIds[index];
+			var name = gameStatePacket.PlayerNames[index];
+			var playerCopy = _gameReferences.playerScene.Instantiate<Player>();
+			playerCopy.SetPawn((uint)playerId, playerId, name);
+			playerCopy.Name = name;
+			_gameReferences.playerSpawnPoint.GetTree().Root.AddChild(playerCopy);
 		}
 	}
 }
