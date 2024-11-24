@@ -1,3 +1,5 @@
+using System;
+using System.Threading.Tasks;
 using Code.Networking;
 using Code.Networking.Packets;
 using Code.References;
@@ -18,6 +20,13 @@ public partial class BootStrap : Node
 		var networkService = new NetworkService(_gameReferences);
 		Services.Add<INetworkService>(networkService);
 		
+		Start();
+	}
+
+	private async void Start()
+	{
+		await Task.Delay(TimeSpan.FromSeconds(5));
+		var networkService = Services.Get<INetworkService>();
 		networkService.Client_SubscribeRpc<MouseInputPacket>(Client_OnMouseInputReceived, () => this.IsValid() == false);
 		networkService.Server_SubscribeRpc<MouseInputPacket>(Server_OnMouseInputReceived, () =>  this.IsValid() == false);
 		
