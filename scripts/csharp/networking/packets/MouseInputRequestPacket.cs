@@ -2,23 +2,16 @@
 
 namespace Code.Networking.Packets;
 
-public struct MouseInputPacket : INetSerializable
+public struct MouseInputRequestPacket : INetSerializable
 {
     public uint NetworkId;
-    public bool WasLeftPressed;
-    public bool WasRightPressed;
-    
     public void Deserialize(NetDataReader reader)
     {
         NetworkId = reader.GetUInt();
-        WasLeftPressed = reader.GetBool();
-        WasRightPressed = reader.GetBool();
     }
 
     public void Serialize(NetDataWriter writer)
     {
         writer.Put(NetworkId);
-        writer.Put(WasLeftPressed);
-        writer.Put(WasRightPressed);
     }
 }

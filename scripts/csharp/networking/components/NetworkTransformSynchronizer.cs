@@ -13,12 +13,14 @@ public partial class NetworkTransformSynchronizer : Node
     private INetworkService _networkService => Services.Get<INetworkService>();
 
     private TransformPacket? _lastReceivedTransformPacket;
-    private Vector2 _previousPosition;
+    
     public override void _Ready()
     {
-        //_networkService.Server_SubscribeRpc<TransformPacket, Connection>(Server_OnTransformPacketReceived, () => this.IsValid() == false);
-        //_networkService.Server_SubscribeRpc<TransformRequestPacket, Connection>(Server_OnTransformRequestPacketReceived, () => this.IsValid() == false);
-        //_networkService.Client_SubscribeRpc<TransformPacket>(Client_OnTransformPacketReceived, () => this.IsValid() == false);
+        _networkService.Server_SubscribeRpc<TransformPacket, Connection>(Server_OnTransformPacketReceived, () => this.IsValid() == false);
+        _networkService.Server_SubscribeRpc<TransformRequestPacket, Connection>(Server_OnTransformRequestPacketReceived, () => this.IsValid() == false);
+        _networkService.Client_SubscribeRpc<TransformPacket>(Client_OnTransformPacketReceived, () => this.IsValid() == false);
+        
+        Client_SendTransformRequest();
     }
 
     public override void _Process(double delta)
@@ -46,12 +48,21 @@ public partial class NetworkTransformSynchronizer : Node
             }
         }
     }
+    
+    private void Client_SendTransformRequest()
+    {
+        if (_networkService.IsServer()) return;
+        if (target.HasOwnership()) return;
+        
+        var transformRequestPacket = new TransformRequestPacket();
+        transformRequestPacket.NetworkId = target.NetworkId;
+
+        _networkService.Client.Send(transformRequestPacket, SendType.Reliable);
+    }
 
     private void Server_OnTransformPacketReceived(TransformPacket packet, Connection from)
     {
         if (packet.NetworkId != target.NetworkId) return;
-        var fromSteamId = (ulong) from.UserData;
-        if (fromSteamId != target.NetworkOwner) return;
         
         Services.Get<INetworkService>().Server.Broadcast(packet, SendType.Reliable, from);
     }

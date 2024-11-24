@@ -30,5 +30,5 @@ public interface INetworkService : IDisposable
     
     void Server_Kick(SteamId playerId);
 
-    public event Action OnStartedClientOrServer;
+    public event Action<uint> OnStartedClientOrServer;
 }
