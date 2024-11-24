@@ -33,6 +33,4 @@ public interface INetworkService : IDisposable
     void Client_SubscribeRpc<T, TUserData>(Action<T, TUserData> callback, Func<bool> destroyPredicate) where T : struct, INetSerializable;
     
     void Server_Kick(SteamId playerId);
-
-    public event Action<uint> OnStartedClientOrServer;
 }

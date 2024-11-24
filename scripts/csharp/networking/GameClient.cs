@@ -1,4 +1,5 @@
-﻿using Code.Service;
+﻿using System;
+using Code.Service;
 using Steamworks;
 using Steamworks.Data;
 
@@ -6,14 +7,14 @@ namespace Code.Networking;
 
 public class GameClient : BaseClient
 {
-
+    public static event Action<ulong> OnClientConnected;
     public override void OnConnectionChanged(ConnectionInfo info)
     {
         base.OnConnectionChanged(info);
         
         if (info.State == ConnectionState.Connected)
         {
-            
+            OnClientConnected?.Invoke(info.identity.SteamId.Value);
         }
         
         if(info.State == ConnectionState.None || info.State == ConnectionState.ClosedByPeer || info.State == ConnectionState.Dead || info.State == ConnectionState.ProblemDetectedLocally)

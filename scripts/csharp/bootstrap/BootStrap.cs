@@ -25,7 +25,7 @@ public partial class BootStrap : Node
 		
 		var networkService = new NetworkService(_gameReferences);
 		Services.Add<INetworkService>(networkService);
-		networkService.OnStartedClientOrServer += Init;
+		GameClient.OnClientConnected += Init;
 	}
 	
 	public override void _Ready()
@@ -69,11 +69,12 @@ public partial class BootStrap : Node
 		Services.Dispose();
 	}
 
-	private async void Init(uint networkId)
+	private async void Init(ulong steamIdConnected)
 	{
-		_networkId = networkId;
+		//I'm converting the steamId to uint to save 4 bytes xd
+		_networkId = (uint)steamIdConnected;
 		var networkService = Services.Get<INetworkService>();
-		networkService.OnStartedClientOrServer -= Init;
+		GameClient.OnClientConnected -= Init;
 
 		if (networkService.IsServer())
 		{
@@ -90,8 +91,6 @@ public partial class BootStrap : Node
 				NetworkId = _networkId
 			};
 			
-			//Hook up to connected instead of waiting some time
-			await Task.Delay(TimeSpan.FromSeconds(2));
 			networkService.Client.Send(packet, SendType.Reliable);
 		}
 	}
