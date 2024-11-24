@@ -1,20 +1,21 @@
-using System;
-using System.Threading.Tasks;
 using Code.Networking;
+using Code.Networking.handlers;
 using Code.Networking.Packets;
 using Code.References;
 using Code.Service;
 using Code.Utils;
 using Godot;
-using Steamworks;
 using Steamworks.Data;
 
 public partial class BootStrap : Node
 {
 
 	[Export] private GameReferences _gameReferences;
-	private MouseInputPacket _cachedMouseInputPacket;
+	private PlayerSkillUsePacket _lastSkillUsed;
 	private uint _networkId;
+	private ClientSkillHandler _clientHandler;
+	private ServerSkillHandler _serverHandler;
+	
 	public override void _EnterTree()
 	{
 		var steamService = new SteamService(3354180);
@@ -22,110 +23,59 @@ public partial class BootStrap : Node
 		
 		var networkService = new NetworkService(_gameReferences);
 		Services.Add<INetworkService>(networkService);
-		networkService.OnStartedClientOrServer += Start;
-	}
-
-	private void Start(uint networkId)
-	{
-		_networkId = networkId;
-		var networkService = Services.Get<INetworkService>();
-		networkService.OnStartedClientOrServer -= Start;
-		
-		networkService.Client_SubscribeRpc<MouseInputResponsePacket>(Client_OnMouseInputResponse, () => this.IsValid() == false);
-		networkService.Client_SubscribeRpc<MouseInputPacket, Connection>(Client_OnMouseInputPacket, () => this.IsValid() == false);
-		
-		networkService.Server_SubscribeRpc<MouseInputRequestPacket, Connection>(Server_OnMouseInputRequest, () =>  this.IsValid() == false);
-	}
-
-	private void Server_OnMouseInputRequest(MouseInputRequestPacket mousePacket, Connection from)
-	{
-		//Validation goes here
-		var response = new MouseInputResponsePacket
-		{
-			NetworkId = mousePacket.NetworkId,
-			CanMouseInput = true
-		};
-		
-		GD.Print($"[SERVER] Validating request from {from.UserData}, Validation:{response.CanMouseInput}");
-		Services.Get<INetworkService>().Server.Send(response, from, SendType.Reliable);
-	}
-
-	private void Client_OnMouseInputResponse(MouseInputResponsePacket mouseInputResponse)
-	{
-		if (mouseInputResponse.NetworkId != _networkId || !mouseInputResponse.CanMouseInput) return;
-		
-		GD.Print($"[CLIENT] MouseInputResponsePacket. CanMouseInput:{mouseInputResponse.CanMouseInput}");
-		Services.Get<INetworkService>().Client.Send(_cachedMouseInputPacket, SendType.Reliable);
-		//Jump or something with the mouse input
+		networkService.OnStartedClientOrServer += Init;
 	}
 	
-
-	private void Client_OnMouseInputPacket(MouseInputPacket mousePacket, Connection from)
-	{
-		if(mousePacket.NetworkId == _networkId) return;
-		
-		GD.Print($"[CLIENT] MouseInputPacket. LeftClickPressed:{mousePacket.WasLeftPressed} - RightClickPressed{mousePacket.WasRightPressed} - From:{from.UserData}");
-		//Jump or something with the mouse input
-	}
-
 	public override void _Ready()
 	{
 		var lobbyController = _gameReferences.lobbyScene.Instantiate<LobbyController>();
 		AddChild(lobbyController);
 		lobbyController.Show();
 	}
-
+	
 	public override void _Process(double delta)
 	{
 		Services.Get<INetworkService>()._Process((float)delta);
 		
-		Server_Receive();
-		Client_Receive();
+		_serverHandler?.Receive();
+		_clientHandler?.Receive();
 
-		if (Input.IsActionJustPressed("LeftClick")) // && HasOwnership()
+		if (Input.IsActionJustPressed("LeftClick"))
 		{
-			_cachedMouseInputPacket = new MouseInputPacket
+			_lastSkillUsed = new PlayerSkillUsePacket
 			{
 				NetworkId = _networkId,
-				WasLeftPressed = true,
-				WasRightPressed = false
+				SkillUsed = "Attack"
 			};
-			
-			var networkService = Services.Get<INetworkService>();
-			if (networkService.IsServer())
+
+			if (_serverHandler != null)
 			{
-				networkService.Server?.BroadcastExceptLocalhost(_cachedMouseInputPacket, SendType.Reliable);
+				//Do some validation like mana check etc
+				Services.Get<INetworkService>().Server?.BroadcastExceptLocalhost(_lastSkillUsed, SendType.Reliable);
+				//Use skill here if true, else show some feedback "Not enough mana" etc
 			}
 			else
 			{
-				var mouseInputRequest = new MouseInputRequestPacket
-				{
-					NetworkId = _networkId
-					//More data can be added here
-				};
-				networkService.Client?.Send(mouseInputRequest, SendType.Reliable);
+				_clientHandler?.SendSkillRequest(_lastSkillUsed);
 			}
 		}
 	}
 	
-	private void Server_Receive()
-	{
-		if (Services.Get<INetworkService>().IsServer())
-		{
-			Services.Get<INetworkService>().Server.Receive();
-		}
-	}
-
-	private void Client_Receive()
-	{
-		if (Services.Get<INetworkService>().IsClient())
-		{
-			Services.Get<INetworkService>().Client.Receive();
-		}
-	}
-
 	public override void _ExitTree()
 	{
 		Services.Dispose();
+	}
+
+	private void Init(uint networkId)
+	{
+		_networkId = networkId;
+		var networkService = Services.Get<INetworkService>();
+		networkService.OnStartedClientOrServer -= Init;
+		
+		if(networkService.IsServer())
+			_serverHandler = new ServerSkillHandler(networkService, _networkId, this);
+		
+		if(networkService.IsClient())
+			_clientHandler = new ClientSkillHandler(networkService, _networkId, this);
 	}
 }
