@@ -62,7 +62,6 @@ public partial class Player : Node2D, ITarget
             _camera.MakeCurrent();
         } 
         _label.Text = $"{NickName}";
-        animSprite.
     }
     
 
