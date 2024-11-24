@@ -175,6 +175,7 @@ public class NetworkService : INetworkService
 
     public void Dispose()
     {
-        
+        HostDisconnect();
+        ClientDisconnect();
     }
 }

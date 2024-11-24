@@ -52,6 +52,8 @@ public partial class NetworkTransformSynchronizer : Node
             {
                 _networkService.Client.Send(transformPacket, SendType.Reliable);
             }
+            
+            _previousPosition = currentPosition;
         }
     }
     
