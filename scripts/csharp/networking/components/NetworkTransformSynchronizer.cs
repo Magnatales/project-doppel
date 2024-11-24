@@ -19,7 +19,7 @@ public partial class NetworkTransformSynchronizer : Node
     
     public override void _Ready()
     {
-        //_networkService.Server_SubscribeRpc<TransformPacket, Connection>(Server_OnTransformPacketReceived, () => this.IsValid() == false);
+        _networkService.Server_SubscribeRpc<TransformPacket, Connection>(Server_OnTransformPacketReceived, () => this.IsValid() == false);
         _networkService.Server_SubscribeRpc<TransformRequestPacket, Connection>(Server_OnTransformRequestPacketReceived, () => this.IsValid() == false);
         
         _networkService.Client_SubscribeRpc<TransformPacket>(Client_OnTransformPacketReceived, () => this.IsValid() == false);
@@ -41,8 +41,7 @@ public partial class NetworkTransformSynchronizer : Node
             if (!target.IsValid()) return;
 
             var currentPosition = target.GlobalPosition;
-            if ((currentPosition - _previousPosition).LengthSquared() > _positionThreshold * _positionThreshold) return;
-            
+            if (!(currentPosition.DistanceTo(_previousPosition) > _positionThreshold)) return;
             var transformPacket = CreateTransformPacket();
             if (_networkService.IsServer())
             {
@@ -68,12 +67,12 @@ public partial class NetworkTransformSynchronizer : Node
         _networkService.Client.Send(transformRequestPacket, SendType.Reliable);
     }
 
-    // private void Server_OnTransformPacketReceived(TransformPacket packet, Connection from)
-    // {
-    //     if (packet.NetworkId != target.NetworkId) return;
-    //     
-    //     _networkService.Server.Broadcast(packet, SendType.Reliable, from);
-    // }
+    private void Server_OnTransformPacketReceived(TransformPacket packet, Connection from)
+    {
+        if (packet.NetworkId != target.NetworkId) return;
+        
+        _networkService.Server.Broadcast(packet, SendType.Reliable, from);
+    }
     
     private void Server_OnTransformRequestPacketReceived(TransformRequestPacket packet, Connection connection)
     {
