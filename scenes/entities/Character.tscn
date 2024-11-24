@@ -72,6 +72,7 @@ text = "Pepe"
 script = ExtResource("7_lr34d")
 _smoothingRange = 1
 
-[node name="NetworkTransformSynchronizer" type="Node" parent="." node_paths=PackedStringArray("target")]
+[node name="NetworkTransformSynchronizer" type="Node" parent="." node_paths=PackedStringArray("target", "sprite")]
 script = ExtResource("8_1oumc")
 target = NodePath("..")
+sprite = NodePath("../EntityAnimatedSprite2D")

@@ -10,6 +10,7 @@ namespace Code.Networking.Components;
 public partial class NetworkTransformSynchronizer : Node
 {
     [Export] private Player target;
+    [Export] private AnimatedSprite2D sprite;
     private INetworkService _networkService => Services.Get<INetworkService>();
 
     private TransformPacket? _lastReceivedTransformPacket;
@@ -34,6 +35,7 @@ public partial class NetworkTransformSynchronizer : Node
             if (_lastReceivedTransformPacket.HasValue)
             {
                 target.Position = _lastReceivedTransformPacket.Value.Position;
+                sprite.FlipH = _lastReceivedTransformPacket.Value.FlipH;
             }
         }
         else
@@ -89,6 +91,7 @@ public partial class NetworkTransformSynchronizer : Node
         transformPacket.NetworkId = target.NetworkId;
         transformPacket.Position = target.GlobalPosition;
         transformPacket.ParentPath = GetParent().GetPath();
+        transformPacket.FlipH = sprite.FlipH;
         return transformPacket;
     }
 
