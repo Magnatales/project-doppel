@@ -71,6 +71,7 @@ namespace Code.Networking;
 
         public void BroadcastExceptLocalhost<T>(T packet, SendType sendType) where T : struct, INetSerializable
         {
+            GD.Print("SENDING SERVER BroadcastExceptLocalhost");
             Broadcast(packet, sendType, GetLocalConnection());
         }
 
