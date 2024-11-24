@@ -36,6 +36,8 @@ public partial class NetworkTransformSynchronizer : Node
             {
                 target.Position = _lastReceivedTransformPacket.Value.Position;
                 sprite.FlipH = _lastReceivedTransformPacket.Value.FlipH;
+                sprite.Frame = _lastReceivedTransformPacket.Value.Frame;
+                sprite.Animation = _lastReceivedTransformPacket.Value.Animation;
             }
         }
         else
@@ -92,6 +94,8 @@ public partial class NetworkTransformSynchronizer : Node
         transformPacket.Position = target.GlobalPosition;
         transformPacket.ParentPath = GetParent().GetPath();
         transformPacket.FlipH = sprite.FlipH;
+        transformPacket.Frame = sprite.Frame;
+        transformPacket.Animation = sprite.Animation;
         return transformPacket;
     }
 

@@ -9,6 +9,8 @@ public struct TransformPacket : INetSerializable
     public Vector2 Position;
     public string ParentPath;
     public bool FlipH;
+    public int Frame;
+    public string Animation;
     
     public void Deserialize(NetDataReader reader)
     {
@@ -16,6 +18,8 @@ public struct TransformPacket : INetSerializable
         Position = reader.Get<Vector2Serializable>().Get();
         ParentPath = reader.GetString();
         FlipH = reader.GetBool();
+        Frame = reader.GetInt();
+        Animation = reader.GetString();
     }
 
     public void Serialize(NetDataWriter writer)
@@ -24,5 +28,7 @@ public struct TransformPacket : INetSerializable
         writer.Put(Vector2Serializable.From(Position));
         writer.Put(ParentPath);
         writer.Put(FlipH);
+        writer.Put(Frame);
+        writer.Put(Animation);
     }
 }
