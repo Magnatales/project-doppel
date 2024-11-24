@@ -12,7 +12,7 @@ public class GameServer : BaseServer
         //public GameState gameState;
         private GameReferences _gameReferences;
 
-        public List<Player> _players;
+        public List<Player> _players = new List<Player>();
 
         private List<ulong> banned;
 
