@@ -91,7 +91,7 @@ public partial class BootStrap : Node
 			};
 			
 			//Hook up to connected instead of waiting some time
-			await Task.Delay(TimeSpan.FromSeconds(3));
+			await Task.Delay(TimeSpan.FromSeconds(1));
 			networkService.Client.Send(packet, SendType.Reliable);
 		}
 	}
