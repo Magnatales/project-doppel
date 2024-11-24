@@ -6,6 +6,7 @@ using Code.References;
 using Code.Service;
 using Code.Utils;
 using Godot;
+using Steamworks;
 using Steamworks.Data;
 
 public partial class BootStrap : Node
@@ -19,16 +20,16 @@ public partial class BootStrap : Node
 		
 		var networkService = new NetworkService(_gameReferences);
 		Services.Add<INetworkService>(networkService);
-		
-		Start();
+		networkService.OnStartedClientOrServer += Start;
 	}
 
-	private async void Start()
+	private void Start()
 	{
-		await Task.Delay(TimeSpan.FromSeconds(5));
 		var networkService = Services.Get<INetworkService>();
-		networkService.Client_SubscribeRpc<MouseInputPacket>(Client_OnMouseInputReceived, () => this.IsValid() == false);
-		networkService.Server_SubscribeRpc<MouseInputPacket>(Server_OnMouseInputReceived, () =>  this.IsValid() == false);
+		networkService.OnStartedClientOrServer -= Start;
+		
+		//networkService.Client_SubscribeRpc<MouseInputPacket>(Client_OnMouseInputReceived, () => this.IsValid() == false);
+		//networkService.Server_SubscribeRpc<MouseInputPacket>(Server_OnMouseInputReceived, () =>  this.IsValid() == false);
 		
 		networkService.Client_SubscribeRpc<MouseInputPacket, Connection>(Client_OnMouseInputReceivedFrom, () =>  this.IsValid() == false);
 		networkService.Server_SubscribeRpc<MouseInputPacket, Connection>(Server_OnMouseInputReceivedFrom, () =>  this.IsValid() == false);
@@ -36,22 +37,22 @@ public partial class BootStrap : Node
 
 	private void Server_OnMouseInputReceived(MouseInputPacket mousePacket)
 	{
-		GD.Print($"[SERVER] Mouse input package received {mousePacket.WasLeftPressed} - {mousePacket.WasRightPressed}");
+		GD.Print($"[SERVER] MouseInputPacket. LeftClickPressed:{mousePacket.WasLeftPressed} - RightClickPressed{mousePacket.WasRightPressed}");
 	}
 
-	private void Client_OnMouseInputReceived(MouseInputPacket mopMouseInputPacket)
+	private void Client_OnMouseInputReceived(MouseInputPacket mousePacket)
 	{
-		GD.Print($"[CLIENT] Mouse input package received {mopMouseInputPacket.WasLeftPressed} - {mopMouseInputPacket.WasRightPressed}");
+		GD.Print($"[CLIENT] MouseInputPacket. LeftClickPressed:{mousePacket.WasLeftPressed} - RightClickPressed{mousePacket.WasRightPressed}");
 	}
 
 	private void Server_OnMouseInputReceivedFrom(MouseInputPacket mousePacket, Connection from)
 	{
-		GD.Print($"[SERVER] Mouse input package received {mousePacket.WasLeftPressed} - {mousePacket.WasRightPressed} from {from.UserData}");
+		GD.Print($"[SERVER] MouseInputPacket. LeftClickPressed:{mousePacket.WasLeftPressed} - RightClickPressed{mousePacket.WasRightPressed} - From:{from.UserData}");
 	}
 
-	private void Client_OnMouseInputReceivedFrom(MouseInputPacket mouseInputPacket, Connection from)
+	private void Client_OnMouseInputReceivedFrom(MouseInputPacket mousePacket, Connection from)
 	{
-		GD.Print($"[CLIENT] Mouse input package received {mouseInputPacket.WasLeftPressed} - {mouseInputPacket.WasRightPressed} from {from.UserData}");
+		GD.Print($"[CLIENT] MouseInputPacket. LeftClickPressed:{mousePacket.WasLeftPressed} - RightClickPressed{mousePacket.WasRightPressed} - From:{from.UserData}");
 	}
 
 	public override void _Ready()
@@ -70,6 +71,7 @@ public partial class BootStrap : Node
 
 		if (Input.IsActionJustPressed("LeftClick"))
 		{
+			GD.Print("TIMES");
 			var mouseInputPacket = new MouseInputPacket
 			{
 				WasLeftPressed = true,

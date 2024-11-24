@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://lm7cbvhmuc3l"]
+[gd_scene load_steps=11 format=3 uid="uid://lm7cbvhmuc3l"]
 
 [ext_resource type="Script" path="res://scripts/csharp/entity/Player.cs" id="1_e0iv7"]
 [ext_resource type="PackedScene" uid="uid://cf37hjqiiwp88" path="res://scenes/entities/PlayerAnimatedSprite.tscn" id="2_bj33f"]
@@ -7,7 +7,6 @@
 [ext_resource type="Material" uid="uid://n43ikyvv5sw7" path="res://shaders/pixel_smooth.tres" id="5_s22gc"]
 [ext_resource type="FontFile" uid="uid://mc441mrvu2ce" path="res://resources/fonts/alagard.ttf" id="5_wtes3"]
 [ext_resource type="Script" path="res://scripts/csharp/utils/Camera2d.cs" id="7_lr34d"]
-[ext_resource type="Script" path="res://scripts/csharp/networking/components/NetworkTransformSynchronizer.cs" id="8_1oumc"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_my2ov"]
 
@@ -71,7 +70,3 @@ text = "Pepe"
 [node name="Camera2D" type="Camera2D" parent="."]
 script = ExtResource("7_lr34d")
 _smoothingRange = 1
-
-[node name="NetworkTransformSynchronizer" type="Node" parent="." node_paths=PackedStringArray("target")]
-script = ExtResource("8_1oumc")
-target = NodePath("..")

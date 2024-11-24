@@ -72,8 +72,8 @@ public partial class Player : Node2D, ITarget
 
     public void SetPawn(uint networkId, ulong networkOwner, string nickName)
     {
-        this.NetworkId = networkId;
-        this.NetworkOwner = networkOwner;
+        NetworkId = networkId;
+        NetworkOwner = networkOwner;
         NickName = nickName;
     }
 

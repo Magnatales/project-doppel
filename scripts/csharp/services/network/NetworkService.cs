@@ -13,6 +13,8 @@ public class NetworkService : INetworkService
     public GameServer Server { get; private set; }
     public GameClient Client { get; private set; }
     
+    public event Action OnStartedClientOrServer;
+    
     public ushort TickRate = 60;
     public ulong Tick { get; private set; }
     private float _tickPerSeconds;
@@ -35,6 +37,7 @@ public class NetworkService : INetworkService
         }
 
         await ClientConnect(SteamClient.SteamId);
+        OnStartedClientOrServer?.Invoke();
     }
 
     public async Task ClientConnect(SteamId steamId)
@@ -47,6 +50,7 @@ public class NetworkService : INetworkService
             GD.Print("Client connected successfully");
             await Task.Delay(500);
         }
+        OnStartedClientOrServer?.Invoke();
     }
     
     public void _Process(float delta)
