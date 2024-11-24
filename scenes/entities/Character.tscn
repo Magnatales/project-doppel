@@ -54,7 +54,6 @@ collision_layer = 2
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MouseTarget"]
-position = Vector2(3, 0)
 shape = SubResource("RectangleShape2D_ldcmm")
 debug_color = Color(0.699914, 0.320888, 0.930597, 0.42)
 
