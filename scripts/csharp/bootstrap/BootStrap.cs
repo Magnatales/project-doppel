@@ -39,13 +39,14 @@ public partial class BootStrap : Node
 
 	private void Server_OnMouseInputRequest(MouseInputRequestPacket mousePacket, Connection from)
 	{
-		//Validation goes here!
+		//Validation goes here
 		var response = new MouseInputResponsePacket
 		{
 			NetworkId = mousePacket.NetworkId,
 			CanMouseInput = true
 		};
 		
+		GD.Print($"[SERVER] Validating request from {from.UserData}, Validation:{response.CanMouseInput}");
 		Services.Get<INetworkService>().Server.Send(response, from, SendType.Reliable);
 	}
 
