@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bfy2em3bwuvfo"
-path="res://.godot/imported/PC Computer - Ragnarok Online - Zombie.png-3af560b42ae6f1489fe1151bb86c31cd.ctex"
+path="res://.godot/imported/PC Computer - Ragnarok Online - Zombie.png-ed7e2b8b86bc055113123d1d6ebd199d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/Zombie/PC Computer - Ragnarok Online - Zombie.png"
-dest_files=["res://.godot/imported/PC Computer - Ragnarok Online - Zombie.png-3af560b42ae6f1489fe1151bb86c31cd.ctex"]
+source_file="res://textures/zombie/PC Computer - Ragnarok Online - Zombie.png"
+dest_files=["res://.godot/imported/PC Computer - Ragnarok Online - Zombie.png-ed7e2b8b86bc055113123d1d6ebd199d.ctex"]
 
 [params]
 

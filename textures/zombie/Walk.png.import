@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bnnhjqgpsj316"
-path="res://.godot/imported/Walk.png-adbbe1900a0397c5b709e9acfff71571.ctex"
+path="res://.godot/imported/Walk.png-c91fed1ff24562436932949563dae3e8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/Zombie/Walk.png"
-dest_files=["res://.godot/imported/Walk.png-adbbe1900a0397c5b709e9acfff71571.ctex"]
+source_file="res://textures/zombie/Walk.png"
+dest_files=["res://.godot/imported/Walk.png-c91fed1ff24562436932949563dae3e8.ctex"]
 
 [params]
 

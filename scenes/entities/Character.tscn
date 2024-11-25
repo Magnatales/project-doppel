@@ -1,13 +1,12 @@
-[gd_scene load_steps=12 format=3 uid="uid://lm7cbvhmuc3l"]
+[gd_scene load_steps=11 format=3 uid="uid://lm7cbvhmuc3l"]
 
-[ext_resource type="Script" path="res://scripts/CSharp/Entity/Player.cs" id="1_e0iv7"]
+[ext_resource type="Script" path="res://scripts/csharp/entity/Player.cs" id="1_cl2qe"]
 [ext_resource type="PackedScene" uid="uid://cf37hjqiiwp88" path="res://scenes/entities/PlayerAnimatedSprite.tscn" id="2_bj33f"]
-[ext_resource type="PackedScene" uid="uid://dminkvt8qo4dt" path="res://scenes/entities/Enemy.tscn" id="2_h560s"]
 [ext_resource type="PackedScene" uid="uid://5n51x1gnmr1x" path="res://scenes/utils/HealthBartscn.tscn" id="4_dpg61"]
 [ext_resource type="Material" uid="uid://n43ikyvv5sw7" path="res://shaders/pixel_smooth.tres" id="5_s22gc"]
 [ext_resource type="FontFile" uid="uid://mc441mrvu2ce" path="res://resources/fonts/alagard.ttf" id="5_wtes3"]
-[ext_resource type="Script" path="res://scripts/CSharp/Utils/Camera2d.cs" id="7_lr34d"]
-[ext_resource type="Script" path="res://scripts/CSharp/Networking/components/NetworkTransformSynchronizer.cs" id="8_1oumc"]
+[ext_resource type="Script" path="res://scripts/csharp/utils/Camera2d.cs" id="6_q6g13"]
+[ext_resource type="Script" path="res://scripts/csharp/networking/components/NetworkTransformSynchronizer.cs" id="7_hiupb"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_my2ov"]
 
@@ -20,10 +19,9 @@ default_font_size = 0
 
 [node name="Player" type="Node2D" node_paths=PackedStringArray("navAgent", "animSprite", "healthBar", "area", "mouseTargetArea", "_label", "_camera")]
 position = Vector2(281, 181)
-script = ExtResource("1_e0iv7")
+script = ExtResource("1_cl2qe")
 Speed = 75.0
 navAgent = NodePath("NavigationAgent2D")
-packedScene = ExtResource("2_h560s")
 animSprite = NodePath("EntityAnimatedSprite2D")
 healthBar = NodePath("HealthBar")
 area = NodePath("Area2D")
@@ -67,11 +65,12 @@ offset_bottom = -19.0
 theme = SubResource("Theme_txvd7")
 text = "Pepe"
 
-[node name="Camera2D" type="Camera2D" parent="."]
-script = ExtResource("7_lr34d")
+[node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("_player2")]
+script = ExtResource("6_q6g13")
+_player2 = NodePath("..")
 _smoothingRange = 1
 
 [node name="NetworkTransformSynchronizer" type="Node" parent="." node_paths=PackedStringArray("target", "sprite")]
-script = ExtResource("8_1oumc")
+script = ExtResource("7_hiupb")
 target = NodePath("..")
 sprite = NodePath("../EntityAnimatedSprite2D")
