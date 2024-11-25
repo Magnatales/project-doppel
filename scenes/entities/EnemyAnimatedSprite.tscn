@@ -1,9 +1,9 @@
 [gd_scene load_steps=24 format=3 uid="uid://egy2bdemjgov"]
 
-[ext_resource type="Material" uid="uid://n43ikyvv5sw7" path="res://Shaders/pixel_smooth.tres" id="1_mcnej"]
-[ext_resource type="Texture2D" uid="uid://c0stf12w2u1h6" path="res://Textures/Zombie/Attack.png" id="2_rcbko"]
-[ext_resource type="Texture2D" uid="uid://brpyajwybbkwr" path="res://Textures/Zombie/Idle.png" id="3_4fei5"]
-[ext_resource type="Texture2D" uid="uid://bnnhjqgpsj316" path="res://Textures/Zombie/Walk.png" id="4_4qk2u"]
+[ext_resource type="Material" uid="uid://n43ikyvv5sw7" path="res://shaders/pixel_smooth.tres" id="1_mcnej"]
+[ext_resource type="Texture2D" uid="uid://c0stf12w2u1h6" path="res://textures/Zombie/Attack.png" id="2_rcbko"]
+[ext_resource type="Texture2D" uid="uid://brpyajwybbkwr" path="res://textures/Zombie/Idle.png" id="3_4fei5"]
+[ext_resource type="Texture2D" uid="uid://bnnhjqgpsj316" path="res://textures/Zombie/Walk.png" id="4_4qk2u"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fcj8v"]
 atlas = ExtResource("2_rcbko")

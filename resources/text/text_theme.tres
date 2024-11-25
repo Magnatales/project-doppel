@@ -1,6 +1,6 @@
 [gd_resource type="Theme" load_steps=2 format=3 uid="uid://dp7shd8hg32r"]
 
-[ext_resource type="FontFile" uid="uid://mc441mrvu2ce" path="res://Resources/Fonts/alagard.ttf" id="1_v8k5v"]
+[ext_resource type="FontFile" uid="uid://mc441mrvu2ce" path="res://resources/fonts/alagard.ttf" id="1_v8k5v"]
 
 [resource]
 default_font = ExtResource("1_v8k5v")

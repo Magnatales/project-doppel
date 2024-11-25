@@ -11,11 +11,11 @@ config_version=5
 [application]
 
 config/name="project-doppel"
-run/main_scene="res://Scenes/Bootstrap.tscn"
+run/main_scene="res://scenes/Bootstrap.tscn"
 config/features=PackedStringArray("4.3", "C#", "Forward Plus")
 boot_splash/show_image=false
-config/icon="res://Textures/godot_103035.svg"
-config/windows_native_icon="res://Textures/godo4.ico"
+config/icon="res://textures/godot_103035.svg"
+config/windows_native_icon="res://textures/godo4.ico"
 
 [display]
 
@@ -42,11 +42,11 @@ movie_writer/movie_file="C:/Magnatales Games/Godot/Videos/Output.avi"
 [file_customization]
 
 folder_colors={
-"res://Resources/": "orange",
-"res://Scenes/": "blue",
-"res://Scripts/": "teal",
-"res://Shaders/": "red",
-"res://Textures/": "purple"
+"res://resources/": "orange",
+"res://scenes/": "blue",
+"res://scripts/": "teal",
+"res://shaders/": "red",
+"res://textures/": "purple"
 }
 
 [input]

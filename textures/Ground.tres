@@ -1,6 +1,6 @@
 [gd_resource type="TileSet" load_steps=12 format=3 uid="uid://nlhb4i0virul"]
 
-[ext_resource type="Texture2D" uid="uid://dfas0owpswsa" path="res://Textures/natural.png" id="1_4eaip"]
+[ext_resource type="Texture2D" uid="uid://dfas0owpswsa" path="res://textures/natural.png" id="1_4eaip"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_j2wns"]
 

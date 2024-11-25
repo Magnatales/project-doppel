@@ -1,8 +1,8 @@
 [gd_scene load_steps=7 format=3 uid="uid://b0pkiwc4iryhu"]
 
-[ext_resource type="Script" path="res://Scripts/CSharp/Vfx/Effect.cs" id="1_c365g"]
-[ext_resource type="Material" uid="uid://n43ikyvv5sw7" path="res://Shaders/pixel_smooth.tres" id="1_mpwd7"]
-[ext_resource type="Texture2D" uid="uid://cq643qod5bjlh" path="res://Textures/Effects/Hit.png" id="2_bawbg"]
+[ext_resource type="Script" path="res://scripts/CSharp/Vfx/Effect.cs" id="1_c365g"]
+[ext_resource type="Material" uid="uid://n43ikyvv5sw7" path="res://shaders/pixel_smooth.tres" id="1_mpwd7"]
+[ext_resource type="Texture2D" uid="uid://cq643qod5bjlh" path="res://textures/Effects/Hit.png" id="2_bawbg"]
 
 [sub_resource type="Animation" id="Animation_s7sb5"]
 resource_name = "Hit"

@@ -1,13 +1,13 @@
 [gd_scene load_steps=12 format=3 uid="uid://lm7cbvhmuc3l"]
 
-[ext_resource type="Script" path="res://Scripts/CSharp/Entity/Player.cs" id="1_e0iv7"]
-[ext_resource type="PackedScene" uid="uid://cf37hjqiiwp88" path="res://Scenes/Entities/PlayerAnimatedSprite.tscn" id="2_bj33f"]
-[ext_resource type="PackedScene" uid="uid://dminkvt8qo4dt" path="res://Scenes/Entities/Enemy.tscn" id="2_h560s"]
-[ext_resource type="PackedScene" uid="uid://5n51x1gnmr1x" path="res://Scenes/Utils/HealthBartscn.tscn" id="4_dpg61"]
-[ext_resource type="Material" uid="uid://n43ikyvv5sw7" path="res://Shaders/pixel_smooth.tres" id="5_s22gc"]
-[ext_resource type="FontFile" uid="uid://mc441mrvu2ce" path="res://Resources/Fonts/alagard.ttf" id="5_wtes3"]
-[ext_resource type="Script" path="res://Scripts/CSharp/Utils/Camera2d.cs" id="7_lr34d"]
-[ext_resource type="Script" path="res://Scripts/CSharp/Networking/components/NetworkTransformSynchronizer.cs" id="8_1oumc"]
+[ext_resource type="Script" path="res://scripts/CSharp/Entity/Player.cs" id="1_e0iv7"]
+[ext_resource type="PackedScene" uid="uid://cf37hjqiiwp88" path="res://scenes/entities/PlayerAnimatedSprite.tscn" id="2_bj33f"]
+[ext_resource type="PackedScene" uid="uid://dminkvt8qo4dt" path="res://scenes/entities/Enemy.tscn" id="2_h560s"]
+[ext_resource type="PackedScene" uid="uid://5n51x1gnmr1x" path="res://scenes/utils/HealthBartscn.tscn" id="4_dpg61"]
+[ext_resource type="Material" uid="uid://n43ikyvv5sw7" path="res://shaders/pixel_smooth.tres" id="5_s22gc"]
+[ext_resource type="FontFile" uid="uid://mc441mrvu2ce" path="res://resources/fonts/alagard.ttf" id="5_wtes3"]
+[ext_resource type="Script" path="res://scripts/CSharp/Utils/Camera2d.cs" id="7_lr34d"]
+[ext_resource type="Script" path="res://scripts/CSharp/Networking/components/NetworkTransformSynchronizer.cs" id="8_1oumc"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_my2ov"]
 

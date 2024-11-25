@@ -1,10 +1,10 @@
 [gd_scene load_steps=8 format=3 uid="uid://tqgg41odn7nx"]
 
-[ext_resource type="Script" path="res://Scripts/CSharp/Networking/LobbyController.cs" id="1_m6ovv"]
-[ext_resource type="Script" path="res://Scripts/CSharp/Networking/LobbyView.cs" id="2_tjgoh"]
-[ext_resource type="PackedScene" uid="uid://w8nuo1kmcf5v" path="res://Scenes/Worlds/Field_01.tscn" id="3_40ok7"]
-[ext_resource type="FontFile" uid="uid://mc441mrvu2ce" path="res://Resources/Fonts/alagard.ttf" id="4_8ud3q"]
-[ext_resource type="Theme" uid="uid://dp7shd8hg32r" path="res://Resources/Text/text_theme.tres" id="5_i3gg0"]
+[ext_resource type="Script" path="res://scripts/CSharp/Networking/LobbyController.cs" id="1_m6ovv"]
+[ext_resource type="Script" path="res://scripts/CSharp/Networking/LobbyView.cs" id="2_tjgoh"]
+[ext_resource type="PackedScene" uid="uid://w8nuo1kmcf5v" path="res://scenes/worlds/Field_01.tscn" id="3_40ok7"]
+[ext_resource type="FontFile" uid="uid://mc441mrvu2ce" path="res://resources/fonts/alagard.ttf" id="4_8ud3q"]
+[ext_resource type="Theme" uid="uid://dp7shd8hg32r" path="res://resources/text/text_theme.tres" id="5_i3gg0"]
 
 [sub_resource type="Theme" id="Theme_c7xmo"]
 default_font = ExtResource("4_8ud3q")

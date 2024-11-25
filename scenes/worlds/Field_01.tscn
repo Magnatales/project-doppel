@@ -1,11 +1,11 @@
 [gd_scene load_steps=8 format=4 uid="uid://w8nuo1kmcf5v"]
 
-[ext_resource type="Material" uid="uid://n43ikyvv5sw7" path="res://Shaders/pixel_smooth.tres" id="1_57wvn"]
-[ext_resource type="Texture2D" uid="uid://dfas0owpswsa" path="res://Textures/natural.png" id="2_7hnp4"]
-[ext_resource type="Script" path="res://Scripts/GDScript/test_gd.gd" id="3_sfa6x"]
-[ext_resource type="TileSet" uid="uid://nlhb4i0virul" path="res://Textures/Ground.tres" id="4_7nuvr"]
-[ext_resource type="TileSet" uid="uid://d8ikugmexub8" path="res://Textures/Level2.tres" id="5_kde1w"]
-[ext_resource type="TileSet" uid="uid://t1g2dayfcusi" path="res://Textures/Level1.tres" id="6_gv48m"]
+[ext_resource type="Material" uid="uid://n43ikyvv5sw7" path="res://shaders/pixel_smooth.tres" id="1_57wvn"]
+[ext_resource type="Texture2D" uid="uid://dfas0owpswsa" path="res://textures/natural.png" id="2_7hnp4"]
+[ext_resource type="Script" path="res://scripts/GDScript/test_gd.gd" id="3_sfa6x"]
+[ext_resource type="TileSet" uid="uid://nlhb4i0virul" path="res://textures/Ground.tres" id="4_7nuvr"]
+[ext_resource type="TileSet" uid="uid://d8ikugmexub8" path="res://textures/Level2.tres" id="5_kde1w"]
+[ext_resource type="TileSet" uid="uid://t1g2dayfcusi" path="res://textures/Level1.tres" id="6_gv48m"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_vhlqf"]
 vertices = PackedVector2Array(369, 385, 742.969, 441, 56.0469, 441.992, 175, 385, 59.9375, 77.0234, 175, 259, 741.023, 79.9688, 369, 259)

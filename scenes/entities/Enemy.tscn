@@ -1,13 +1,13 @@
 [gd_scene load_steps=24 format=3 uid="uid://dminkvt8qo4dt"]
 
-[ext_resource type="Script" path="res://Scripts/CSharp/Entity/enemy/Enemy.cs" id="1_1dt1o"]
-[ext_resource type="Resource" uid="uid://ckngfgocfg1n7" path="res://Resources/Instances/Zombie.tres" id="2_6xj5k"]
-[ext_resource type="Texture2D" uid="uid://c0stf12w2u1h6" path="res://Textures/Zombie/Attack.png" id="3_d0xw3"]
-[ext_resource type="Texture2D" uid="uid://blpfyhsv0pg1s" path="res://Textures/Zombie/Die.png" id="4_tgugo"]
-[ext_resource type="Texture2D" uid="uid://brpyajwybbkwr" path="res://Textures/Zombie/Idle.png" id="5_lmbal"]
-[ext_resource type="Texture2D" uid="uid://bnnhjqgpsj316" path="res://Textures/Zombie/Walk.png" id="6_jx0lt"]
-[ext_resource type="Material" uid="uid://n43ikyvv5sw7" path="res://Shaders/pixel_smooth.tres" id="7_ig2ub"]
-[ext_resource type="Script" path="res://Scripts/CSharp/Entity/enemy/EnemyAreas.cs" id="8_7sthm"]
+[ext_resource type="Script" path="res://scripts/CSharp/Entity/enemy/Enemy.cs" id="1_1dt1o"]
+[ext_resource type="Resource" uid="uid://ckngfgocfg1n7" path="res://resources/instances/Zombie.tres" id="2_6xj5k"]
+[ext_resource type="Texture2D" uid="uid://c0stf12w2u1h6" path="res://textures/Zombie/Attack.png" id="3_d0xw3"]
+[ext_resource type="Texture2D" uid="uid://blpfyhsv0pg1s" path="res://textures/Zombie/Die.png" id="4_tgugo"]
+[ext_resource type="Texture2D" uid="uid://brpyajwybbkwr" path="res://textures/Zombie/Idle.png" id="5_lmbal"]
+[ext_resource type="Texture2D" uid="uid://bnnhjqgpsj316" path="res://textures/Zombie/Walk.png" id="6_jx0lt"]
+[ext_resource type="Material" uid="uid://n43ikyvv5sw7" path="res://shaders/pixel_smooth.tres" id="7_ig2ub"]
+[ext_resource type="Script" path="res://scripts/CSharp/Entity/enemy/EnemyAreas.cs" id="8_7sthm"]
 
 [sub_resource type="Animation" id="Animation_galgo"]
 resource_name = "Attack"

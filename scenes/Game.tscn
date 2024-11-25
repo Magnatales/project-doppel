@@ -1,11 +1,11 @@
 [gd_scene load_steps=7 format=3 uid="uid://b7kic5ecsmher"]
 
-[ext_resource type="PackedScene" uid="uid://w8nuo1kmcf5v" path="res://Scenes/Worlds/Field_01.tscn" id="1_1ou6t"]
-[ext_resource type="PackedScene" uid="uid://tqgg41odn7nx" path="res://Scenes/Networking/Lobby.tscn" id="1_bpy4p"]
-[ext_resource type="Script" path="res://Scripts/CSharp/Utils/FPSCounter.cs" id="2_5yq0y"]
-[ext_resource type="PackedScene" uid="uid://dxf2j75pllknv" path="res://Scenes/Vfx/Effects.tscn" id="3_hv8ha"]
-[ext_resource type="PackedScene" uid="uid://dminkvt8qo4dt" path="res://Scenes/Entities/Enemy.tscn" id="5_4yoo7"]
-[ext_resource type="Script" path="res://Scripts/CSharp/Entity/enemy/EnemySpawner.cs" id="5_absc8"]
+[ext_resource type="PackedScene" uid="uid://w8nuo1kmcf5v" path="res://scenes/worlds/Field_01.tscn" id="1_1ou6t"]
+[ext_resource type="PackedScene" uid="uid://tqgg41odn7nx" path="res://scenes/networking/Lobby.tscn" id="1_bpy4p"]
+[ext_resource type="Script" path="res://scripts/CSharp/Utils/FPSCounter.cs" id="2_5yq0y"]
+[ext_resource type="PackedScene" uid="uid://dxf2j75pllknv" path="res://scenes/Vfx/Effects.tscn" id="3_hv8ha"]
+[ext_resource type="PackedScene" uid="uid://dminkvt8qo4dt" path="res://scenes/entities/Enemy.tscn" id="5_4yoo7"]
+[ext_resource type="Script" path="res://scripts/CSharp/Entity/enemy/EnemySpawner.cs" id="5_absc8"]
 
 [node name="Game" type="Node2D"]
 y_sort_enabled = true

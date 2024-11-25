@@ -1,21 +1,21 @@
 [gd_scene load_steps=10 format=3 uid="uid://w0lfnb3hpbsc"]
 
-[ext_resource type="Script" path="res://Scripts/CSharp/Bootstrap/BootStrap.cs" id="1_7bsw4"]
-[ext_resource type="PackedScene" uid="uid://tqgg41odn7nx" path="res://Scenes/Networking/Lobby.tscn" id="2_1h2oh"]
-[ext_resource type="Script" path="res://Scripts/CSharp/References/GameReferences.cs" id="2_vaags"]
-[ext_resource type="PackedScene" uid="uid://lm7cbvhmuc3l" path="res://Scenes/Entities/Character.tscn" id="3_flsqu"]
-[ext_resource type="Material" uid="uid://n43ikyvv5sw7" path="res://Shaders/pixel_smooth.tres" id="5_f0h1o"]
-[ext_resource type="Script" path="res://Scripts/CSharp/Networking/components/UILabelBandwithOut.cs" id="5_o8qk3"]
-[ext_resource type="Theme" uid="uid://dp7shd8hg32r" path="res://Resources/Text/text_theme.tres" id="6_74af5"]
-[ext_resource type="Script" path="res://Scripts/CSharp/Networking/components/UILabelPing.cs" id="6_1162j"]
-[ext_resource type="Script" path="res://Scripts/CSharp/Networking/components/UILabelBandwithIn.cs" id="7_8t7ix"]
+[ext_resource type="Script" path="res://scripts/CSharp/Bootstrap/BootStrap.cs" id="1_7bsw4"]
+[ext_resource type="Script" path="res://scripts/CSharp/references/GameReferences.cs" id="2_1fgmh"]
+[ext_resource type="PackedScene" uid="uid://tqgg41odn7nx" path="res://scenes/networking/Lobby.tscn" id="2_1h2oh"]
+[ext_resource type="PackedScene" uid="uid://lm7cbvhmuc3l" path="res://scenes/entities/Character.tscn" id="3_flsqu"]
+[ext_resource type="Material" uid="uid://n43ikyvv5sw7" path="res://shaders/pixel_smooth.tres" id="5_f0h1o"]
+[ext_resource type="Script" path="res://scripts/CSharp/Networking/components/UILabelBandwithOut.cs" id="5_o8qk3"]
+[ext_resource type="Theme" uid="uid://dp7shd8hg32r" path="res://resources/text/text_theme.tres" id="6_74af5"]
+[ext_resource type="Script" path="res://scripts/CSharp/Networking/components/UILabelPing.cs" id="6_1162j"]
+[ext_resource type="Script" path="res://scripts/CSharp/Networking/components/UILabelBandwithIn.cs" id="7_8t7ix"]
 
 [node name="Bootstrap" type="Node" node_paths=PackedStringArray("_gameReferences")]
 script = ExtResource("1_7bsw4")
 _gameReferences = NodePath("GameReferences")
 
 [node name="GameReferences" type="Node" parent="." node_paths=PackedStringArray("playerSpawnPoint")]
-script = ExtResource("2_vaags")
+script = ExtResource("2_1fgmh")
 playerScene = ExtResource("3_flsqu")
 lobbyScene = ExtResource("2_1h2oh")
 playerSpawnPoint = NodePath("PlayerSpawnPoint")
