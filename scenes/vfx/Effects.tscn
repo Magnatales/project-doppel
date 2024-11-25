@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://dxf2j75pllknv"]
 
-[ext_resource type="Script" path="res://scripts/csharp/vfx/Effects.cs" id="1_s5svl"]
-[ext_resource type="PackedScene" uid="uid://b0pkiwc4iryhu" path="res://scenes/vfx/Effect.tscn" id="2_q4xnd"]
+[ext_resource type="Script" path="res://Scripts/CSharp/Vfx/Effects.cs" id="1_s5svl"]
+[ext_resource type="PackedScene" uid="uid://b0pkiwc4iryhu" path="res://Scenes/Vfx/Effect.tscn" id="2_q4xnd"]
 
 [node name="Effects" type="Node2D"]
 script = ExtResource("1_s5svl")

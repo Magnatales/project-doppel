@@ -1,13 +1,13 @@
 [gd_scene load_steps=24 format=3 uid="uid://dminkvt8qo4dt"]
 
-[ext_resource type="Script" path="res://scripts/csharp/entity/enemy/Enemy.cs" id="1_1uhjh"]
-[ext_resource type="Resource" uid="uid://ckngfgocfg1n7" path="res://resources/instances/Zombie.tres" id="2_40q83"]
-[ext_resource type="Texture2D" uid="uid://c0stf12w2u1h6" path="res://textures/zombie/Attack.png" id="3_e51co"]
-[ext_resource type="Texture2D" uid="uid://blpfyhsv0pg1s" path="res://textures/zombie/Die.png" id="4_22msj"]
-[ext_resource type="Texture2D" uid="uid://brpyajwybbkwr" path="res://textures/zombie/Idle.png" id="5_0xj2y"]
-[ext_resource type="Texture2D" uid="uid://bnnhjqgpsj316" path="res://textures/zombie/Walk.png" id="6_rs84h"]
-[ext_resource type="Material" uid="uid://n43ikyvv5sw7" path="res://shaders/pixel_smooth.tres" id="7_2cu33"]
-[ext_resource type="Script" path="res://scripts/csharp/entity/enemy/EnemyAreas.cs" id="8_tfoki"]
+[ext_resource type="Script" path="res://Scripts/CSharp/Entity/enemy/Enemy.cs" id="1_1dt1o"]
+[ext_resource type="Resource" uid="uid://ckngfgocfg1n7" path="res://Resources/Instances/Zombie.tres" id="2_6xj5k"]
+[ext_resource type="Texture2D" uid="uid://c0stf12w2u1h6" path="res://Textures/Zombie/Attack.png" id="3_d0xw3"]
+[ext_resource type="Texture2D" uid="uid://blpfyhsv0pg1s" path="res://Textures/Zombie/Die.png" id="4_tgugo"]
+[ext_resource type="Texture2D" uid="uid://brpyajwybbkwr" path="res://Textures/Zombie/Idle.png" id="5_lmbal"]
+[ext_resource type="Texture2D" uid="uid://bnnhjqgpsj316" path="res://Textures/Zombie/Walk.png" id="6_jx0lt"]
+[ext_resource type="Material" uid="uid://n43ikyvv5sw7" path="res://Shaders/pixel_smooth.tres" id="7_ig2ub"]
+[ext_resource type="Script" path="res://Scripts/CSharp/Entity/enemy/EnemyAreas.cs" id="8_7sthm"]
 
 [sub_resource type="Animation" id="Animation_galgo"]
 resource_name = "Attack"
@@ -23,7 +23,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("3_e51co")]
+"values": [ExtResource("3_d0xw3")]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -102,7 +102,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("4_22msj")]
+"values": [ExtResource("4_tgugo")]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -155,7 +155,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("3_e51co")]
+"values": [ExtResource("3_d0xw3")]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -209,7 +209,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("5_0xj2y")]
+"values": [ExtResource("5_lmbal")]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -272,7 +272,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("5_0xj2y")]
+"values": [ExtResource("5_lmbal")]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -338,7 +338,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("6_rs84h")]
+"values": [ExtResource("6_jx0lt")]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -465,11 +465,11 @@ properties/1/spawn = true
 properties/1/replication_mode = 1
 
 [node name="Enemy" type="Node2D" node_paths=PackedStringArray("NavAgent", "AnimPlayer", "EnemyAreas", "Sprite", "_hitArea", "_healthBar", "_hpText")]
-script = ExtResource("1_1uhjh")
+script = ExtResource("1_1dt1o")
 NavAgent = NodePath("NavigationAgent2D")
 AnimPlayer = NodePath("AnimationPlayer")
 EnemyAreas = NodePath("EnemyAreas")
-Stats = ExtResource("2_40q83")
+Stats = ExtResource("2_6xj5k")
 Sprite = NodePath("Sprite2D")
 _hitArea = NodePath("HitArea")
 _healthBar = NodePath("HealthBar")
@@ -488,16 +488,16 @@ speed_scale = 0.5
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 2
-material = ExtResource("7_2cu33")
+material = ExtResource("7_ig2ub")
 position = Vector2(-16.6667, -52.6667)
 scale = Vector2(0.5, 0.5)
-texture = ExtResource("5_0xj2y")
+texture = ExtResource("5_lmbal")
 centered = false
 hframes = 6
 frame = 3
 
 [node name="EnemyAreas" type="Node2D" parent="." node_paths=PackedStringArray("attackArea", "detectionArea")]
-script = ExtResource("8_tfoki")
+script = ExtResource("8_7sthm")
 attackArea = NodePath("Attack")
 detectionArea = NodePath("Detection")
 

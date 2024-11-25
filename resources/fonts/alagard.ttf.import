@@ -3,12 +3,12 @@
 importer="font_data_dynamic"
 type="FontFile"
 uid="uid://mc441mrvu2ce"
-path="res://.godot/imported/alagard.ttf-8f1689d4b25e4e3ff2180c55e312685b.fontdata"
+path="res://.godot/imported/alagard.ttf-0e3f79a19f1e7e2e097c5d78ff3c4a83.fontdata"
 
 [deps]
 
-source_file="res://resources/fonts/alagard.ttf"
-dest_files=["res://.godot/imported/alagard.ttf-8f1689d4b25e4e3ff2180c55e312685b.fontdata"]
+source_file="res://Resources/Fonts/alagard.ttf"
+dest_files=["res://.godot/imported/alagard.ttf-0e3f79a19f1e7e2e097c5d78ff3c4a83.fontdata"]
 
 [params]
 
