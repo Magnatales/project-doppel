@@ -1,0 +1,24 @@
+﻿@startuml
+'https://plantuml.com/class-diagram
+
+enum Stat
+{
+	HP
+	Mana
+	Attack
+	Armor
+	Str
+	Dex
+	Vit
+	Int
+	Agi
+}
+
+interface IActor
+{
+	+ operator int [](Stat)
+	+ int GetAttribute(Stat)
+}
+
+
+@enduml

@@ -1,0 +1,62 @@
+﻿@startuml
+'https://plantuml.com/class-diagram
+
+
+
+class BootstrapperServer
+
+interface IDataCache
+{
+	+ Skill GetSkill(string skillId)
+	+ MonsterData GetMonster(string monsterId)
+}
+
+class Server
+{
+	+ async Start()
+	- async PrepareNetworking()
+	- async PrepareLobby()
+	- async StartReceivingPlayers()
+}
+
+class Game
+{
+	- List<Map> loadedMaps
+	- List<Players> players
+	- Dictionary<string, string> playerToMap
+}
+
+class Map
+{
+	- List<Player> players
+	- List<Monster> monsters
+}
+
+interface IServerNetworkHandler
+{
+	+ Action OnSkillRequest
+	+ Action OnPlayerUpdate
+
+	+ ReportSkillExecution(SkillExecutedData data)
+	+ ReportPlayerUpdate(PlayerUpdateData data)
+	+ ReportMonsterUpdate(MonsterUpdateData data)
+}
+
+class CombatSystem
+{
+	+ SkillOutcome UseSkill(skillId, caster, target)
+	+ BasicAttackOutcome UseBasicAttack(attacker, defender)
+}
+
+BootstrapperServer --> Server: Instances
+BootstrapperServer --> IDataCache: Instances
+
+Server ---> Game: Contains
+Server ---> IServerNetworkHandler: Instances
+Game -> IServerNetworkHandler : References 
+IDataCache <- Game : References 
+Server ---> IDataCache: References
+Game --> Map: Contains
+Game --> CombatSystem: Contains
+
+@enduml
