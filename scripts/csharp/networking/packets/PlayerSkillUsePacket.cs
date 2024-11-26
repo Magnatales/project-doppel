@@ -19,15 +19,6 @@ public struct PlayerSkillUsePacket : INetSerializable
         writer.Put(SkillUsed);
     }
     
-    public PlayerSkillUsePacket Get()
-    {
-        return new PlayerSkillUsePacket
-        {
-            NetworkId = NetworkId,
-            SkillUsed = SkillUsed,
-        };
-    }
-    
     public static PlayerSkillUsePacket From(PlayerSkillUsePacket playerSkillUsePacket)
     {
         var packet = new PlayerSkillUsePacket();

@@ -69,7 +69,7 @@ public partial class BootStrap : Node
 		Services.Dispose();
 	}
 
-	private async void Init(ulong steamIdConnected)
+	private void Init(ulong steamIdConnected)
 	{
 		//I'm converting the steamId to uint to save 4 bytes xd
 		_networkId = (uint)steamIdConnected;

@@ -1,5 +1,6 @@
 using Godot;
 
+[GlobalClass]
 public partial class EnemyStats : Resource
 {
 	[Export] public int Health {get ; set;}

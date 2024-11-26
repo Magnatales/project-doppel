@@ -33,10 +33,10 @@ public partial class LobbyController : CanvasLayer, ILobbyController
 
     private void JoinLocalHost()
     {
-        var eNetMultiplayerPeer = new ENetMultiplayerPeer();
-        eNetMultiplayerPeer.CreateClient("127.0.0.1", 25565);
-        Multiplayer.MultiplayerPeer = eNetMultiplayerPeer;
-        _lobbyView.HideMenus();
+        // var eNetMultiplayerPeer = new ENetMultiplayerPeer();
+        // eNetMultiplayerPeer.CreateClient("127.0.0.1", 25565);
+        // Multiplayer.MultiplayerPeer = eNetMultiplayerPeer;
+        // _lobbyView.HideMenus();
     }
 
     private async void CreateLocalHost()
@@ -50,16 +50,6 @@ public partial class LobbyController : CanvasLayer, ILobbyController
 
     public async void CreateSteamHost()
     {
-        // var lobby = await SteamManager.Instance.CreateLobby();
-        //
-        // _lobbyView.BindHostLobby(lobby.Id.ToString());
-        //
-        // var steamPeer = new SteamMultiplayerPeer();
-        // steamPeer.CreateHost(25565);
-        // Multiplayer.MultiplayerPeer = steamPeer;
-        // Multiplayer.PeerConnected += AddPlayer;
-        // Multiplayer.PeerDisconnected += RemovePlayer;
-        
         _lobbyView.HideMenus();
         await Services.Get<INetworkService>().HostConnect();
         await SteamMatchmaking.CreateLobbyAsync();
